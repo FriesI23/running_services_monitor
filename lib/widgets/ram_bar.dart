@@ -30,6 +30,11 @@ class RamBar extends StatelessWidget {
     double systemRamKb = usedRamKb - appsRamKb;
     if (systemRamKb < 0) systemRamKb = 0; // Safety
 
+    // Avoid division by zero
+    if (totalRamKb <= 0) {
+      return const SizedBox.shrink();
+    }
+
     final double systemFlex = systemRamKb / totalRamKb;
     final double appsFlex = appsRamKb / totalRamKb;
     final double freeFlex = freeRamKb / totalRamKb;
