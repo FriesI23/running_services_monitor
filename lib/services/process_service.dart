@@ -21,10 +21,13 @@ class ProcessService {
     try {
       final apps = await InstalledApps.getInstalledApps(excludeSystemApps: false, withIcon: true);
       _appCache.clear();
+      int appsWithIcons = 0;
       for (var app in apps) {
         _appCache[app.packageName] = app;
+        if (app.icon != null) appsWithIcons++;
       }
       _isCacheInitialized = true;
+      debugPrint('App cache refreshed: ${apps.length} apps loaded, $appsWithIcons have icons');
     } catch (e) {
       debugPrint('Error refreshing app cache: $e');
     }
@@ -61,9 +64,52 @@ class ProcessService {
       final appProcessInfos = await compute(_processDataInIsolate, isolateData);
 
       // 4. Re-attach AppInfo from cache (main thread)
+      int appsWithAppInfo = 0;
+      int servicesWithIcons = 0;
+      int fetchedIcons = 0;
+
       for (var info in appProcessInfos) {
         info.appInfo = _appCache[info.packageName];
+        if (info.appInfo != null && info.appInfo!.icon != null) {
+          appsWithAppInfo++;
+        } else {
+          // If no cached icon, try to fetch it directly
+          try {
+            final fetchedAppInfo = await InstalledApps.getAppInfo(info.packageName);
+            if (fetchedAppInfo != null && fetchedAppInfo.icon != null) {
+              info.appInfo = fetchedAppInfo;
+              fetchedIcons++;
+            }
+          } catch (e) {
+            // Ignore errors for individual apps
+          }
+        }
+
+        // Also attach icons to individual services from their package names
+        for (var service in info.services) {
+          final serviceAppInfo = _appCache[service.packageName];
+          if (serviceAppInfo != null && serviceAppInfo.icon != null) {
+            service.icon = serviceAppInfo.icon;
+            servicesWithIcons++;
+          } else if (service.packageName != info.packageName) {
+            // If service has different package, try to fetch its icon
+            try {
+              final fetchedServiceInfo = await InstalledApps.getAppInfo(service.packageName);
+              if (fetchedServiceInfo != null && fetchedServiceInfo.icon != null) {
+                service.icon = fetchedServiceInfo.icon;
+                servicesWithIcons++;
+                fetchedIcons++;
+              }
+            } catch (e) {
+              // Ignore errors for individual services
+            }
+          }
+        }
       }
+
+      debugPrint(
+        'Icon stats: $appsWithAppInfo cached, $fetchedIcons fetched, $servicesWithIcons service icons, ${appProcessInfos.length} total apps',
+      );
 
       return appProcessInfos;
     } catch (e) {

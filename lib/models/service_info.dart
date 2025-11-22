@@ -10,6 +10,7 @@ class RunningServiceInfo {
   String? appName;
   String? ramUsage; // e.g. "25 MB"
   double? ramInKb; // Parsed value for aggregation
+  dynamic icon; // Service-specific icon from InstalledApps cache
 
   RunningServiceInfo({
     required this.user,
@@ -22,6 +23,7 @@ class RunningServiceInfo {
     this.appName,
     this.ramUsage,
     this.ramInKb,
+    this.icon,
   });
 
   @override
