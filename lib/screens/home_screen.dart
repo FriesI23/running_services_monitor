@@ -66,6 +66,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return MultiBlocProvider(
       providers: [BlocProvider.value(value: homeBloc)],
       child: BlocListener<HomeBloc, HomeState>(
+        listenWhen: (previous, current) =>
+            previous.value.errorMessage != current.value.errorMessage ||
+            previous.value.notification != current.value.notification,
         listener: (context, state) {
           // Handle one-time side effects
           state.maybeWhen(
@@ -73,6 +76,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               // Show Shizuku setup dialog if needed
               if (message.contains('Shizuku is not running')) {
                 _showShizukuSetupDialog();
+              }
+            },
+            success: (value) {
+              if (value.notification != null) {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(value.notification!),
+                    duration: const Duration(seconds: 1),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
               }
             },
             orElse: () {},
@@ -239,27 +254,48 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           return name.contains(searchQuery) || pkg.contains(searchQuery);
         }).toList();
 
+        Widget content;
         if (filteredApps.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.inbox_outlined, size: 64, color: Theme.of(context).colorScheme.outline),
-                const SizedBox(height: 16),
-                Text(
-                  searchQuery.isNotEmpty ? 'No matching apps' : 'No apps found',
-                  style: Theme.of(context).textTheme.bodyLarge,
+          content = LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.inbox_outlined, size: 64, color: Theme.of(context).colorScheme.outline),
+                        const SizedBox(height: 16),
+                        Text(
+                          searchQuery.isNotEmpty ? 'No matching apps' : 'No apps found',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              );
+            },
+          );
+        } else {
+          content = ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: filteredApps.length,
+            itemBuilder: (context, index) {
+              return AppListItem(appInfo: filteredApps[index]);
+            },
           );
         }
 
-        return ListView.builder(
-          itemCount: filteredApps.length,
-          itemBuilder: (context, index) {
-            return AppListItem(appInfo: filteredApps[index]);
+        return RefreshIndicator(
+          onRefresh: () async {
+            final future = homeBloc.stream.firstWhere((state) => !state.value.isLoading);
+            homeBloc.add(const HomeEvent.loadData());
+            await future;
           },
+          child: content,
         );
       },
     );

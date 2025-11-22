@@ -46,43 +46,6 @@ class AppDetailsScreen extends StatelessWidget {
               'This app can\'t safely be stopped. If you stop it, you may lose some of your current work.',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey[400]),
             ),
-            const SizedBox(height: 32),
-
-            // Buttons
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton(
-                    onPressed: () {
-                      // Placeholder for Stop action
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(const SnackBar(content: Text('Stop not implemented yet')));
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    ),
-                    child: const Text('Stop'),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: FilledButton(
-                    onPressed: () {
-                      // Placeholder for Report action
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.grey[900], // Darker/Disabled look
-                      foregroundColor: Colors.grey,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    ),
-                    child: const Text('Report'),
-                  ),
-                ),
-              ],
-            ),
 
             const SizedBox(height: 32),
             const Divider(),

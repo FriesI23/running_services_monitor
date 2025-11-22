@@ -70,7 +70,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onLoadData(_LoadData event, Emitter<HomeState> emit) async {
     if (!event.silent) {
-      emit(HomeState.loading(state.value.copyWith(isLoading: true, errorMessage: null)));
+      emit(HomeState.loading(state.value.copyWith(isLoading: true, errorMessage: null, notification: null)));
     }
 
     try {
@@ -116,6 +116,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         appsRam += app.totalRamInKb;
       }
 
+      String? notificationMessage;
+      if (event.silent) {
+        final time = DateTime.now();
+        final timeStr =
+            '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}:${time.second.toString().padLeft(2, '0')}';
+        notificationMessage = 'Auto-updated at $timeStr';
+      } else {
+        notificationMessage = 'Refreshed successfully';
+      }
+
       emit(
         HomeState.success(
           state.value.copyWith(
@@ -127,6 +137,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             usedRamKb: ramInfo[2],
             appsRamKb: appsRam,
             isLoading: false,
+            notification: notificationMessage,
           ),
         ),
       );
