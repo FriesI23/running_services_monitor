@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
+import 'setup_step_item.dart';
 
 class ShizukuSetupDialog extends StatelessWidget {
   final VoidCallback onRetry;
@@ -29,11 +30,11 @@ class ShizukuSetupDialog extends StatelessWidget {
             const SizedBox(height: 16),
             Text(AppLocalizations.of(context)!.setupSteps, style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            _buildStep('1', AppLocalizations.of(context)!.step1),
-            _buildStep('2', AppLocalizations.of(context)!.step2),
-            _buildStep('3', AppLocalizations.of(context)!.step3),
-            _buildStep('4', AppLocalizations.of(context)!.step4),
-            _buildStep('5', AppLocalizations.of(context)!.step5),
+            SetupStepItem(number: '1', text: AppLocalizations.of(context)!.step1),
+            SetupStepItem(number: '2', text: AppLocalizations.of(context)!.step2),
+            SetupStepItem(number: '3', text: AppLocalizations.of(context)!.step3),
+            SetupStepItem(number: '4', text: AppLocalizations.of(context)!.step4),
+            SetupStepItem(number: '5', text: AppLocalizations.of(context)!.step5),
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
@@ -70,32 +71,6 @@ class ShizukuSetupDialog extends StatelessWidget {
           label: Text(AppLocalizations.of(context)!.retry),
         ),
       ],
-    );
-  }
-
-  Widget _buildStep(String number, String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(color: Colors.deepPurple, borderRadius: BorderRadius.circular(12)),
-            child: Center(
-              child: Text(
-                number,
-                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Padding(padding: const EdgeInsets.only(top: 2), child: Text(text)),
-          ),
-        ],
-      ),
     );
   }
 }

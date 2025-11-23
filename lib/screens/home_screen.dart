@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
-import 'package:running_services_monitor/core/theme/theme_bloc.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
-import 'package:running_services_monitor/bloc/language_bloc/language_bloc.dart';
 import 'widgets/shizuku_setup_dialog.dart';
 import 'widgets/home_body.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
+import 'widgets/language_selector.dart';
+import 'widgets/theme_toggle_button.dart';
+import 'widgets/about_button.dart';
+import 'widgets/app_logo.dart';
+import 'widgets/search_field.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -114,23 +117,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               builder: (context, state) {
                 final value = state.value;
                 return AppBar(
-                  title: value.isSearching
-                      ? TextField(
-                          controller: _searchController,
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context)!.searchApps,
-                            border: InputBorder.none,
-                            hintStyle: const TextStyle(color: Colors.white70),
-                          ),
-                          style: const TextStyle(color: Colors.white),
-                        )
-                      : Image.asset(
-                          'assets/splash.png',
-                          width: 32,
-                          height: 32,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
+                  title: value.isSearching ? SearchField(controller: _searchController) : const AppLogo(),
                   bottom: value.shizukuReady
                       ? PreferredSize(
                           preferredSize: const Size.fromHeight(48),
@@ -180,27 +167,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         tooltip: AppLocalizations.of(context)!.refresh,
                       ),
                     ],
-                    PopupMenuButton<Locale>(
-                      icon: const Icon(Icons.language),
-                      tooltip: 'Language',
-                      onSelected: (Locale locale) {
-                        context.read<LanguageBloc>().add(LanguageEvent.changeLanguage(locale));
-                      },
-                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
-                        const PopupMenuItem<Locale>(value: Locale('en'), child: Text('English')),
-                        const PopupMenuItem<Locale>(value: Locale('bn'), child: Text('বাংলা')),
-                      ],
-                    ),
-                    IconButton(
-                      icon: Icon(Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
-                      onPressed: () => context.read<ThemeBloc>().toggleTheme(),
-                      tooltip: AppLocalizations.of(context)!.toggleTheme,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.info_outline),
-                      onPressed: () => context.push('/about'),
-                      tooltip: AppLocalizations.of(context)!.about,
-                    ),
+                    const LanguageSelector(),
+                    const ThemeToggleButton(),
+                    const AboutButton(),
                   ],
                 );
               },

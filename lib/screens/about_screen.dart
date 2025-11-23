@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
+import 'widgets/about_info_tile.dart';
+import 'widgets/about_header.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -60,49 +62,26 @@ class _AboutScreenState extends State<AboutScreen> {
               padding: const EdgeInsets.all(16.0),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  Center(
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          'assets/splash.png',
-                          width: 64,
-                          height: 64,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          AppLocalizations.of(context)!.appTitle,
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(version, style: const TextStyle(fontSize: 16, color: Colors.grey)),
-                      ],
-                    ),
-                  ),
+                  AboutHeader(version: version),
                   const SizedBox(height: 32),
-                  _buildInfoTile(
-                    context,
+                  AboutInfoTile(
                     icon: Icons.person,
                     title: AppLocalizations.of(context)!.developer,
                     subtitle: developerName,
                   ),
-                  _buildInfoTile(
-                    context,
+                  AboutInfoTile(
                     icon: Icons.email,
                     title: AppLocalizations.of(context)!.email,
                     subtitle: email,
                     onTap: () => _launchUrl('mailto:$email'),
                   ),
-                  _buildInfoTile(
-                    context,
+                  AboutInfoTile(
                     icon: Icons.code,
                     title: AppLocalizations.of(context)!.sourceCode,
                     subtitle: 'github.com/biplobsd/running_services_monitor',
                     onTap: () => _launchUrl(sourceCodeUrl),
                   ),
-                  _buildInfoTile(
-                    context,
+                  AboutInfoTile(
                     icon: Icons.web,
                     title: AppLocalizations.of(context)!.blogs,
                     subtitle: 'biplobsd.github.io',
@@ -130,22 +109,6 @@ class _AboutScreenState extends State<AboutScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildInfoTile(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    VoidCallback? onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      onTap: onTap,
-      trailing: onTap != null ? const Icon(Icons.open_in_new, size: 16) : null,
     );
   }
 }

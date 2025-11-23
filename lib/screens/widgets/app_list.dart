@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
 import 'package:running_services_monitor/models/service_info.dart';
-import 'package:running_services_monitor/l10n/app_localizations.dart';
 import 'app_list_item.dart';
+import 'empty_list_state.dart';
 
 class AppList extends StatelessWidget {
   final List<AppProcessInfo> apps;
@@ -24,33 +24,7 @@ class AppList extends StatelessWidget {
 
         Widget content;
         if (filteredApps.isEmpty) {
-          content = LayoutBuilder(
-            builder: (context, constraints) {
-              return CustomScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                slivers: [
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.inbox_outlined, size: 64, color: Theme.of(context).colorScheme.outline),
-                          const SizedBox(height: 16),
-                          Text(
-                            searchQuery.isNotEmpty
-                                ? AppLocalizations.of(context)!.noMatchingApps
-                                : AppLocalizations.of(context)!.noAppsFound,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
+          content = EmptyListState(isSearching: searchQuery.isNotEmpty);
         } else {
           content = CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),

@@ -3,6 +3,8 @@ import '../models/service_info.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
 import 'widgets/app_header.dart';
 import 'widgets/service_list.dart';
+import 'widgets/app_details_description.dart';
+import 'widgets/app_details_section_title.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:running_services_monitor/bloc/app_details_bloc/app_details_bloc.dart';
@@ -35,25 +37,18 @@ class AppDetailsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(24.0),
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
-                        // Header
                         AppHeader(appInfo: currentAppInfo),
                         const SizedBox(height: 24),
 
                         // Description
-                        Text(
-                          AppLocalizations.of(context)!.stopWarning,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey[400]),
-                        ),
+                        const AppDetailsDescription(),
 
                         const SizedBox(height: 32),
                         const Divider(),
                         const SizedBox(height: 16),
 
                         // Service List
-                        Text(
-                          AppLocalizations.of(context)!.activeServices,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                        AppDetailsSectionTitle(title: AppLocalizations.of(context)!.activeServices),
                         const SizedBox(height: 8),
                       ]),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'service_icon.dart';
+import 'service_details_dialog.dart';
 
 class ServiceListItem extends StatelessWidget {
   final RunningServiceInfo service;
@@ -12,7 +13,7 @@ class ServiceListItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
-        leading: _buildAppIcon(context),
+        leading: ServiceIcon(service: service),
         title: Text(service.appName ?? service.packageName, style: const TextStyle(fontWeight: FontWeight.w500)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,59 +81,11 @@ class ServiceListItem extends StatelessWidget {
           ],
         ),
         trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onSurfaceVariant),
-        onTap: () => _showServiceDetails(context),
-      ),
-    );
-  }
-
-  Widget _buildAppIcon(BuildContext context) {
-    return ServiceIcon(service: service);
-  }
-
-  void _showServiceDetails(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(service.appName ?? service.packageName),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildDetailRow('Package', service.packageName),
-              const SizedBox(height: 8),
-              _buildDetailRow('Process', service.processName),
-              const SizedBox(height: 8),
-              _buildDetailRow('PID', service.pid.toString()),
-              if (service.ramUsage != null) ...[
-                const SizedBox(height: 8),
-                _buildDetailRow('RAM Usage', service.ramUsage!),
-              ],
-              if (service.serviceClass != null) ...[
-                const SizedBox(height: 8),
-                _buildDetailRow('Service Class', service.serviceClass!),
-              ],
-              const SizedBox(height: 8),
-              _buildDetailRow('Type', service.isSystemApp ? 'System App' : 'User App'),
-            ],
-          ),
+        onTap: () => showDialog(
+          context: context,
+          builder: (context) => ServiceDetailsDialog(service: service),
         ),
-        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close'))],
       ),
-    );
-  }
-
-  Widget _buildDetailRow(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
-        ),
-        const SizedBox(height: 2),
-        SelectableText(value, style: const TextStyle(fontSize: 14)),
-      ],
     );
   }
 }

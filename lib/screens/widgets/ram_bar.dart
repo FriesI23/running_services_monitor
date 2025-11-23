@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
+import 'ram_legend_item.dart';
 
 class RamBar extends StatelessWidget {
   final double totalRamKb;
@@ -78,44 +79,25 @@ class RamBar extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           // Legend
-          _buildLegendItem(
-            context,
+          RamLegendItem(
             color: Colors.grey[700]!,
             label: AppLocalizations.of(context)!.system,
             value: _formatRam(systemRamKb),
           ),
           const SizedBox(height: 8),
-          _buildLegendItem(
-            context,
+          RamLegendItem(
             color: Colors.lightBlue[200]!,
             label: AppLocalizations.of(context)!.apps,
             value: _formatRam(appsRamKb),
           ),
           const SizedBox(height: 8),
-          _buildLegendItem(
-            context,
+          RamLegendItem(
             color: Colors.grey[300]!,
             label: AppLocalizations.of(context)!.free,
             value: _formatRam(freeRamKb),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildLegendItem(BuildContext context, {required Color color, required String label, required String value}) {
-    return Row(
-      children: [
-        Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
-        ),
-        const SizedBox(width: 12),
-        Text(label, style: const TextStyle(fontSize: 14)),
-        const Spacer(),
-        Text('$value ${AppLocalizations.of(context)!.ofRam}', style: const TextStyle(fontSize: 14)),
-      ],
     );
   }
 }

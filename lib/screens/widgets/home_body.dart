@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
 import 'package:running_services_monitor/models/service_info.dart';
-import 'package:running_services_monitor/l10n/app_localizations.dart';
 import 'app_list.dart';
 import 'ram_bar.dart';
+import 'loading_state.dart';
+import 'error_state.dart';
 
 class HomeBody extends StatelessWidget {
   final TabController tabController;
@@ -20,38 +21,14 @@ class HomeBody extends StatelessWidget {
 
         // Loading state (initial load)
         if (value.isLoading && value.allApps.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text(AppLocalizations.of(context)!.loadingServices),
-              ],
-            ),
-          );
+          return const LoadingState();
         }
 
         // Error state (no data)
         if (value.errorMessage != null && value.allApps.isEmpty) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.error_outline, size: 64, color: Theme.of(context).colorScheme.error),
-                  const SizedBox(height: 16),
-                  Text(value.errorMessage!, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
-                  const SizedBox(height: 24),
-                  FilledButton.icon(
-                    onPressed: () => homeBloc.add(const HomeEvent.initializeShizuku()),
-                    icon: const Icon(Icons.refresh),
-                    label: Text(AppLocalizations.of(context)!.retry),
-                  ),
-                ],
-              ),
-            ),
+          return ErrorState(
+            errorMessage: value.errorMessage!,
+            onRetry: () => homeBloc.add(const HomeEvent.initializeShizuku()),
           );
         }
 

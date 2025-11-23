@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:running_services_monitor/models/service_info.dart';
+import 'default_service_icon.dart';
 
 class ServiceIcon extends StatelessWidget {
   final RunningServiceInfo service;
@@ -16,26 +17,10 @@ class ServiceIcon extends StatelessWidget {
         width: size,
         height: size,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _buildDefaultIcon(context),
+        errorBuilder: (context, error, stackTrace) => DefaultServiceIcon(service: service, size: size),
       );
     }
 
-    return _buildDefaultIcon(context);
-  }
-
-  Widget _buildDefaultIcon(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Icon(
-        service.isSystemApp ? Icons.android : Icons.apps,
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
-        size: size * 0.6,
-      ),
-    );
+    return DefaultServiceIcon(service: service, size: size);
   }
 }
