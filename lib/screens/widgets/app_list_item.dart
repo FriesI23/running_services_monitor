@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
-import '../app_details_screen.dart';
 import 'app_icon.dart';
 
 class AppListItem extends StatelessWidget {
@@ -23,7 +23,7 @@ class AppListItem extends StatelessWidget {
       ),
       trailing: Text(appInfo.totalRam, style: const TextStyle(fontSize: 14)),
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppDetailsScreen(appInfo: appInfo)));
+        context.push('/app-details', extra: appInfo);
       },
     );
   }

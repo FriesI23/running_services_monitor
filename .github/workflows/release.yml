@@ -41,7 +41,9 @@ jobs:
         run: flutter pub get
 
       - name: 🧠 Generate code
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
 
       - name: 🔐 Decode Keystore
         env:

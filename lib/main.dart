@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'core/dependency_injection/dependency_injection.dart';
 import 'core/theme/theme_bloc.dart';
 import 'bloc/language_bloc/language_bloc.dart';
-import 'screens/home_screen.dart';
+import 'core/routing/app_router.dart';
 
 void main() async {
   try {
@@ -38,7 +38,8 @@ class MyApp extends StatelessWidget {
         builder: (context, themeMode) {
           return BlocBuilder<LanguageBloc, LanguageState>(
             builder: (context, languageState) {
-              return MaterialApp(
+              return MaterialApp.router(
+                routerConfig: createAppRouter(),
                 onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
@@ -63,7 +64,6 @@ class MyApp extends StatelessWidget {
                   appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
                 ),
                 themeMode: themeMode,
-                home: const SelectionArea(child: HomeScreen()),
               );
             },
           );

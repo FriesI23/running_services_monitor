@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
 import 'package:running_services_monitor/core/theme/theme_bloc.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
 import 'package:running_services_monitor/bloc/language_bloc/language_bloc.dart';
-import 'package:running_services_monitor/screens/about_screen.dart';
 import 'widgets/shizuku_setup_dialog.dart';
 import 'widgets/home_body.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
@@ -68,10 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context)!.enjoyingApp),
-          action: SnackBarAction(
-            label: AppLocalizations.of(context)!.donate,
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AboutScreen())),
-          ),
+          action: SnackBarAction(label: AppLocalizations.of(context)!.donate, onPressed: () => context.go('/about')),
         ),
       );
     }
@@ -172,7 +169,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         tooltip: AppLocalizations.of(context)!.autoUpdate,
                       ),
                       IconButton(
-                        icon: value.isLoading && value.systemApps.isNotEmpty && value.userApps.isNotEmpty && value.allApps.isNotEmpty
+                        icon:
+                            value.isLoading &&
+                                value.systemApps.isNotEmpty &&
+                                value.userApps.isNotEmpty &&
+                                value.allApps.isNotEmpty
                             ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))
                             : const Icon(Icons.refresh),
                         onPressed: value.isLoading ? null : () => homeBloc.add(const HomeEvent.loadData()),
@@ -197,8 +198,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                     IconButton(
                       icon: const Icon(Icons.info_outline),
-                      onPressed: () =>
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AboutScreen())),
+                      onPressed: () => context.push('/about'),
                       tooltip: AppLocalizations.of(context)!.about,
                     ),
                   ],
