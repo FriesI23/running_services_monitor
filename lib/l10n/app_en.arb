@@ -64,5 +64,7 @@
   "permissionStep3": "Find 'Running Services Monitor' and grant permission",
   "permissionNote": "Make sure Shizuku service is running before granting permission.",
   "openShizuku": "Open Shizuku",
-  "systemAppWarning": "⚠️ WARNING: This is a SYSTEM APP. Stopping it may cause your device to malfunction or become unstable. Only proceed if you know what you're doing!"
+  "systemAppWarning": "⚠️ WARNING: This is a SYSTEM APP. Stopping it may cause your device to malfunction or become unstable. Only proceed if you know what you're doing!",
+  "runningServicesTitle": "Try System Running Services",
+  "openRunningServicesTooltip": "Open Running Services in Android Settings"
 }

@@ -206,4 +206,11 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get systemAppWarning =>
       '⚠️ সতর্কতা: এটি একটি সিস্টেম অ্যাপ। এটি বন্ধ করলে আপনার ডিভাইস ত্রুটিপূর্ণ বা অস্থিতিশীল হতে পারে। শুধুমাত্র তখনই এগিয়ে যান যদি আপনি জানেন আপনি কী করছেন!';
+
+  @override
+  String get runningServicesTitle => 'রানিং সার্ভিসেস';
+
+  @override
+  String get openRunningServicesTooltip =>
+      'অ্যান্ড্রয়েড সেটিংসে রানিং সার্ভিসেস খুলুন';
 }

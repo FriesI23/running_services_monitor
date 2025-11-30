@@ -5,6 +5,7 @@ import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
 import 'package:running_services_monitor/core/extensions.dart';
+import 'package:running_services_monitor/core/utils/android_settings_helper.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
 import 'widgets/shizuku_permission_dialog.dart';
 import 'widgets/home_body.dart';
@@ -210,6 +211,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ],
           ),
           body: HomeBody(tabController: _tabController),
+          floatingActionButton: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              final value = state.value;
+              if (!value.shizukuReady) return const SizedBox.shrink();
+              return FloatingActionButton.extended(
+                onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
+                icon: const Icon(Icons.security),
+                label: Text(context.loc.runningServicesTitle, style: TextStyle(fontSize: 14.sp)),
+                tooltip: context.loc.openRunningServicesTooltip,
+              );
+            },
+          ),
         ),
       ),
     );

@@ -475,6 +475,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'⚠️ WARNING: This is a SYSTEM APP. Stopping it may cause your device to malfunction or become unstable. Only proceed if you know what you\'re doing!'**
   String get systemAppWarning;
+
+  /// No description provided for @runningServicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Try System Running Services'**
+  String get runningServicesTitle;
+
+  /// No description provided for @openRunningServicesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Running Services in Android Settings'**
+  String get openRunningServicesTooltip;
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/core/constants.dart';
 import 'package:running_services_monitor/core/extensions.dart';
+import 'package:running_services_monitor/core/utils/android_settings_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'setup_step_item.dart';
 
@@ -91,12 +92,15 @@ class ShizukuPermissionDialog extends StatelessWidget {
           onPressed: () => SystemNavigator.pop(),
           child: Text(context.loc.exitApp, style: TextStyle(fontSize: 14.sp)),
         ),
-      
-          FilledButton.icon(
-            onPressed: _openShizukuOrPlayStore,
-            icon: Icon(Icons.open_in_new, size: 18.sp),
-            label: Text(context.loc.openShizuku, style: TextStyle(fontSize: 14.sp)),
-          ),
+        TextButton(
+          onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
+          child: Text(context.loc.runningServicesTitle, style: TextStyle(fontSize: 14.sp)),
+        ),
+        FilledButton.icon(
+          onPressed: _openShizukuOrPlayStore,
+          icon: Icon(Icons.open_in_new, size: 18.sp),
+          label: Text(context.loc.openShizuku, style: TextStyle(fontSize: 14.sp)),
+        ),
         FilledButton.icon(
           onPressed: onRetry,
           icon: Icon(Icons.refresh, size: 18.sp),
