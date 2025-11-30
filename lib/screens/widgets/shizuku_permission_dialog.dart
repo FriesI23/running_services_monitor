@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/core/constants.dart';
 import 'package:running_services_monitor/core/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,8 +40,8 @@ class ShizukuPermissionDialog extends StatelessWidget {
       title: Row(
         children: [
           const Icon(Icons.lock_outlined, color: Colors.orange),
-          const SizedBox(width: 8),
-          Text(context.loc.permissionRequired),
+          SizedBox(width: 8.w),
+          Text(context.loc.permissionRequired, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp)),
         ],
       ),
       content: SingleChildScrollView(
@@ -52,12 +53,12 @@ class ShizukuPermissionDialog extends StatelessWidget {
               context.loc.permissionRequiredMessage,
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Text(
               context.loc.permissionSteps,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             _buildStep(
               context,
               '1',
@@ -73,26 +74,26 @@ class ShizukuPermissionDialog extends StatelessWidget {
               '3',
               context.loc.permissionStep3,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.rSafe),
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.info_outline,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    size: 20,
+                    size: 20.w,
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   Expanded(
                     child: Text(
                       context.loc.permissionNote,
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
@@ -124,13 +125,13 @@ class ShizukuPermissionDialog extends StatelessWidget {
 
   Widget _buildStep(BuildContext context, String number, String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.only(bottom: 8.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 24,
-            height: 24,
+            width: 24.w,
+            height: 24.h,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primaryContainer,
               shape: BoxShape.circle,
@@ -140,16 +141,16 @@ class ShizukuPermissionDialog extends StatelessWidget {
                 number,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 2),
+              padding: EdgeInsets.only(top: 2.h),
               child: Text(text),
             ),
           ),

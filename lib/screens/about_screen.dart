@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/core/constants.dart';
 import 'package:running_services_monitor/core/extensions.dart';
 import 'widgets/about_info_tile.dart';
@@ -55,11 +56,11 @@ class _AboutScreenState extends State<AboutScreen> {
         body: CustomScrollView(
           slivers: [
             SliverPadding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0.w),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   AboutHeader(version: version),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                   AboutInfoTile(
                     icon: Icons.person,
                     title: context.loc.developer,
@@ -83,7 +84,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     subtitle: AppConstants.blogsDisplayUrl,
                     onTap: () => _launchUrl(AppConstants.blogsUrl),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   Center(
                     child: FilledButton.icon(
                       onPressed: () => _launchUrl(AppConstants.buyMeCoffeeUrl),
@@ -92,11 +93,11 @@ class _AboutScreenState extends State<AboutScreen> {
                       style: FilledButton.styleFrom(backgroundColor: Colors.amber[800], foregroundColor: Colors.white),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   Center(
                     child: Text(
                       context.loc.madeInBangladesh,
-                      style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      style: TextStyle(fontSize: 14.sp, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ),
                 ]),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
 import 'ram_legend_item.dart';
 
@@ -42,20 +43,20 @@ class RamBar extends StatelessWidget {
     final double freeFlex = freeRamKb / totalRamKb;
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             AppLocalizations.of(context)!.deviceMemory,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.rSafe),
             child: SizedBox(
-              height: 24,
+              height: 24.h,
               child: Row(
                 children: [
 
@@ -77,20 +78,20 @@ class RamBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           RamLegendItem(
             color: Colors.grey[700]!,
             label: AppLocalizations.of(context)!.system,
             value: _formatRam(systemRamKb),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           RamLegendItem(
             color: Colors.lightBlue[200]!,
             label: AppLocalizations.of(context)!.apps,
             value: _formatRam(appsRamKb),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           RamLegendItem(
             color: Colors.grey[300]!,
             label: AppLocalizations.of(context)!.free,

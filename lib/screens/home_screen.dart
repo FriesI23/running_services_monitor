@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
 import 'package:running_services_monitor/core/extensions.dart';
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         },
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight + 48),
+            preferredSize: Size.fromHeight((kToolbarHeight + 48).h),
             child: BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 final value = state.value;
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   title: value.isSearching ? SearchField(controller: _searchController) : const AppLogo(),
                   bottom: value.shizukuReady
                       ? PreferredSize(
-                          preferredSize: const Size.fromHeight(48),
+                          preferredSize: Size.fromHeight(48.h),
                           child: TabBar(
                             controller: _tabController,
                             tabs: [
@@ -168,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 value.systemApps.isNotEmpty &&
                                 value.userApps.isNotEmpty &&
                                 value.allApps.isNotEmpty
-                            ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))
+                            ? SizedBox(width: 24.w, height: 24.h, child: const CircularProgressIndicator(strokeWidth: 2))
                             : const Icon(Icons.refresh),
                         onPressed: value.isLoading ? null : () => homeBloc.add(const HomeEvent.loadData()),
                         tooltip: context.loc.refresh,

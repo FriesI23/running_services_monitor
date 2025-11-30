@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
@@ -18,6 +19,21 @@ void main() async {
     );
 
     configureDependencies();
+
+    // Configure sizes at app startup (before runApp)
+    setPaddingSizes(SizeValues.custom(xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48));
+    setMarginSizes(SizeValues.custom(xs: 2, sm: 4, md: 8, lg: 12, xl: 16, xxl: 24));
+    setRadiusSizes(SizeValues.custom(xs: 2, sm: 4, md: 8, lg: 12, xl: 16, xxl: 24));
+    setSpacingSizes(SizeValues.custom(xs: 4, sm: 8, md: 12, lg: 16, xl: 20, xxl: 24));
+    setTextSizes(TextSizeValues.custom(s14: 15, s16: 17, s18: 20, s24: 26));
+
+    // Set default values for methods without parameters
+    setDefaultPadding(16);
+    setDefaultMargin(8);
+    setDefaultRadius(12);
+    setDefaultSpacing(8);
+    setDefaultTextSize(14);
+
     runApp(const MyApp());
   } catch (e, stackTrace) {
     debugPrint('Error in main: $e');
@@ -39,32 +55,36 @@ class MyApp extends StatelessWidget {
         builder: (context, themeMode) {
           return BlocBuilder<LanguageBloc, LanguageState>(
             builder: (context, languageState) {
-              return MaterialApp.router(
-                routerConfig: createAppRouter(),
-                onGenerateTitle: (context) => context.loc.appTitle,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: AppLocalizations.supportedLocales,
-                locale: languageState.locale,
-                debugShowCheckedModeBanner: false,
-                scrollBehavior: const MaterialScrollBehavior().copyWith(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              return ScaleKitBuilder(
+                designWidth: 375,
+                designHeight: 812,
+                child: MaterialApp.router(
+                  routerConfig: createAppRouter(),
+                  onGenerateTitle: (context) => context.loc.appTitle,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  locale: languageState.locale,
+                  debugShowCheckedModeBanner: false,
+                  scrollBehavior: const MaterialScrollBehavior().copyWith(
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  ),
+                  theme: ThemeData(
+                    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.light),
+                    useMaterial3: true,
+                    appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
+                  ),
+                  darkTheme: ThemeData(
+                    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
+                    useMaterial3: true,
+                    appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
+                  ),
+                  themeMode: themeMode,
                 ),
-                theme: ThemeData(
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.light),
-                  useMaterial3: true,
-                  appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
-                ),
-                darkTheme: ThemeData(
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
-                  useMaterial3: true,
-                  appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
-                ),
-                themeMode: themeMode,
               );
             },
           );

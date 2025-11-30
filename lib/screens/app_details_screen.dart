@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import '../models/service_info.dart';
 import 'package:running_services_monitor/core/extensions.dart';
 import 'widgets/app_header.dart';
@@ -110,22 +111,22 @@ class AppDetailsScreen extends StatelessWidget {
                 body: CustomScrollView(
                   slivers: [
                     SliverPadding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: EdgeInsets.all(24.0.w),
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           AppHeader(appInfo: currentAppInfo),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
 
 
                           const AppDetailsDescription(),
 
-                          const SizedBox(height: 32),
+                          SizedBox(height: 32.h),
                           const Divider(),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
 
 
                           AppDetailsSectionTitle(title: context.loc.activeServices),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8.h),
                         ]),
                       ),
                     ),
@@ -143,23 +144,23 @@ class AppDetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(currentAppInfo.appName, style: const TextStyle(fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8.h),
                             Text(context.loc.stopServiceWarning),
                             if (currentAppInfo.isSystemApp) ...[
-                              const SizedBox(height: 12),
+                              SizedBox(height: 12.h),
                               Container(
-                                padding: const EdgeInsets.all(12),
+                                padding: EdgeInsets.all(12.w),
                                 decoration: BoxDecoration(
                                   color: Colors.red[900]?.withValues(alpha: 0.3),
-                                  border: Border.all(color: Colors.red, width: 2),
-                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.red, width: 2.w),
+                                  borderRadius: BorderRadius.circular(8.rSafe),
                                 ),
                                 child: Text(
                                   context.loc.systemAppWarning,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.error,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                    fontSize: 13.sp,
                                   ),
                                 ),
                               ),

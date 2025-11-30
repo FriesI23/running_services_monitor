@@ -59,10 +59,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return;
       }
 
-      // Check permission first
       final hasPermission = await _shizukuService.checkPermission();
       if (!hasPermission) {
-        // Try to request permission
         final granted = await _shizukuService.requestPermission();
         if (!granted) {
           emit(
@@ -75,7 +73,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       }
 
-      // Initialize Shizuku service
       final initialized = await _shizukuService.initialize();
       if (!initialized) {
         emit(
@@ -87,15 +84,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return;
       }
 
-      if (!isAlreadyReady) {
-        emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
-      }
+      emit(
+        HomeState.success(
+          state.value.copyWith(shizukuReady: true, isLoading: false),
+        ),
+      );
 
-      add(HomeEvent.loadData(silent: isAlreadyReady));
-    } catch (e, s) {
-      print(e);
-      print(s);
-      emit(HomeState.failure(state.value.copyWith(isLoading: false, shizukuReady: false), 'Error: $e'));
+      add(const HomeEvent.loadData());
+    } catch (e) {
+      emit(
+        HomeState.failure(
+          state.value.copyWith(isLoading: false, shizukuReady: false),
+          'Error initializing Shizuku: $e',
+        ),
+      );
     }
   }
 
@@ -116,9 +118,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       final results = await Future.wait([
         _appInfoService.ensureCacheValid(),
-
         _processService.getSystemRamInfo(),
-
         _processService.fetchRawServicesData(),
       ]);
 
