@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:running_services_monitor/core/constants.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'app_info_service.dart';
 import 'shizuku_service.dart';
@@ -13,7 +14,7 @@ class ProcessService {
 
   Future<String?> fetchRawServicesData() async {
     try {
-      final result = await _shizukuService.executeCommand('dumpsys activity services');
+      final result = await _shizukuService.executeCommand(AppConstants.cmdDumpsysActivityServices);
       return result;
     } catch (e) {
       debugPrint('Error fetching raw services data: $e');
@@ -91,7 +92,7 @@ class ProcessService {
 
   Future<String?> meminfo() async {
     try {
-      final result = await _shizukuService.executeCommand('dumpsys meminfo');
+      final result = await _shizukuService.executeCommand(AppConstants.cmdDumpsysMeminfo);
       return result;
     } catch (e) {
       debugPrint('Error getting meminfo: $e');

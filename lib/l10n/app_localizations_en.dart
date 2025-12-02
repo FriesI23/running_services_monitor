@@ -175,6 +175,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stop => 'Stop';
 
   @override
+  String get permissionRequired => 'Permission Required';
+
+  @override
+  String get permissionRequiredMessage =>
+      'Shizuku permission is required to access running services information.';
+
+  @override
+  String get permissionSteps => 'How to Grant Permission:';
+
+  @override
+  String get permissionStep1 => 'Open the Shizuku app';
+
+  @override
+  String get permissionStep2 => 'Go to \'Authorized Apps\' or \'Permissions\'';
+
+  @override
+  String get permissionStep3 =>
+      'Find \'Running Services Monitor\' and grant permission';
+
+  @override
+  String get permissionNote =>
+      'Make sure Shizuku service is running before granting permission.';
+
+  @override
+  String get openShizuku => 'Open Shizuku';
+
+  @override
   String get systemAppWarning =>
       '⚠️ WARNING: This is a SYSTEM APP. Stopping it may cause your device to malfunction or become unstable. Only proceed if you know what you\'re doing!';
+
+  @override
+  String get runningServicesTitle => 'Try System Running Services';
+
+  @override
+  String get openRunningServicesTooltip =>
+      'Open Running Services in Android Settings';
 }

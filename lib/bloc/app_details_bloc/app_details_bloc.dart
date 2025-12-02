@@ -6,7 +6,9 @@ import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/services/app_info_service.dart';
 
 part 'app_details_event.dart';
+
 part 'app_details_state.dart';
+
 part 'app_details_bloc.freezed.dart';
 
 @injectable
@@ -23,7 +25,6 @@ class AppDetailsBloc extends Bloc<AppDetailsEvent, AppDetailsState> {
     try {
       var appInfo = event.appInfo;
 
-
       if (appInfo.appInfo == null || appInfo.appInfo!.icon == null) {
         try {
           final fetchedAppInfo = await _appInfoService.getAppInfo(appInfo.packageName);
@@ -31,10 +32,9 @@ class AppDetailsBloc extends Bloc<AppDetailsEvent, AppDetailsState> {
             appInfo = appInfo.copyWith(appInfo: fetchedAppInfo);
           }
         } catch (e) {
-
+          // Ignore error fetching app info
         }
       }
-
 
       final updatedServices = <RunningServiceInfo>[];
       for (var service in appInfo.services) {
@@ -45,9 +45,7 @@ class AppDetailsBloc extends Bloc<AppDetailsEvent, AppDetailsState> {
             if (fetchedAppInfo != null && fetchedAppInfo.icon != null) {
               updatedService = service.copyWith(icon: fetchedAppInfo.icon);
             }
-          } catch (e) {
-
-          }
+          } catch (_) {}
         }
         updatedServices.add(updatedService);
       }

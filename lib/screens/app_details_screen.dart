@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import '../models/service_info.dart';
-import 'package:running_services_monitor/l10n/app_localizations.dart';
+import 'package:running_services_monitor/core/extensions.dart';
 import 'widgets/app_header.dart';
 import 'widgets/service_list.dart';
 import 'widgets/app_details_description.dart';
@@ -40,7 +41,7 @@ class AppDetailsScreen extends StatelessWidget {
                         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                       ),
                       const SizedBox(width: 16),
-                      Text(AppLocalizations.of(context)!.loading),
+                      Text(context.loc.loading, style: TextStyle(fontSize: 14.sp)),
                     ],
                   ),
                   duration: const Duration(seconds: 10),
@@ -56,7 +57,7 @@ class AppDetailsScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.check_circle, color: Colors.white),
                       const SizedBox(width: 16),
-                      Expanded(child: Text(AppLocalizations.of(context)!.allServicesStopped)),
+                      Expanded(child: Text(context.loc.allServicesStopped, style: TextStyle(fontSize: 14.sp))),
                     ],
                   ),
                   backgroundColor: Colors.green[700],
@@ -83,7 +84,7 @@ class AppDetailsScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.error, color: Colors.white),
                       const SizedBox(width: 16),
-                      Expanded(child: Text('${AppLocalizations.of(context)!.stopServiceError}: $message')),
+                      Expanded(child: Text('${context.loc.stopServiceError}: $message', style: TextStyle(fontSize: 14.sp))),
                     ],
                   ),
                   backgroundColor: Colors.red[700],
@@ -106,26 +107,26 @@ class AppDetailsScreen extends StatelessWidget {
 
             return SelectionArea(
               child: Scaffold(
-                appBar: AppBar(title: Text(AppLocalizations.of(context)!.runningApp)),
+                appBar: AppBar(title: Text(context.loc.runningApp, style: TextStyle(fontSize: 20.sp))),
                 body: CustomScrollView(
                   slivers: [
                     SliverPadding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: EdgeInsets.all(24.0.w),
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           AppHeader(appInfo: currentAppInfo),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
 
 
                           const AppDetailsDescription(),
 
-                          const SizedBox(height: 32),
+                          SizedBox(height: 32.h),
                           const Divider(),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
 
 
-                          AppDetailsSectionTitle(title: AppLocalizations.of(context)!.activeServices),
-                          const SizedBox(height: 8),
+                          AppDetailsSectionTitle(title: context.loc.activeServices),
+                          SizedBox(height: 8.h),
                         ]),
                       ),
                     ),
@@ -137,29 +138,29 @@ class AppDetailsScreen extends StatelessWidget {
                     final confirmed = await showDialog<bool>(
                       context: context,
                       builder: (dialogContext) => AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.stopAllServicesConfirm),
+                        title: Text(context.loc.stopAllServicesConfirm, style: TextStyle(fontSize: 18.sp)),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(currentAppInfo.appName, style: const TextStyle(fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 8),
-                            Text(AppLocalizations.of(context)!.stopServiceWarning),
+                            Text(currentAppInfo.appName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                            SizedBox(height: 8.h),
+                            Text(context.loc.stopServiceWarning, style: TextStyle(fontSize: 14.sp)),
                             if (currentAppInfo.isSystemApp) ...[
-                              const SizedBox(height: 12),
+                              SizedBox(height: 12.h),
                               Container(
-                                padding: const EdgeInsets.all(12),
+                                padding: EdgeInsets.all(12.w),
                                 decoration: BoxDecoration(
                                   color: Colors.red[900]?.withValues(alpha: 0.3),
-                                  border: Border.all(color: Colors.red, width: 2),
-                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.red, width: 2.w),
+                                  borderRadius: BorderRadius.circular(8.rSafe),
                                 ),
                                 child: Text(
-                                  AppLocalizations.of(context)!.systemAppWarning,
+                                  context.loc.systemAppWarning,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.error,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                    fontSize: 13.sp,
                                   ),
                                 ),
                               ),
@@ -169,12 +170,12 @@ class AppDetailsScreen extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(dialogContext).pop(false),
-                            child: Text(AppLocalizations.of(context)!.cancel),
+                            child: Text(context.loc.cancel, style: TextStyle(fontSize: 14.sp)),
                           ),
                           FilledButton(
                             onPressed: () => Navigator.of(dialogContext).pop(true),
                             style: FilledButton.styleFrom(backgroundColor: Colors.red),
-                            child: Text(AppLocalizations.of(context)!.stop),
+                            child: Text(context.loc.stop, style: TextStyle(fontSize: 14.sp)),
                           ),
                         ],
                       ),
@@ -193,7 +194,7 @@ class AppDetailsScreen extends StatelessWidget {
                   },
                   backgroundColor: Colors.red,
                   icon: const Icon(Icons.stop_circle),
-                  label: Text(AppLocalizations.of(context)!.stopAllServices),
+                  label: Text(context.loc.stopAllServices, style: TextStyle(fontSize: 14.sp)),
                 ),
               ),
             );

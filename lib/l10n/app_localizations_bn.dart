@@ -177,6 +177,40 @@ class AppLocalizationsBn extends AppLocalizations {
   String get stop => 'বন্ধ করুন';
 
   @override
+  String get permissionRequired => 'অনুমতি প্রয়োজন';
+
+  @override
+  String get permissionRequiredMessage =>
+      'রানিং সার্ভিসেস তথ্য অ্যাক্সেস করতে শিজুকু অনুমতি প্রয়োজন।';
+
+  @override
+  String get permissionSteps => 'কিভাবে অনুমতি দিবেন:';
+
+  @override
+  String get permissionStep1 => 'শিজুকু অ্যাপ খুলুন';
+
+  @override
+  String get permissionStep2 => '\'অনুমোদিত অ্যাপস\' বা \'অনুমতি\' এ যান';
+
+  @override
+  String get permissionStep3 =>
+      '\'রানিং সার্ভিসেস মনিটর\' খুঁজুন এবং অনুমতি দিন';
+
+  @override
+  String get permissionNote =>
+      'অনুমতি দেওয়ার আগে নিশ্চিত করুন যে শিজুকু সার্ভিস চলছে।';
+
+  @override
+  String get openShizuku => 'শিজুকু খুলুন';
+
+  @override
   String get systemAppWarning =>
       '⚠️ সতর্কতা: এটি একটি সিস্টেম অ্যাপ। এটি বন্ধ করলে আপনার ডিভাইস ত্রুটিপূর্ণ বা অস্থিতিশীল হতে পারে। শুধুমাত্র তখনই এগিয়ে যান যদি আপনি জানেন আপনি কী করছেন!';
+
+  @override
+  String get runningServicesTitle => 'রানিং সার্ভিসেস';
+
+  @override
+  String get openRunningServicesTooltip =>
+      'অ্যান্ড্রয়েড সেটিংসে রানিং সার্ভিসেস খুলুন';
 }

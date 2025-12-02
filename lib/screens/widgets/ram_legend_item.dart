@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
 
 class RamLegendItem extends StatelessWidget {
@@ -13,14 +14,14 @@ class RamLegendItem extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
+          width: 16.w,
+          height: 16.h,
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4.rSafe)),
         ),
-        const SizedBox(width: 12),
-        Text(label, style: const TextStyle(fontSize: 14)),
+        SizedBox(width: 12.w),
+        Text(label, style: TextStyle(fontSize: 14.sp)),
         const Spacer(),
-        Text('$value ${AppLocalizations.of(context)!.ofRam}', style: const TextStyle(fontSize: 14)),
+        Text('$value ${AppLocalizations.of(context)!.ofRam}', style: TextStyle(fontSize: 14.sp)),
       ],
     );
   }

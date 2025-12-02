@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
+import 'package:running_services_monitor/core/extensions.dart';
+import 'package:running_services_monitor/core/utils/android_settings_helper.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
-import 'widgets/shizuku_setup_dialog.dart';
+import 'widgets/shizuku_permission_dialog.dart';
 import 'widgets/home_body.dart';
-import 'package:running_services_monitor/l10n/app_localizations.dart';
 import 'widgets/language_selector.dart';
 import 'widgets/theme_toggle_button.dart';
 import 'widgets/about_button.dart';
@@ -52,7 +54,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => ShizukuSetupDialog(
+      builder: (context) => ShizukuPermissionDialog(
+        type: ShizukuDialogType.setup,
+        onRetry: () {
+          Navigator.of(context).pop();
+          homeBloc.add(const HomeEvent.initializeShizuku());
+        },
+      ),
+    );
+  }
+
+  void _showPermissionDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => ShizukuPermissionDialog(
         onRetry: () {
           Navigator.of(context).pop();
           homeBloc.add(const HomeEvent.initializeShizuku());
@@ -66,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     if (_refreshCount % 5 == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)!.enjoyingApp),
-          action: SnackBarAction(label: AppLocalizations.of(context)!.donate, onPressed: () => context.push('/about')),
+          content: Text(context.loc.enjoyingApp, style: TextStyle(fontSize: 14.sp)),
+          action: SnackBarAction(label: context.loc.donate, onPressed: () => context.push('/about')),
         ),
       );
     }
@@ -78,14 +94,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return MultiBlocProvider(
       providers: [BlocProvider.value(value: homeBloc)],
       child: BlocListener<HomeBloc, HomeState>(
-        listenWhen: (previous, current) =>
-            previous.value.errorMessage != current.value.errorMessage ||
-            previous.value.notification != current.value.notification,
         listener: (context, state) {
           state.maybeWhen(
             failure: (value, message) {
               if (message.contains('Shizuku is not running')) {
                 _showShizukuSetupDialog();
+              } else if (message.contains('Permission denied') || message.contains('grant permission')) {
+                _showPermissionDialog();
               }
             },
             success: (value) {
@@ -93,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(value.notification!),
+                    content: Text(value.notification!, style: TextStyle(fontSize: 14.sp)),
                     duration: const Duration(seconds: 1),
                     behavior: SnackBarBehavior.floating,
                   ),
@@ -105,71 +120,109 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           );
         },
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight + 48),
-            child: BlocBuilder<HomeBloc, HomeState>(
+          appBar: AppBar(
+            title: BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 final value = state.value;
-                return AppBar(
-                  title: value.isSearching ? SearchField(controller: _searchController) : const AppLogo(),
-                  bottom: value.shizukuReady
-                      ? PreferredSize(
-                          preferredSize: const Size.fromHeight(48),
-                          child: TabBar(
-                            controller: _tabController,
-                            tabs: [
-                              Tab(text: '${AppLocalizations.of(context)!.all} (${value.allApps.length})'),
-                              Tab(text: '${AppLocalizations.of(context)!.user} (${value.userApps.length})'),
-                              Tab(text: '${AppLocalizations.of(context)!.system} (${value.systemApps.length})'),
-                            ],
-                          ),
-                        )
-                      : null,
-                  actions: [
-                    if (value.shizukuReady) ...[
-                      IconButton(
-                        icon: Icon(value.isSearching ? Icons.close : Icons.search),
-                        onPressed: () {
-                          if (!value.isSearching) {
-                            homeBloc.add(const HomeEvent.toggleSearch());
-                          } else {
-                            _searchController.clear();
-                            homeBloc.add(const HomeEvent.toggleSearch());
-                          }
-                        },
-                        tooltip: value.isSearching
-                            ? AppLocalizations.of(context)!.closeSearch
-                            : AppLocalizations.of(context)!.search,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          value.isAutoUpdateEnabled ? Icons.timer : Icons.timer_off,
-                          color: value.isAutoUpdateEnabled ? Theme.of(context).colorScheme.primary : null,
-                        ),
-                        onPressed: () => homeBloc.add(const HomeEvent.toggleAutoUpdate()),
-                        tooltip: AppLocalizations.of(context)!.autoUpdate,
-                      ),
-                      IconButton(
-                        icon:
-                            value.isLoading &&
-                                value.systemApps.isNotEmpty &&
-                                value.userApps.isNotEmpty &&
-                                value.allApps.isNotEmpty
-                            ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))
-                            : const Icon(Icons.refresh),
-                        onPressed: value.isLoading ? null : () => homeBloc.add(const HomeEvent.loadData()),
-                        tooltip: AppLocalizations.of(context)!.refresh,
-                      ),
-                    ],
-                    const LanguageSelector(),
-                    const ThemeToggleButton(),
-                    const AboutButton(),
-                  ],
-                );
+                return value.isSearching ? SearchField(controller: _searchController) : const AppLogo();
               },
             ),
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: [
+                Tab(
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      final value = state.value;
+                      return Text('${context.loc.all} (${value.allApps.length})', style: TextStyle(fontSize: 14.sp));
+                    },
+                  ),
+                ),
+                Tab(
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      final value = state.value;
+                      return Text('${context.loc.user} (${value.userApps.length})', style: TextStyle(fontSize: 14.sp));
+                    },
+                  ),
+                ),
+                Tab(
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      final value = state.value;
+                      return Text('${context.loc.system} (${value.systemApps.length})', style: TextStyle(fontSize: 14.sp));
+                    },
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  final value = state.value;
+                  if (!value.shizukuReady) return const SizedBox.shrink();
+                  return IconButton(
+                    icon: Icon(value.isSearching ? Icons.close : Icons.search),
+                    onPressed: () {
+                      if (!value.isSearching) {
+                        homeBloc.add(const HomeEvent.toggleSearch());
+                      } else {
+                        _searchController.clear();
+                        homeBloc.add(const HomeEvent.toggleSearch());
+                      }
+                    },
+                    tooltip: value.isSearching ? context.loc.closeSearch : context.loc.search,
+                  );
+                },
+              ),
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  final value = state.value;
+                  if (!value.shizukuReady) return const SizedBox.shrink();
+                  return IconButton(
+                    icon: Icon(
+                      value.isAutoUpdateEnabled ? Icons.timer : Icons.timer_off,
+                      color: value.isAutoUpdateEnabled ? Theme.of(context).colorScheme.primary : null,
+                    ),
+                    onPressed: () => homeBloc.add(const HomeEvent.toggleAutoUpdate()),
+                    tooltip: context.loc.autoUpdate,
+                  );
+                },
+              ),
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  final value = state.value;
+                  if (!value.shizukuReady) return const SizedBox.shrink();
+                  return IconButton(
+                    icon: value.isLoading &&
+                            value.systemApps.isNotEmpty &&
+                            value.userApps.isNotEmpty &&
+                            value.allApps.isNotEmpty
+                        ? SizedBox(width: 18.w, height: 24.h, child: const FittedBox(child: CircularProgressIndicator()))
+                        : const Icon(Icons.refresh),
+                    onPressed: value.isLoading ? null : () => homeBloc.add(const HomeEvent.loadData()),
+                    tooltip: context.loc.refresh,
+                  );
+                },
+              ),
+              const LanguageSelector(),
+              const ThemeToggleButton(),
+              const AboutButton(),
+            ],
           ),
           body: HomeBody(tabController: _tabController),
+          floatingActionButton: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              final value = state.value;
+              if (!value.shizukuReady) return const SizedBox.shrink();
+              return FloatingActionButton.extended(
+                onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
+                icon: const Icon(Icons.security),
+                label: Text(context.loc.runningServicesTitle, style: TextStyle(fontSize: 14.sp)),
+                tooltip: context.loc.openRunningServicesTooltip,
+              );
+            },
+          ),
         ),
       ),
     );

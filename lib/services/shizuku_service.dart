@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:running_services_monitor/core/constants.dart';
 
 @lazySingleton
 class ShizukuService {
   ShizukuService();
 
-  static const _channel = MethodChannel('com.runningservices/shizuku');
+  static const _channel = MethodChannel(AppConstants.shizukuChannelName);
 
   bool _isInitialized = false;
   bool _hasPermission = false;
@@ -95,7 +96,7 @@ class ShizukuService {
 
     try {
       debugPrint('Executing command: $command');
-      final String? result = await _channel.invokeMethod('runCommand', {'command': command});
+      final String? result = await _channel.invokeMethod(AppConstants.cmdMethodRunCommand, {'command': command});
       debugPrint('Command result length: ${result?.length ?? 0} characters');
       return result;
     } catch (e) {
