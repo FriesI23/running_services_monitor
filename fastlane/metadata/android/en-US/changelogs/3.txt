@@ -1,0 +1,8 @@
+Initial release featuring:
+• Monitor all running services on your device
+• View system and user apps separately
+• Search functionality to find specific apps
+• Detailed app information display
+• Shizuku integration for privileged access without root
+• Material Design 3 with dark/light mode support
+• English and Bangla localization
