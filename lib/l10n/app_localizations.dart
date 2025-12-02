@@ -479,7 +479,7 @@ abstract class AppLocalizations {
   /// No description provided for @runningServicesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Try System Running Services'**
+  /// **'System Running Services'**
   String get runningServicesTitle;
 
   /// No description provided for @openRunningServicesTooltip.

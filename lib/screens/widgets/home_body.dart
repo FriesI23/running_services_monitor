@@ -20,11 +20,9 @@ class HomeBody extends StatelessWidget {
         final value = state.value;
         final homeBloc = context.read<HomeBloc>();
 
-
         if (value.isLoading && value.allApps.isEmpty) {
           return LoadingState(status: value.loadingStatus);
         }
-
 
         if (value.errorMessage != null && value.allApps.isEmpty) {
           return ErrorState(
@@ -32,7 +30,6 @@ class HomeBody extends StatelessWidget {
             onRetry: () => homeBloc.add(const HomeEvent.initializeShizuku()),
           );
         }
-
 
         return BlocSelector<HomeBloc, HomeState, ({double total, double used, double apps, double free})>(
           selector: (state) => (
@@ -49,7 +46,7 @@ class HomeBody extends StatelessWidget {
                 }
                 return [
                   SliverPersistentHeader(
-                    pinned: true,
+                    pinned: false,
                     delegate: _RamBarDelegate(
                       ramBar: RamBar(
                         totalRamKb: ram.total,

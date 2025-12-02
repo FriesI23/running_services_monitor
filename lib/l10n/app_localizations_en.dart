@@ -206,7 +206,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '⚠️ WARNING: This is a SYSTEM APP. Stopping it may cause your device to malfunction or become unstable. Only proceed if you know what you\'re doing!';
 
   @override
-  String get runningServicesTitle => 'Try System Running Services';
+  String get runningServicesTitle => 'System Running Services';
 
   @override
   String get openRunningServicesTooltip =>
