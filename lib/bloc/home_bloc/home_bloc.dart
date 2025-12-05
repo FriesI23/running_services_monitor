@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:running_services_monitor/models/home_state_model.dart';
 import 'package:running_services_monitor/models/service_info.dart';
+import 'package:running_services_monitor/services/app_info_service.dart';
 import 'package:running_services_monitor/services/process_service.dart';
 import 'package:running_services_monitor/services/shizuku_service.dart';
 
@@ -15,17 +16,19 @@ part 'home_bloc.freezed.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ShizukuService _shizukuService;
   final ProcessService _processService;
+  final AppInfoService _appInfoService;
   Timer? _autoUpdateTimer;
 
-  HomeBloc(this._shizukuService, this._processService) : super(const HomeState.initial(HomeStateModel())) {
+  HomeBloc(this._shizukuService, this._processService, this._appInfoService)
+    : super(const HomeState.initial(HomeStateModel())) {
     on<_InitializeShizuku>(_onInitializeShizuku);
     on<_LoadData>(_onLoadData);
     on<_ToggleAutoUpdate>(_onToggleAutoUpdate);
     on<_ToggleSearch>(_onToggleSearch);
     on<_UpdateSearchQuery>(_onUpdateSearchQuery);
     on<_RemoveApp>(_onRemoveApp);
-
     on<_AutoUpdateTick>(_onAutoUpdateTick);
+    on<_UpdateAppInfoIcons>(_onUpdateAppInfoIcons);
   }
 
   @override
@@ -80,7 +83,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
 
-      add(const HomeEvent.loadData());
+      add(const HomeEvent.updateAppInfoIcons(startCache: true));
+      add(const HomeEvent.loadData(updateAppInfoIcons: true));
     } catch (e) {
       emit(HomeState.failure(state.value.copyWith(shizukuReady: false), 'Error initializing Shizuku: $e'));
     }
@@ -91,7 +95,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       final Map<String, AppProcessInfo> appsMap = {};
 
-      await for (final app in _processService.streamAppProcessInfos()) {
+      final streamResult = _processService.streamAppProcessInfosWithRamInfo();
+      final systemRamFuture = !event.silent ? streamResult.systemRamInfo : null;
+
+      await for (final app in streamResult.apps) {
         appsMap[app.packageName] = app;
 
         final allApps = appsMap.values.toList();
@@ -113,23 +120,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       }
 
-      if (!event.silent) {
-        final ramData = await _processService.getSystemRamInfo();
-        final ramInfo = ramData.ramInfo;
-
-        emit(
-          HomeState.success(
-            state.value.copyWith(
-              totalRamKb: ramInfo?[0] ?? 0,
-              freeRamKb: ramInfo?[1] ?? 0,
-              usedRamKb: ramInfo?[2] ?? 0,
+      if (systemRamFuture != null) {
+        final ramInfo = await systemRamFuture;
+        if (ramInfo != null) {
+          emit(
+            HomeState.loading(
+              state.value.copyWith(totalRamKb: ramInfo[0], freeRamKb: ramInfo[1], usedRamKb: ramInfo[2]),
             ),
-            'Refreshed successfully',
-          ),
-        );
-      } else {
-        emit(HomeState.success(state.value));
+          );
+        }
       }
+      emit(HomeState.success(state.value, 'Refreshed successfully', event.updateAppInfoIcons));
     } catch (e) {
       if (!event.silent) {
         emit(HomeState.failure(state.value, 'Error loading data: $e'));
@@ -191,5 +192,48 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       ),
     );
+  }
+
+  Future<void> _onUpdateAppInfoIcons(_UpdateAppInfoIcons event, Emitter<HomeState> emit) async {
+    try {
+      if (event.startCache ?? false) {
+        await _appInfoService.ensureCacheValid();
+        return;
+      }
+      final cachedApps = _appInfoService.cachedAppsMap;
+      if (cachedApps == null || cachedApps.isEmpty) return;
+
+      final currentState = state.value;
+
+      final updatedAllApps = currentState.allApps.map((app) {
+        final cachedAppInfo = cachedApps[app.packageName];
+        if (cachedAppInfo != null && app.appInfo?.icon == null) {
+          return app.copyWith(appInfo: cachedAppInfo);
+        }
+        return app;
+      }).toList();
+
+      final updatedUserApps = currentState.userApps.map((app) {
+        final cachedAppInfo = cachedApps[app.packageName];
+        if (cachedAppInfo != null && app.appInfo?.icon == null) {
+          return app.copyWith(appInfo: cachedAppInfo);
+        }
+        return app;
+      }).toList();
+
+      final updatedSystemApps = currentState.systemApps.map((app) {
+        final cachedAppInfo = cachedApps[app.packageName];
+        if (cachedAppInfo != null && app.appInfo?.icon == null) {
+          return app.copyWith(appInfo: cachedAppInfo);
+        }
+        return app;
+      }).toList();
+
+      emit(
+        HomeState.success(
+          currentState.copyWith(allApps: updatedAllApps, userApps: updatedUserApps, systemApps: updatedSystemApps),
+        ),
+      );
+    } catch (_) {}
   }
 }

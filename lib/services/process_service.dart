@@ -90,131 +90,148 @@ class ProcessService {
     return processServiceData(services: servicesData, meminfo: memInfo);
   }
 
-  Stream<AppProcessInfo> streamAppProcessInfos() async* {
-    final appMap = _appInfoService.cachedAppsMap ?? {};
+  ({Stream<AppProcessInfo> apps, Future<List<double>?> systemRamInfo}) streamAppProcessInfosWithRamInfo() {
+    final meminfoCompleter = Completer<String?>();
 
-    Map<int, double> ramMap = {};
+    Stream<AppProcessInfo> appStream() async* {
+      final appMap = _appInfoService.cachedAppsMap ?? {};
 
-    final data = await meminfo();
-    if (data != null) {
-      ramMap = _parseRamMap(data);
-    }
+      Map<int, double> ramMap = {};
 
-    final Map<String, AppProcessInfo> groupedApps = {};
+      final data = await meminfo();
+      meminfoCompleter.complete(data);
+      if (data != null) {
+        ramMap = _parseRamMap(data);
+      }
 
-    List<String> currentBlock = [];
-    String? currentPackage;
+      final Map<String, AppProcessInfo> groupedApps = {};
 
-    await for (final line in _shizukuService.executeCommandStream(AppConstants.cmdDumpsysActivityServices)) {
-      final trimmedLine = line.trim();
+      List<String> currentBlock = [];
+      String? currentPackage;
 
-      if (trimmedLine.isEmpty) {
-        if (currentBlock.isNotEmpty && currentPackage != null) {
-          final services = _parseServiceBlock(currentBlock);
+      await for (final line in _shizukuService.executeCommandStream(AppConstants.cmdDumpsysActivityServices)) {
+        final trimmedLine = line.trim();
 
-          if (services.isNotEmpty) {
-            if (groupedApps.containsKey(currentPackage)) {
-              final existingApp = groupedApps[currentPackage]!;
-              final mergedServices = [...existingApp.services, ...services];
-              final Set<int> mergedPids = {...existingApp.pids, ...services.map((s) => s.pid)};
+        if (trimmedLine.isEmpty) {
+          if (currentBlock.isNotEmpty && currentPackage != null) {
+            final services = _parseServiceBlock(currentBlock);
 
-              double totalRamKb = 0;
-              for (var s in mergedServices) {
-                if (ramMap.containsKey(s.pid)) {
-                  totalRamKb += ramMap[s.pid]!;
-                } else if (s.ramInKb != null) {
-                  totalRamKb += s.ramInKb!;
+            if (services.isNotEmpty) {
+              if (groupedApps.containsKey(currentPackage)) {
+                final existingApp = groupedApps[currentPackage]!;
+                final mergedServices = [...existingApp.services, ...services];
+                final Set<int> mergedPids = {...existingApp.pids, ...services.map((s) => s.pid)};
+
+                double totalRamKb = 0;
+                for (var s in mergedServices) {
+                  if (ramMap.containsKey(s.pid)) {
+                    totalRamKb += ramMap[s.pid]!;
+                  } else if (s.ramInKb != null) {
+                    totalRamKb += s.ramInKb!;
+                  }
                 }
+
+                final enrichedServices = <RunningServiceInfo>[];
+                for (var s in mergedServices) {
+                  var enriched = s;
+                  if (ramMap.containsKey(s.pid) && s.ramInKb == null) {
+                    final ramKb = ramMap[s.pid]!;
+                    enriched = enriched.copyWith(ramInKb: ramKb, ramUsage: _formatRam(ramKb));
+                  }
+                  if (existingApp.appInfo?.icon != null && s.icon == null) {
+                    enriched = enriched.copyWith(icon: existingApp.appInfo!.icon);
+                  }
+                  enrichedServices.add(enriched);
+                }
+
+                final updatedApp = existingApp.copyWith(
+                  services: enrichedServices,
+                  pids: mergedPids.toList(),
+                  totalRam: _formatRam(totalRamKb),
+                  totalRamInKb: totalRamKb,
+                );
+                groupedApps[currentPackage] = updatedApp;
+                debugPrint('Updated grouped app: $currentPackage now has ${mergedServices.length} services');
+                yield updatedApp;
+              } else {
+                final appProcessInfo = _createAppProcessInfo(
+                  packageName: currentPackage,
+                  services: services,
+                  appMap: appMap,
+                  ramMap: ramMap,
+                );
+                groupedApps[currentPackage] = appProcessInfo;
+                debugPrint('Yielding new app: $currentPackage with ${services.length} services');
+                yield appProcessInfo;
               }
-
-              final enrichedServices = <RunningServiceInfo>[];
-              for (var s in mergedServices) {
-                var enriched = s;
-                if (ramMap.containsKey(s.pid) && s.ramInKb == null) {
-                  final ramKb = ramMap[s.pid]!;
-                  enriched = enriched.copyWith(ramInKb: ramKb, ramUsage: _formatRam(ramKb));
-                }
-                if (existingApp.appInfo?.icon != null && s.icon == null) {
-                  enriched = enriched.copyWith(icon: existingApp.appInfo!.icon);
-                }
-                enrichedServices.add(enriched);
-              }
-
-              final updatedApp = existingApp.copyWith(
-                services: enrichedServices,
-                pids: mergedPids.toList(),
-                totalRam: _formatRam(totalRamKb),
-                totalRamInKb: totalRamKb,
-              );
-              groupedApps[currentPackage] = updatedApp;
-              debugPrint('Updated grouped app: $currentPackage now has ${mergedServices.length} services');
-              yield updatedApp;
-            } else {
-              final appProcessInfo = _createAppProcessInfo(
-                packageName: currentPackage,
-                services: services,
-                appMap: appMap,
-                ramMap: ramMap,
-              );
-              groupedApps[currentPackage] = appProcessInfo;
-              debugPrint('Yielding new app: $currentPackage with ${services.length} services');
-              yield appProcessInfo;
             }
-          }
 
-          currentBlock.clear();
-          currentPackage = null;
-        }
-      } else if (trimmedLine.contains('* ServiceRecord{')) {
-        final serviceMatch = RegExp(r'([a-z0-9.]+)/\.?([A-Za-z0-9.]+)').firstMatch(trimmedLine);
-        if (serviceMatch != null) {
-          currentPackage = serviceMatch.group(1);
+            currentBlock.clear();
+            currentPackage = null;
+          }
+        } else if (trimmedLine.contains('* ServiceRecord{')) {
+          final serviceMatch = RegExp(r'([a-z0-9.]+)/\.?([A-Za-z0-9.]+)').firstMatch(trimmedLine);
+          if (serviceMatch != null) {
+            currentPackage = serviceMatch.group(1);
+            currentBlock.add(line);
+          }
+        } else if (currentPackage != null) {
           currentBlock.add(line);
         }
-      } else if (currentPackage != null) {
-        currentBlock.add(line);
       }
-    }
 
-    if (currentBlock.isNotEmpty && currentPackage != null) {
-      final services = _parseServiceBlock(currentBlock);
+      if (currentBlock.isNotEmpty && currentPackage != null) {
+        final services = _parseServiceBlock(currentBlock);
 
-      if (services.isNotEmpty) {
-        if (groupedApps.containsKey(currentPackage)) {
-          final existingApp = groupedApps[currentPackage]!;
-          final mergedServices = [...existingApp.services, ...services];
-          final Set<int> mergedPids = {...existingApp.pids, ...services.map((s) => s.pid)};
+        if (services.isNotEmpty) {
+          if (groupedApps.containsKey(currentPackage)) {
+            final existingApp = groupedApps[currentPackage]!;
+            final mergedServices = [...existingApp.services, ...services];
+            final Set<int> mergedPids = {...existingApp.pids, ...services.map((s) => s.pid)};
 
-          double totalRamKb = 0;
-          for (var s in mergedServices) {
-            if (ramMap.containsKey(s.pid)) {
-              totalRamKb += ramMap[s.pid]!;
-            } else if (s.ramInKb != null) {
-              totalRamKb += s.ramInKb!;
+            double totalRamKb = 0;
+            for (var s in mergedServices) {
+              if (ramMap.containsKey(s.pid)) {
+                totalRamKb += ramMap[s.pid]!;
+              } else if (s.ramInKb != null) {
+                totalRamKb += s.ramInKb!;
+              }
             }
-          }
 
-          final updatedApp = existingApp.copyWith(
-            services: mergedServices,
-            pids: mergedPids.toList(),
-            totalRam: _formatRam(totalRamKb),
-            totalRamInKb: totalRamKb,
-          );
-          groupedApps[currentPackage] = updatedApp;
-          debugPrint('Final update for grouped app: $currentPackage with ${mergedServices.length} services');
-          yield updatedApp;
-        } else {
-          final appProcessInfo = _createAppProcessInfo(
-            packageName: currentPackage,
-            services: services,
-            appMap: appMap,
-            ramMap: ramMap,
-          );
-          debugPrint('Yielding final app: $currentPackage with ${services.length} services');
-          yield appProcessInfo;
+            final updatedApp = existingApp.copyWith(
+              services: mergedServices,
+              pids: mergedPids.toList(),
+              totalRam: _formatRam(totalRamKb),
+              totalRamInKb: totalRamKb,
+            );
+            groupedApps[currentPackage] = updatedApp;
+            debugPrint('Final update for grouped app: $currentPackage with ${mergedServices.length} services');
+            yield updatedApp;
+          } else {
+            final appProcessInfo = _createAppProcessInfo(
+              packageName: currentPackage,
+              services: services,
+              appMap: appMap,
+              ramMap: ramMap,
+            );
+            debugPrint('Yielding final app: $currentPackage with ${services.length} services');
+            yield appProcessInfo;
+          }
         }
       }
     }
+
+    final systemRamFuture = meminfoCompleter.future.then((data) async {
+      if (data == null) return null;
+      return await compute(_parseSystemRamInfo, data);
+    });
+
+    return (apps: appStream(), systemRamInfo: systemRamFuture);
+  }
+
+  Stream<AppProcessInfo> streamAppProcessInfos() async* {
+    final result = streamAppProcessInfosWithRamInfo();
+    yield* result.apps;
   }
 
   List<RunningServiceInfo> _parseServiceBlock(List<String> lines) {

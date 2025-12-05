@@ -133,7 +133,7 @@ class AppDetailsScreen extends StatelessWidget {
                       ]),
                     ),
                   ),
-                  SliverFillRemaining(hasScrollBody: true, child: ServiceList(services: currentAppInfo.services)),
+                  ServiceList(services: currentAppInfo.services),
                 ],
               ),
               floatingActionButton: FloatingActionButton.extended(

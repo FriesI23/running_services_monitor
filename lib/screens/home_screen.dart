@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 _showPermissionDialog();
               }
             },
-            success: (value, toast) {
+            success: (value, toast, updateAppInfoIcons) {
               if (toast != null) {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -114,6 +114,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ),
                 );
                 _checkReviewRequest();
+
+                if (updateAppInfoIcons ?? false) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Future.delayed(const Duration(milliseconds: 500), () {
+                      homeBloc.add(const HomeEvent.updateAppInfoIcons());
+                    });
+                  });
+                }
               }
             },
             orElse: () {},

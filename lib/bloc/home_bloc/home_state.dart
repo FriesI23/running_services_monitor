@@ -4,7 +4,7 @@ part of 'home_bloc.dart';
 class HomeState with _$HomeState {
   const factory HomeState.initial(HomeStateModel value) = _Initial;
   const factory HomeState.loading(HomeStateModel value, [String? message]) = _Loading;
-  const factory HomeState.success(HomeStateModel value, [String? toast]) = _Success;
+  const factory HomeState.success(HomeStateModel value, [String? toast, bool? updateAppInfoIcons]) = _Success;
   const factory HomeState.failure(HomeStateModel value, String message) = _Failure;
 
   const HomeState._();
@@ -14,7 +14,7 @@ class HomeState with _$HomeState {
     return when(
       initial: (value) => value,
       loading: (value, message) => value,
-      success: (value, toast) => value,
+      success: (value, toast, updateAppInfoIcons) => value,
       failure: (value, message) => value,
     );
   }

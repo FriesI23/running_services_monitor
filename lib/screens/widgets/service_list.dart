@@ -9,14 +9,10 @@ class ServiceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            return ServiceListItem(service: services[index]);
-          }, childCount: services.length),
-        ),
-      ],
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        return ServiceListItem(service: services[index]);
+      }, childCount: services.length),
     );
   }
 }
