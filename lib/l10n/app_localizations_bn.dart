@@ -293,4 +293,16 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get no => 'না';
+
+  @override
+  String get connections => 'কানেকশনসমূহ';
+
+  @override
+  String get flags => 'ফ্ল্যাগস';
+
+  @override
+  String get visible => 'দৃশ্যমান';
+
+  @override
+  String get capabilities => 'ক্যাপাবিলিটিস';
 }

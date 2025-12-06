@@ -84,6 +84,51 @@ class ServiceDetailsDialog extends StatelessWidget {
               label: context.loc.type,
               value: service.isSystemApp ? context.loc.systemApp : context.loc.userApp,
             ),
+            if (service.connections.isNotEmpty) ...[
+              SizedBox(height: 16.h),
+              ExpansionTile(
+                tilePadding: EdgeInsets.zero,
+                title: Text(
+                  '${context.loc.connections} (${service.connections.length})',
+                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                ),
+                children: [
+                  ...service.connections.map(
+                    (conn) => Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(bottom: 8.h),
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(8.rSafe),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${conn.packageName}/${conn.serviceName}',
+                            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 4.h),
+                          if (conn.flags != null)
+                            Text(
+                              '${context.loc.flags}: ${conn.flags}',
+                              style: TextStyle(fontSize: 10.sp, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                            ),
+                          Row(
+                            children: [
+                              if (conn.isForeground == true) _buildBadge(context, 'FGS', Colors.green),
+                              if (conn.isVisible == true) _buildBadge(context, 'VIS', Colors.blue),
+                              if (conn.hasCapabilities == true) _buildBadge(context, 'CAPS', Colors.orange),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
             if (service.rawServiceRecord != null) ...[
               SizedBox(height: 16.h),
               ExpansionTile(
@@ -118,6 +163,22 @@ class ServiceDetailsDialog extends StatelessWidget {
           child: Text(context.loc.close, style: TextStyle(fontSize: 14.sp)),
         ),
       ],
+    );
+  }
+
+  Widget _buildBadge(BuildContext context, String label, Color color) {
+    return Container(
+      margin: EdgeInsets.only(right: 4.w, top: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(4.rSafe),
+        border: Border.all(color: color.withValues(alpha: 0.5)),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold, color: color),
+      ),
     );
   }
 }

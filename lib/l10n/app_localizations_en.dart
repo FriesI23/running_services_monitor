@@ -291,4 +291,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no => 'No';
+
+  @override
+  String get connections => 'Connections';
+
+  @override
+  String get flags => 'Flags';
+
+  @override
+  String get visible => 'Visible';
+
+  @override
+  String get capabilities => 'Capabilities';
 }

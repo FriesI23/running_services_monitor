@@ -101,5 +101,9 @@
   "rawOutput": "Raw Output",
   "close": "Close",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "connections": "Connections",
+  "flags": "Flags",
+  "visible": "Visible",
+  "capabilities": "Capabilities"
 }

@@ -29,6 +29,7 @@ abstract class RunningServiceInfo with _$RunningServiceInfo {
     bool? createdFromFg,
     String? rawServiceRecord,
     int? uid,
+    @Default([]) List<ConnectionRecord> connections,
   }) = _RunningServiceInfo;
 }
 
@@ -43,6 +44,7 @@ abstract class AppProcessInfo with _$AppProcessInfo {
     required double totalRamInKb,
     required bool isSystemApp,
     AppInfo? appInfo,
+    @Default([]) List<ConnectionRecord> connections,
   }) = _AppProcessInfo;
 }
 
@@ -57,4 +59,20 @@ abstract class RunningProcessInfo with _$RunningProcessInfo {
     required bool isSystemApp,
     required String importance,
   }) = _RunningProcessInfo;
+}
+
+@freezed
+abstract class ConnectionRecord with _$ConnectionRecord {
+  const factory ConnectionRecord({
+    required String packageName,
+    required String serviceName,
+    String? bindingPackage,
+    String? bindingProcess,
+    String? conn,
+    String? flags,
+    bool? isForeground,
+    bool? isVisible,
+    bool? hasCapabilities,
+    String? rawConnectionRecord,
+  }) = _ConnectionRecord;
 }

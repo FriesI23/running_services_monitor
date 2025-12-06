@@ -23,7 +23,6 @@ class ProcessService {
       }
       return buffer.toString();
     } catch (e) {
-
       return null;
     }
   }
@@ -75,7 +74,6 @@ class ProcessService {
 
       return finalAppProcessInfos;
     } catch (e) {
-
       return [];
     }
   }
@@ -251,11 +249,42 @@ class ProcessService {
     String? lastActivityTime;
     bool? startRequested;
     bool? createdFromFg;
+    final connections = <ConnectionRecord>[];
 
     final rawBlock = lines.join('\n');
 
     for (var line in lines) {
       final trimmedLine = line.trim();
+
+      if (trimmedLine.startsWith('* ConnectionRecord{') || trimmedLine.startsWith('ConnectionRecord{')) {
+        final connMatch = RegExp(
+          r'([a-z0-9.]+)/\.?([A-Za-z0-9.$]+):@([a-f0-9]+)\s+flags=(0x[a-f0-9]+)',
+        ).firstMatch(trimmedLine);
+        if (connMatch != null) {
+          final connPackageName = connMatch.group(1) ?? '';
+          final connServiceName = connMatch.group(2) ?? '';
+          final conn = connMatch.group(3);
+          final flags = connMatch.group(4);
+
+          final connIsForeground = trimmedLine.contains(' FGS ') || trimmedLine.contains(' FG ');
+          final isVisible = trimmedLine.contains(' VIS ');
+          final hasCapabilities = trimmedLine.contains(' CAPS ');
+
+          connections.add(
+            ConnectionRecord(
+              packageName: connPackageName,
+              serviceName: connServiceName,
+              conn: conn,
+              flags: flags,
+              isForeground: connIsForeground,
+              isVisible: isVisible,
+              hasCapabilities: hasCapabilities,
+              rawConnectionRecord: trimmedLine,
+            ),
+          );
+        }
+        continue;
+      }
 
       if (trimmedLine.startsWith('* ServiceRecord{')) {
         final serviceMatch = RegExp(r'([a-z0-9.]+)/\.?([A-Za-z0-9.]+)').firstMatch(trimmedLine);
@@ -286,7 +315,6 @@ class ProcessService {
         createdFromFg = trimmedLine.substring('createdFromFg='.length) == 'true';
       } else if (trimmedLine.startsWith('app=ProcessRecord{')) {
         if (trimmedLine == 'app=null') {
-
           return [];
         }
 
@@ -309,8 +337,6 @@ class ProcessService {
           packageName.startsWith('android') ||
           packageName.startsWith('com.google.android');
 
-
-
       services.add(
         RunningServiceInfo(
           user: '0',
@@ -330,10 +356,9 @@ class ProcessService {
           createdFromFg: createdFromFg,
           rawServiceRecord: rawBlock,
           uid: uid,
+          connections: connections,
         ),
       );
-    } else {
-
     }
 
     return services;
@@ -415,7 +440,6 @@ class ProcessService {
       }
       return buffer.toString();
     } catch (e) {
-
       return null;
     }
   }
@@ -427,7 +451,6 @@ class ProcessService {
 
       return (ramInfo: await compute(_parseSystemRamInfo, result), meminfo: result);
     } catch (e) {
-
       return (ramInfo: null, meminfo: null);
     }
   }
@@ -450,17 +473,14 @@ class ProcessService {
 
   Future<bool> stopService(String packageName) async {
     try {
-
       final result = await _shizukuService.executeCommand('am force-stop $packageName');
 
       if (result == null || result.isEmpty || !result.toLowerCase().contains('error')) {
         return true;
       } else {
-
         return false;
       }
     } catch (e) {
-
       return false;
     }
   }

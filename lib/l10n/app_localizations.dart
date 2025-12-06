@@ -643,6 +643,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No'**
   String get no;
+
+  /// No description provided for @connections.
+  ///
+  /// In en, this message translates to:
+  /// **'Connections'**
+  String get connections;
+
+  /// No description provided for @flags.
+  ///
+  /// In en, this message translates to:
+  /// **'Flags'**
+  String get flags;
+
+  /// No description provided for @visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible'**
+  String get visible;
+
+  /// No description provided for @capabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Capabilities'**
+  String get capabilities;
 }
 
 class _AppLocalizationsDelegate
