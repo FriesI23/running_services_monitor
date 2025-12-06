@@ -143,7 +143,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get apps => 'অ্যাপস';
 
   @override
-  String get used => 'Used';
+  String get used => 'ব্যবহৃত';
 
   @override
   String get free => 'ফাঁকা';
@@ -229,68 +229,68 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get package => 'Package';
+  String get package => 'প্যাকেজ';
 
   @override
-  String get service => 'Service';
+  String get service => 'সার্ভিস';
 
   @override
-  String get process => 'Process';
+  String get process => 'প্রসেস';
 
   @override
-  String get pid => 'PID';
+  String get pid => 'পিআইডি';
 
   @override
-  String get uid => 'UID';
+  String get uid => 'ইউআইডি';
 
   @override
-  String get ramUsage => 'RAM Usage';
+  String get ramUsage => 'র‍্যাম ব্যবহার';
 
   @override
-  String get intent => 'Intent';
+  String get intent => 'ইনটেন্ট';
 
   @override
-  String get foreground => 'Foreground';
+  String get foreground => 'ফোরগ্রাউন্ড';
 
   @override
-  String get foregroundId => 'Foreground ID';
+  String get foregroundId => 'ফোরগ্রাউন্ড আইডি';
 
   @override
-  String get startRequested => 'Start Requested';
+  String get startRequested => 'স্টার্ট রিকোয়েস্টেড';
 
   @override
-  String get createdFromFg => 'Created From FG';
+  String get createdFromFg => 'ফোরগ্রাউন্ড থেকে তৈরি';
 
   @override
-  String get createTime => 'Create Time';
+  String get createTime => 'তৈরির সময়';
 
   @override
-  String get lastActivity => 'Last Activity';
+  String get lastActivity => 'সর্বশেষ অ্যাক্টিভিটি';
 
   @override
-  String get baseDir => 'Base Dir';
+  String get baseDir => 'বেস ডিরেক্টরি';
 
   @override
-  String get dataDir => 'Data Dir';
+  String get dataDir => 'ডেটা ডিরেক্টরি';
 
   @override
-  String get type => 'Type';
+  String get type => 'ধরন';
 
   @override
-  String get systemApp => 'System App';
+  String get systemApp => 'সিস্টেম অ্যাপ';
 
   @override
-  String get userApp => 'User App';
+  String get userApp => 'ব্যবহারকারী অ্যাপ';
 
   @override
-  String get rawOutput => 'Raw Output';
+  String get rawOutput => 'র আউটপুট';
 
   @override
-  String get close => 'Close';
+  String get close => 'বন্ধ করুন';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'হ্যাঁ';
 
   @override
-  String get no => 'No';
+  String get no => 'না';
 }
