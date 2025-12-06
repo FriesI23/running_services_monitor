@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
+import 'package:running_services_monitor/models/process_state_filter.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'dismissible_app_list_item.dart';
 import 'empty_list_state.dart';
@@ -12,19 +13,38 @@ class AppList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<HomeBloc, HomeState, String>(
-      selector: (state) => state.value.searchQuery,
-      builder: (context, searchQuery) {
-        final filteredApps = apps.where((app) {
-          if (searchQuery.isEmpty) return true;
-          final name = app.appName.toLowerCase();
-          final pkg = app.packageName.toLowerCase();
-          return name.contains(searchQuery) || pkg.contains(searchQuery);
+    return BlocSelector<
+      HomeBloc,
+      HomeState,
+      ({String searchQuery, ProcessStateFilter processFilter, bool sortAscending})
+    >(
+      selector: (state) => (
+        searchQuery: state.value.searchQuery,
+        processFilter: state.value.selectedProcessFilter,
+        sortAscending: state.value.sortAscending,
+      ),
+      builder: (context, data) {
+        var filteredApps = apps.where((app) {
+          if (data.searchQuery.isNotEmpty) {
+            final name = app.appName.toLowerCase();
+            final pkg = app.packageName.toLowerCase();
+            if (!name.contains(data.searchQuery) && !pkg.contains(data.searchQuery)) {
+              return false;
+            }
+          }
+
+          return data.processFilter.matchesAppState(app.processState, app.hasServices);
         }).toList();
+
+        if (data.sortAscending) {
+          filteredApps.sort((a, b) => a.totalRamInKb.compareTo(b.totalRamInKb));
+        } else {
+          filteredApps.sort((a, b) => b.totalRamInKb.compareTo(a.totalRamInKb));
+        }
 
         Widget content;
         if (filteredApps.isEmpty) {
-          content = EmptyListState(isSearching: searchQuery.isNotEmpty);
+          content = EmptyListState(isSearching: data.searchQuery.isNotEmpty);
         } else {
           content = CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),

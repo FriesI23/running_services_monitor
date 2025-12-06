@@ -667,6 +667,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Capabilities'**
   String get capabilities;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @cached.
+  ///
+  /// In en, this message translates to:
+  /// **'Cached'**
+  String get cached;
+
+  /// No description provided for @noServicesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No services found'**
+  String get noServicesFound;
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:running_services_monitor/models/home_state_model.dart';
+import 'package:running_services_monitor/models/process_state_filter.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/services/app_info_service.dart';
 import 'package:running_services_monitor/services/process_service.dart';
@@ -30,6 +31,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_RemoveService>(_onRemoveService);
     on<_AutoUpdateTick>(_onAutoUpdateTick);
     on<_UpdateAppInfoIcons>(_onUpdateAppInfoIcons);
+    on<_SetProcessFilter>(_onSetProcessFilter);
+    on<_ToggleSortOrder>(_onToggleSortOrder);
   }
 
   @override
@@ -291,5 +294,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } catch (_) {}
+  }
+
+  Future<void> _onSetProcessFilter(_SetProcessFilter event, Emitter<HomeState> emit) async {
+    emit(HomeState.success(state.value.copyWith(selectedProcessFilter: event.filter)));
+  }
+
+  Future<void> _onToggleSortOrder(_ToggleSortOrder event, Emitter<HomeState> emit) async {
+    emit(HomeState.success(state.value.copyWith(sortAscending: !state.value.sortAscending)));
   }
 }

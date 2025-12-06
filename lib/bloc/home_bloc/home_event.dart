@@ -13,4 +13,6 @@ class HomeEvent with _$HomeEvent {
   const factory HomeEvent.autoUpdateTick() = _AutoUpdateTick;
 
   const factory HomeEvent.updateAppInfoIcons({@Default(false) bool? startCache}) = _UpdateAppInfoIcons;
+  const factory HomeEvent.setProcessFilter(ProcessStateFilter filter) = _SetProcessFilter;
+  const factory HomeEvent.toggleSortOrder() = _ToggleSortOrder;
 }

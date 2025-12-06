@@ -105,5 +105,8 @@
   "connections": "Connections",
   "flags": "Flags",
   "visible": "Visible",
-  "capabilities": "Capabilities"
+  "capabilities": "Capabilities",
+  "active": "Active",
+  "cached": "Cached",
+  "noServicesFound": "No services found"
 }

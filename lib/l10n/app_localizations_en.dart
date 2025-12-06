@@ -303,4 +303,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get capabilities => 'Capabilities';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get cached => 'Cached';
+
+  @override
+  String get noServicesFound => 'No services found';
 }

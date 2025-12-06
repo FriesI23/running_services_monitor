@@ -46,6 +46,9 @@ abstract class AppProcessInfo with _$AppProcessInfo {
     required bool isSystemApp,
     AppInfo? appInfo,
     @Default([]) List<ConnectionRecord> connections,
+    String? processState,
+    String? adjLevel,
+    @Default(true) bool hasServices,
   }) = _AppProcessInfo;
 }
 

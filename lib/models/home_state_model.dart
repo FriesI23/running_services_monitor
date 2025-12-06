@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../models/service_info.dart';
+import 'process_state_filter.dart';
 
 part 'home_state_model.freezed.dart';
 
@@ -20,5 +21,7 @@ abstract class HomeStateModel with _$HomeStateModel {
     @Default(false) bool isAutoUpdateEnabled,
     @Default(false) bool isSearching,
     @Default('') String searchQuery,
+    @Default(ProcessStateFilter.all) ProcessStateFilter selectedProcessFilter,
+    @Default(false) bool sortAscending,
   }) = _HomeStateModel;
 }

@@ -93,5 +93,7 @@
   "connections": "কানেকশনসমূহ",
   "flags": "ফ্ল্যাগস",
   "visible": "দৃশ্যমান",
-  "capabilities": "ক্যাপাবিলিটিস"
+  "capabilities": "ক্যাপাবিলিটিস",
+  "active": "সক্রিয়",
+  "cached": "ক্যাশড"
 }

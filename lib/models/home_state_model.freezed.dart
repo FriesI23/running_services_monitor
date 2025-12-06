@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeStateModel {
 
- bool get shizukuReady; List<AppProcessInfo> get allApps; List<AppProcessInfo> get userApps; List<AppProcessInfo> get systemApps; double get totalRamKb; double get freeRamKb; double get usedRamKb; double get appsRamKb; bool get isAutoUpdateEnabled; bool get isSearching; String get searchQuery;
+ bool get shizukuReady; List<AppProcessInfo> get allApps; List<AppProcessInfo> get userApps; List<AppProcessInfo> get systemApps; double get totalRamKb; double get freeRamKb; double get usedRamKb; double get appsRamKb; bool get isAutoUpdateEnabled; bool get isSearching; String get searchQuery; ProcessStateFilter get selectedProcessFilter; bool get sortAscending;
 /// Create a copy of HomeStateModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateModelCopyWith<HomeStateModel> get copyWith => _$HomeStateModelCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateModel&&(identical(other.shizukuReady, shizukuReady) || other.shizukuReady == shizukuReady)&&const DeepCollectionEquality().equals(other.allApps, allApps)&&const DeepCollectionEquality().equals(other.userApps, userApps)&&const DeepCollectionEquality().equals(other.systemApps, systemApps)&&(identical(other.totalRamKb, totalRamKb) || other.totalRamKb == totalRamKb)&&(identical(other.freeRamKb, freeRamKb) || other.freeRamKb == freeRamKb)&&(identical(other.usedRamKb, usedRamKb) || other.usedRamKb == usedRamKb)&&(identical(other.appsRamKb, appsRamKb) || other.appsRamKb == appsRamKb)&&(identical(other.isAutoUpdateEnabled, isAutoUpdateEnabled) || other.isAutoUpdateEnabled == isAutoUpdateEnabled)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateModel&&(identical(other.shizukuReady, shizukuReady) || other.shizukuReady == shizukuReady)&&const DeepCollectionEquality().equals(other.allApps, allApps)&&const DeepCollectionEquality().equals(other.userApps, userApps)&&const DeepCollectionEquality().equals(other.systemApps, systemApps)&&(identical(other.totalRamKb, totalRamKb) || other.totalRamKb == totalRamKb)&&(identical(other.freeRamKb, freeRamKb) || other.freeRamKb == freeRamKb)&&(identical(other.usedRamKb, usedRamKb) || other.usedRamKb == usedRamKb)&&(identical(other.appsRamKb, appsRamKb) || other.appsRamKb == appsRamKb)&&(identical(other.isAutoUpdateEnabled, isAutoUpdateEnabled) || other.isAutoUpdateEnabled == isAutoUpdateEnabled)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedProcessFilter, selectedProcessFilter) || other.selectedProcessFilter == selectedProcessFilter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,shizukuReady,const DeepCollectionEquality().hash(allApps),const DeepCollectionEquality().hash(userApps),const DeepCollectionEquality().hash(systemApps),totalRamKb,freeRamKb,usedRamKb,appsRamKb,isAutoUpdateEnabled,isSearching,searchQuery);
+int get hashCode => Object.hash(runtimeType,shizukuReady,const DeepCollectionEquality().hash(allApps),const DeepCollectionEquality().hash(userApps),const DeepCollectionEquality().hash(systemApps),totalRamKb,freeRamKb,usedRamKb,appsRamKb,isAutoUpdateEnabled,isSearching,searchQuery,selectedProcessFilter,sortAscending);
 
 @override
 String toString() {
-  return 'HomeStateModel(shizukuReady: $shizukuReady, allApps: $allApps, userApps: $userApps, systemApps: $systemApps, totalRamKb: $totalRamKb, freeRamKb: $freeRamKb, usedRamKb: $usedRamKb, appsRamKb: $appsRamKb, isAutoUpdateEnabled: $isAutoUpdateEnabled, isSearching: $isSearching, searchQuery: $searchQuery)';
+  return 'HomeStateModel(shizukuReady: $shizukuReady, allApps: $allApps, userApps: $userApps, systemApps: $systemApps, totalRamKb: $totalRamKb, freeRamKb: $freeRamKb, usedRamKb: $usedRamKb, appsRamKb: $appsRamKb, isAutoUpdateEnabled: $isAutoUpdateEnabled, isSearching: $isSearching, searchQuery: $searchQuery, selectedProcessFilter: $selectedProcessFilter, sortAscending: $sortAscending)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateModelCopyWith<$Res>  {
   factory $HomeStateModelCopyWith(HomeStateModel value, $Res Function(HomeStateModel) _then) = _$HomeStateModelCopyWithImpl;
 @useResult
 $Res call({
- bool shizukuReady, List<AppProcessInfo> allApps, List<AppProcessInfo> userApps, List<AppProcessInfo> systemApps, double totalRamKb, double freeRamKb, double usedRamKb, double appsRamKb, bool isAutoUpdateEnabled, bool isSearching, String searchQuery
+ bool shizukuReady, List<AppProcessInfo> allApps, List<AppProcessInfo> userApps, List<AppProcessInfo> systemApps, double totalRamKb, double freeRamKb, double usedRamKb, double appsRamKb, bool isAutoUpdateEnabled, bool isSearching, String searchQuery, ProcessStateFilter selectedProcessFilter, bool sortAscending
 });
 
 
@@ -62,7 +62,7 @@ class _$HomeStateModelCopyWithImpl<$Res>
 
 /// Create a copy of HomeStateModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? shizukuReady = null,Object? allApps = null,Object? userApps = null,Object? systemApps = null,Object? totalRamKb = null,Object? freeRamKb = null,Object? usedRamKb = null,Object? appsRamKb = null,Object? isAutoUpdateEnabled = null,Object? isSearching = null,Object? searchQuery = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? shizukuReady = null,Object? allApps = null,Object? userApps = null,Object? systemApps = null,Object? totalRamKb = null,Object? freeRamKb = null,Object? usedRamKb = null,Object? appsRamKb = null,Object? isAutoUpdateEnabled = null,Object? isSearching = null,Object? searchQuery = null,Object? selectedProcessFilter = null,Object? sortAscending = null,}) {
   return _then(_self.copyWith(
 shizukuReady: null == shizukuReady ? _self.shizukuReady : shizukuReady // ignore: cast_nullable_to_non_nullable
 as bool,allApps: null == allApps ? _self.allApps : allApps // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,9 @@ as double,appsRamKb: null == appsRamKb ? _self.appsRamKb : appsRamKb // ignore: 
 as double,isAutoUpdateEnabled: null == isAutoUpdateEnabled ? _self.isAutoUpdateEnabled : isAutoUpdateEnabled // ignore: cast_nullable_to_non_nullable
 as bool,isSearching: null == isSearching ? _self.isSearching : isSearching // ignore: cast_nullable_to_non_nullable
 as bool,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
-as String,
+as String,selectedProcessFilter: null == selectedProcessFilter ? _self.selectedProcessFilter : selectedProcessFilter // ignore: cast_nullable_to_non_nullable
+as ProcessStateFilter,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -160,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool shizukuReady,  List<AppProcessInfo> allApps,  List<AppProcessInfo> userApps,  List<AppProcessInfo> systemApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  double appsRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool shizukuReady,  List<AppProcessInfo> allApps,  List<AppProcessInfo> userApps,  List<AppProcessInfo> systemApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  double appsRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeStateModel() when $default != null:
-return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.appsRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery);case _:
+return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.appsRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery,_that.selectedProcessFilter,_that.sortAscending);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool shizukuReady,  List<AppProcessInfo> allApps,  List<AppProcessInfo> userApps,  List<AppProcessInfo> systemApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  double appsRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool shizukuReady,  List<AppProcessInfo> allApps,  List<AppProcessInfo> userApps,  List<AppProcessInfo> systemApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  double appsRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)  $default,) {final _that = this;
 switch (_that) {
 case _HomeStateModel():
-return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.appsRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery);case _:
+return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.appsRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery,_that.selectedProcessFilter,_that.sortAscending);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +203,10 @@ return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool shizukuReady,  List<AppProcessInfo> allApps,  List<AppProcessInfo> userApps,  List<AppProcessInfo> systemApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  double appsRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool shizukuReady,  List<AppProcessInfo> allApps,  List<AppProcessInfo> userApps,  List<AppProcessInfo> systemApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  double appsRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeStateModel() when $default != null:
-return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.appsRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery);case _:
+return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.appsRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery,_that.selectedProcessFilter,_that.sortAscending);case _:
   return null;
 
 }
@@ -216,7 +218,7 @@ return $default(_that.shizukuReady,_that.allApps,_that.userApps,_that.systemApps
 
 
 class _HomeStateModel implements HomeStateModel {
-  const _HomeStateModel({this.shizukuReady = false, final  List<AppProcessInfo> allApps = const [], final  List<AppProcessInfo> userApps = const [], final  List<AppProcessInfo> systemApps = const [], this.totalRamKb = 0.0, this.freeRamKb = 0.0, this.usedRamKb = 0.0, this.appsRamKb = 0.0, this.isAutoUpdateEnabled = false, this.isSearching = false, this.searchQuery = ''}): _allApps = allApps,_userApps = userApps,_systemApps = systemApps;
+  const _HomeStateModel({this.shizukuReady = false, final  List<AppProcessInfo> allApps = const [], final  List<AppProcessInfo> userApps = const [], final  List<AppProcessInfo> systemApps = const [], this.totalRamKb = 0.0, this.freeRamKb = 0.0, this.usedRamKb = 0.0, this.appsRamKb = 0.0, this.isAutoUpdateEnabled = false, this.isSearching = false, this.searchQuery = '', this.selectedProcessFilter = ProcessStateFilter.all, this.sortAscending = false}): _allApps = allApps,_userApps = userApps,_systemApps = systemApps;
   
 
 @override@JsonKey() final  bool shizukuReady;
@@ -248,6 +250,8 @@ class _HomeStateModel implements HomeStateModel {
 @override@JsonKey() final  bool isAutoUpdateEnabled;
 @override@JsonKey() final  bool isSearching;
 @override@JsonKey() final  String searchQuery;
+@override@JsonKey() final  ProcessStateFilter selectedProcessFilter;
+@override@JsonKey() final  bool sortAscending;
 
 /// Create a copy of HomeStateModel
 /// with the given fields replaced by the non-null parameter values.
@@ -259,16 +263,16 @@ _$HomeStateModelCopyWith<_HomeStateModel> get copyWith => __$HomeStateModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeStateModel&&(identical(other.shizukuReady, shizukuReady) || other.shizukuReady == shizukuReady)&&const DeepCollectionEquality().equals(other._allApps, _allApps)&&const DeepCollectionEquality().equals(other._userApps, _userApps)&&const DeepCollectionEquality().equals(other._systemApps, _systemApps)&&(identical(other.totalRamKb, totalRamKb) || other.totalRamKb == totalRamKb)&&(identical(other.freeRamKb, freeRamKb) || other.freeRamKb == freeRamKb)&&(identical(other.usedRamKb, usedRamKb) || other.usedRamKb == usedRamKb)&&(identical(other.appsRamKb, appsRamKb) || other.appsRamKb == appsRamKb)&&(identical(other.isAutoUpdateEnabled, isAutoUpdateEnabled) || other.isAutoUpdateEnabled == isAutoUpdateEnabled)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeStateModel&&(identical(other.shizukuReady, shizukuReady) || other.shizukuReady == shizukuReady)&&const DeepCollectionEquality().equals(other._allApps, _allApps)&&const DeepCollectionEquality().equals(other._userApps, _userApps)&&const DeepCollectionEquality().equals(other._systemApps, _systemApps)&&(identical(other.totalRamKb, totalRamKb) || other.totalRamKb == totalRamKb)&&(identical(other.freeRamKb, freeRamKb) || other.freeRamKb == freeRamKb)&&(identical(other.usedRamKb, usedRamKb) || other.usedRamKb == usedRamKb)&&(identical(other.appsRamKb, appsRamKb) || other.appsRamKb == appsRamKb)&&(identical(other.isAutoUpdateEnabled, isAutoUpdateEnabled) || other.isAutoUpdateEnabled == isAutoUpdateEnabled)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedProcessFilter, selectedProcessFilter) || other.selectedProcessFilter == selectedProcessFilter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,shizukuReady,const DeepCollectionEquality().hash(_allApps),const DeepCollectionEquality().hash(_userApps),const DeepCollectionEquality().hash(_systemApps),totalRamKb,freeRamKb,usedRamKb,appsRamKb,isAutoUpdateEnabled,isSearching,searchQuery);
+int get hashCode => Object.hash(runtimeType,shizukuReady,const DeepCollectionEquality().hash(_allApps),const DeepCollectionEquality().hash(_userApps),const DeepCollectionEquality().hash(_systemApps),totalRamKb,freeRamKb,usedRamKb,appsRamKb,isAutoUpdateEnabled,isSearching,searchQuery,selectedProcessFilter,sortAscending);
 
 @override
 String toString() {
-  return 'HomeStateModel(shizukuReady: $shizukuReady, allApps: $allApps, userApps: $userApps, systemApps: $systemApps, totalRamKb: $totalRamKb, freeRamKb: $freeRamKb, usedRamKb: $usedRamKb, appsRamKb: $appsRamKb, isAutoUpdateEnabled: $isAutoUpdateEnabled, isSearching: $isSearching, searchQuery: $searchQuery)';
+  return 'HomeStateModel(shizukuReady: $shizukuReady, allApps: $allApps, userApps: $userApps, systemApps: $systemApps, totalRamKb: $totalRamKb, freeRamKb: $freeRamKb, usedRamKb: $usedRamKb, appsRamKb: $appsRamKb, isAutoUpdateEnabled: $isAutoUpdateEnabled, isSearching: $isSearching, searchQuery: $searchQuery, selectedProcessFilter: $selectedProcessFilter, sortAscending: $sortAscending)';
 }
 
 
@@ -279,7 +283,7 @@ abstract mixin class _$HomeStateModelCopyWith<$Res> implements $HomeStateModelCo
   factory _$HomeStateModelCopyWith(_HomeStateModel value, $Res Function(_HomeStateModel) _then) = __$HomeStateModelCopyWithImpl;
 @override @useResult
 $Res call({
- bool shizukuReady, List<AppProcessInfo> allApps, List<AppProcessInfo> userApps, List<AppProcessInfo> systemApps, double totalRamKb, double freeRamKb, double usedRamKb, double appsRamKb, bool isAutoUpdateEnabled, bool isSearching, String searchQuery
+ bool shizukuReady, List<AppProcessInfo> allApps, List<AppProcessInfo> userApps, List<AppProcessInfo> systemApps, double totalRamKb, double freeRamKb, double usedRamKb, double appsRamKb, bool isAutoUpdateEnabled, bool isSearching, String searchQuery, ProcessStateFilter selectedProcessFilter, bool sortAscending
 });
 
 
@@ -296,7 +300,7 @@ class __$HomeStateModelCopyWithImpl<$Res>
 
 /// Create a copy of HomeStateModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? shizukuReady = null,Object? allApps = null,Object? userApps = null,Object? systemApps = null,Object? totalRamKb = null,Object? freeRamKb = null,Object? usedRamKb = null,Object? appsRamKb = null,Object? isAutoUpdateEnabled = null,Object? isSearching = null,Object? searchQuery = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? shizukuReady = null,Object? allApps = null,Object? userApps = null,Object? systemApps = null,Object? totalRamKb = null,Object? freeRamKb = null,Object? usedRamKb = null,Object? appsRamKb = null,Object? isAutoUpdateEnabled = null,Object? isSearching = null,Object? searchQuery = null,Object? selectedProcessFilter = null,Object? sortAscending = null,}) {
   return _then(_HomeStateModel(
 shizukuReady: null == shizukuReady ? _self.shizukuReady : shizukuReady // ignore: cast_nullable_to_non_nullable
 as bool,allApps: null == allApps ? _self._allApps : allApps // ignore: cast_nullable_to_non_nullable
@@ -309,7 +313,9 @@ as double,appsRamKb: null == appsRamKb ? _self.appsRamKb : appsRamKb // ignore: 
 as double,isAutoUpdateEnabled: null == isAutoUpdateEnabled ? _self.isAutoUpdateEnabled : isAutoUpdateEnabled // ignore: cast_nullable_to_non_nullable
 as bool,isSearching: null == isSearching ? _self.isSearching : isSearching // ignore: cast_nullable_to_non_nullable
 as bool,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
-as String,
+as String,selectedProcessFilter: null == selectedProcessFilter ? _self.selectedProcessFilter : selectedProcessFilter // ignore: cast_nullable_to_non_nullable
+as ProcessStateFilter,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

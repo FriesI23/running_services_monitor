@@ -55,7 +55,7 @@ extension HomeEventPatterns on HomeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitializeShizuku value)?  initializeShizuku,TResult Function( _LoadData value)?  loadData,TResult Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult Function( _ToggleSearch value)?  toggleSearch,TResult Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult Function( _RemoveApp value)?  removeApp,TResult Function( _RemoveService value)?  removeService,TResult Function( _AutoUpdateTick value)?  autoUpdateTick,TResult Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitializeShizuku value)?  initializeShizuku,TResult Function( _LoadData value)?  loadData,TResult Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult Function( _ToggleSearch value)?  toggleSearch,TResult Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult Function( _RemoveApp value)?  removeApp,TResult Function( _RemoveService value)?  removeService,TResult Function( _AutoUpdateTick value)?  autoUpdateTick,TResult Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult Function( _SetProcessFilter value)?  setProcessFilter,TResult Function( _ToggleSortOrder value)?  toggleSortOrder,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
@@ -67,7 +67,9 @@ return updateSearchQuery(_that);case _RemoveApp() when removeApp != null:
 return removeApp(_that);case _RemoveService() when removeService != null:
 return removeService(_that);case _AutoUpdateTick() when autoUpdateTick != null:
 return autoUpdateTick(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that);case _:
+return updateAppInfoIcons(_that);case _SetProcessFilter() when setProcessFilter != null:
+return setProcessFilter(_that);case _ToggleSortOrder() when toggleSortOrder != null:
+return toggleSortOrder(_that);case _:
   return orElse();
 
 }
@@ -85,7 +87,7 @@ return updateAppInfoIcons(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitializeShizuku value)  initializeShizuku,required TResult Function( _LoadData value)  loadData,required TResult Function( _ToggleAutoUpdate value)  toggleAutoUpdate,required TResult Function( _ToggleSearch value)  toggleSearch,required TResult Function( _UpdateSearchQuery value)  updateSearchQuery,required TResult Function( _RemoveApp value)  removeApp,required TResult Function( _RemoveService value)  removeService,required TResult Function( _AutoUpdateTick value)  autoUpdateTick,required TResult Function( _UpdateAppInfoIcons value)  updateAppInfoIcons,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitializeShizuku value)  initializeShizuku,required TResult Function( _LoadData value)  loadData,required TResult Function( _ToggleAutoUpdate value)  toggleAutoUpdate,required TResult Function( _ToggleSearch value)  toggleSearch,required TResult Function( _UpdateSearchQuery value)  updateSearchQuery,required TResult Function( _RemoveApp value)  removeApp,required TResult Function( _RemoveService value)  removeService,required TResult Function( _AutoUpdateTick value)  autoUpdateTick,required TResult Function( _UpdateAppInfoIcons value)  updateAppInfoIcons,required TResult Function( _SetProcessFilter value)  setProcessFilter,required TResult Function( _ToggleSortOrder value)  toggleSortOrder,}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku():
@@ -97,7 +99,9 @@ return updateSearchQuery(_that);case _RemoveApp():
 return removeApp(_that);case _RemoveService():
 return removeService(_that);case _AutoUpdateTick():
 return autoUpdateTick(_that);case _UpdateAppInfoIcons():
-return updateAppInfoIcons(_that);case _:
+return updateAppInfoIcons(_that);case _SetProcessFilter():
+return setProcessFilter(_that);case _ToggleSortOrder():
+return toggleSortOrder(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -114,7 +118,7 @@ return updateAppInfoIcons(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitializeShizuku value)?  initializeShizuku,TResult? Function( _LoadData value)?  loadData,TResult? Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult? Function( _ToggleSearch value)?  toggleSearch,TResult? Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult? Function( _RemoveApp value)?  removeApp,TResult? Function( _RemoveService value)?  removeService,TResult? Function( _AutoUpdateTick value)?  autoUpdateTick,TResult? Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitializeShizuku value)?  initializeShizuku,TResult? Function( _LoadData value)?  loadData,TResult? Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult? Function( _ToggleSearch value)?  toggleSearch,TResult? Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult? Function( _RemoveApp value)?  removeApp,TResult? Function( _RemoveService value)?  removeService,TResult? Function( _AutoUpdateTick value)?  autoUpdateTick,TResult? Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult? Function( _SetProcessFilter value)?  setProcessFilter,TResult? Function( _ToggleSortOrder value)?  toggleSortOrder,}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
@@ -126,7 +130,9 @@ return updateSearchQuery(_that);case _RemoveApp() when removeApp != null:
 return removeApp(_that);case _RemoveService() when removeService != null:
 return removeService(_that);case _AutoUpdateTick() when autoUpdateTick != null:
 return autoUpdateTick(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that);case _:
+return updateAppInfoIcons(_that);case _SetProcessFilter() when setProcessFilter != null:
+return setProcessFilter(_that);case _ToggleSortOrder() when toggleSortOrder != null:
+return toggleSortOrder(_that);case _:
   return null;
 
 }
@@ -143,7 +149,7 @@ return updateAppInfoIcons(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function()?  autoUpdateTick,TResult Function( bool? startCache)?  updateAppInfoIcons,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function()?  autoUpdateTick,TResult Function( bool? startCache)?  updateAppInfoIcons,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
 return initializeShizuku();case _LoadData() when loadData != null:
@@ -154,7 +160,9 @@ return updateSearchQuery(_that.query);case _RemoveApp() when removeApp != null:
 return removeApp(_that.packageName);case _RemoveService() when removeService != null:
 return removeService(_that.packageName,_that.serviceName);case _AutoUpdateTick() when autoUpdateTick != null:
 return autoUpdateTick();case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that.startCache);case _:
+return updateAppInfoIcons(_that.startCache);case _SetProcessFilter() when setProcessFilter != null:
+return setProcessFilter(_that.filter);case _ToggleSortOrder() when toggleSortOrder != null:
+return toggleSortOrder();case _:
   return orElse();
 
 }
@@ -172,7 +180,7 @@ return updateAppInfoIcons(_that.startCache);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent,  bool updateAppInfoIcons)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function()  autoUpdateTick,required TResult Function( bool? startCache)  updateAppInfoIcons,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent,  bool updateAppInfoIcons)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function()  autoUpdateTick,required TResult Function( bool? startCache)  updateAppInfoIcons,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku():
 return initializeShizuku();case _LoadData():
@@ -183,7 +191,9 @@ return updateSearchQuery(_that.query);case _RemoveApp():
 return removeApp(_that.packageName);case _RemoveService():
 return removeService(_that.packageName,_that.serviceName);case _AutoUpdateTick():
 return autoUpdateTick();case _UpdateAppInfoIcons():
-return updateAppInfoIcons(_that.startCache);case _:
+return updateAppInfoIcons(_that.startCache);case _SetProcessFilter():
+return setProcessFilter(_that.filter);case _ToggleSortOrder():
+return toggleSortOrder();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,7 +210,7 @@ return updateAppInfoIcons(_that.startCache);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function()?  autoUpdateTick,TResult? Function( bool? startCache)?  updateAppInfoIcons,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function()?  autoUpdateTick,TResult? Function( bool? startCache)?  updateAppInfoIcons,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
 return initializeShizuku();case _LoadData() when loadData != null:
@@ -211,7 +221,9 @@ return updateSearchQuery(_that.query);case _RemoveApp() when removeApp != null:
 return removeApp(_that.packageName);case _RemoveService() when removeService != null:
 return removeService(_that.packageName,_that.serviceName);case _AutoUpdateTick() when autoUpdateTick != null:
 return autoUpdateTick();case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that.startCache);case _:
+return updateAppInfoIcons(_that.startCache);case _SetProcessFilter() when setProcessFilter != null:
+return setProcessFilter(_that.filter);case _ToggleSortOrder() when toggleSortOrder != null:
+return toggleSortOrder();case _:
   return null;
 
 }
@@ -680,6 +692,104 @@ as bool?,
 
 
 }
+
+/// @nodoc
+
+
+class _SetProcessFilter implements HomeEvent {
+  const _SetProcessFilter(this.filter);
+  
+
+ final  ProcessStateFilter filter;
+
+/// Create a copy of HomeEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SetProcessFilterCopyWith<_SetProcessFilter> get copyWith => __$SetProcessFilterCopyWithImpl<_SetProcessFilter>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetProcessFilter&&(identical(other.filter, filter) || other.filter == filter));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,filter);
+
+@override
+String toString() {
+  return 'HomeEvent.setProcessFilter(filter: $filter)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SetProcessFilterCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
+  factory _$SetProcessFilterCopyWith(_SetProcessFilter value, $Res Function(_SetProcessFilter) _then) = __$SetProcessFilterCopyWithImpl;
+@useResult
+$Res call({
+ ProcessStateFilter filter
+});
+
+
+
+
+}
+/// @nodoc
+class __$SetProcessFilterCopyWithImpl<$Res>
+    implements _$SetProcessFilterCopyWith<$Res> {
+  __$SetProcessFilterCopyWithImpl(this._self, this._then);
+
+  final _SetProcessFilter _self;
+  final $Res Function(_SetProcessFilter) _then;
+
+/// Create a copy of HomeEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? filter = null,}) {
+  return _then(_SetProcessFilter(
+null == filter ? _self.filter : filter // ignore: cast_nullable_to_non_nullable
+as ProcessStateFilter,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _ToggleSortOrder implements HomeEvent {
+  const _ToggleSortOrder();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ToggleSortOrder);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'HomeEvent.toggleSortOrder()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 mixin _$HomeState {

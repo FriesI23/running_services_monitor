@@ -218,9 +218,68 @@ class ProcessService {
               appMap: appMap,
               ramMap: ramMap,
             );
+            groupedApps[currentPackage] = appProcessInfo;
 
             yield appProcessInfo;
           }
+        }
+      }
+
+      final lruProcesses = await _fetchLruProcesses();
+
+      for (final entry in groupedApps.entries) {
+        final packageName = entry.key;
+        if (lruProcesses.containsKey(packageName)) {
+          final lruInfo = lruProcesses[packageName]!;
+          final updatedApp = entry.value.copyWith(processState: lruInfo.state, adjLevel: lruInfo.adj);
+          groupedApps[packageName] = updatedApp;
+          yield updatedApp;
+        }
+      }
+
+      for (final entry in lruProcesses.entries) {
+        final packageName = entry.key;
+        if (!groupedApps.containsKey(packageName)) {
+          final lruInfo = entry.value;
+
+          final isSystem = lruInfo.uid < 10000;
+
+          String appName = packageName;
+          final appInfo = appMap[packageName];
+          if (appInfo != null) {
+            appName = appInfo.name;
+          } else {
+            final parts = packageName.split('.');
+            if (parts.isNotEmpty) {
+              String name = parts.last;
+              if (name.isNotEmpty) {
+                name = name[0].toUpperCase() + name.substring(1);
+              }
+              appName = name;
+            }
+          }
+
+          double ramKb = 0;
+          if (ramMap.containsKey(lruInfo.pid)) {
+            ramKb = ramMap[lruInfo.pid]!;
+          }
+
+          final processOnlyApp = AppProcessInfo(
+            packageName: packageName,
+            appName: appName,
+            services: [],
+            pids: [lruInfo.pid],
+            totalRam: _formatRam(ramKb),
+            totalRamInKb: ramKb,
+            isSystemApp: isSystem,
+            appInfo: appInfo,
+            processState: lruInfo.state,
+            adjLevel: lruInfo.adj,
+            hasServices: false,
+          );
+
+          groupedApps[packageName] = processOnlyApp;
+          yield processOnlyApp;
         }
       }
     }
@@ -231,6 +290,50 @@ class ProcessService {
     });
 
     return (apps: appStream(), systemRamInfo: systemRamFuture);
+  }
+
+  Future<Map<String, ({String state, String adj, int pid, int uid})>> _fetchLruProcesses() async {
+    final Map<String, ({String state, String adj, int pid, int uid})> processes = {};
+
+    try {
+      final result = await _shizukuService.executeCommand(AppConstants.cmdDumpsysActivityLru);
+      if (result == null || result.isEmpty) return processes;
+
+      final lines = result.split('\n');
+      for (final line in lines) {
+        final parsed = _parseLruLine(line);
+        if (parsed != null) {
+          processes[parsed.packageName] = (state: parsed.state, adj: parsed.adj, pid: parsed.pid, uid: parsed.uid);
+        }
+      }
+    } catch (_) {}
+
+    return processes;
+  }
+
+  ({String packageName, String state, String adj, int pid, int uid})? _parseLruLine(String line) {
+    final trimmed = line.trim();
+    if (!trimmed.startsWith('#')) return null;
+
+    final regex = RegExp(r'#\s*\d+:\s*(\S+)\s+(\S+)\s+\S+\s+(\d+):([^/]+)/u(\d+)a(\d+)');
+
+    final match = regex.firstMatch(trimmed);
+    if (match == null) return null;
+
+    final state = match.group(1) ?? '';
+    final adj = match.group(2) ?? '';
+    final pid = int.tryParse(match.group(3) ?? '') ?? 0;
+    final processName = match.group(4) ?? '';
+    final userId = int.tryParse(match.group(5) ?? '0') ?? 0;
+    final appId = int.tryParse(match.group(6) ?? '0') ?? 0;
+    final uid = userId * 100000 + 10000 + appId;
+
+    String packageName = processName;
+    if (processName.contains(':')) {
+      packageName = processName.split(':').first;
+    }
+
+    return (packageName: packageName, state: state, adj: adj, pid: pid, uid: uid);
   }
 
   Stream<AppProcessInfo> streamAppProcessInfos() async* {
@@ -337,10 +440,7 @@ class ProcessService {
       final isSystem =
           (uid != null && uid < 10000) ||
           (baseDir != null &&
-              (baseDir.startsWith('/system') || baseDir.startsWith('/product') || baseDir.startsWith('/system_ext'))) ||
-          packageName.startsWith('com.android') ||
-          packageName.startsWith('android') ||
-          packageName.startsWith('com.google.android');
+              (baseDir.startsWith('/system') || baseDir.startsWith('/product') || baseDir.startsWith('/system_ext')));
 
       services.add(
         RunningServiceInfo(

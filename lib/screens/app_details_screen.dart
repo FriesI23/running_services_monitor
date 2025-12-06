@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
+import 'package:installed_apps/installed_apps.dart';
 import '../models/service_info.dart';
+import '../models/process_state_filter.dart';
 import 'package:running_services_monitor/core/extensions.dart';
 import 'widgets/app_header.dart';
 import 'widgets/service_list.dart';
@@ -136,6 +138,15 @@ class AppDetailsScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text(context.loc.runningApp, style: TextStyle(fontSize: 20.sp)),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.info_outline),
+                      tooltip: 'App Info',
+                      onPressed: () {
+                        InstalledApps.openSettings(currentAppInfo.packageName);
+                      },
+                    ),
+                  ],
                 ),
                 body: CustomScrollView(
                   slivers: [
@@ -144,7 +155,10 @@ class AppDetailsScreen extends StatelessWidget {
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           AppHeader(appInfo: currentAppInfo),
-                          SizedBox(height: 24.h),
+                          SizedBox(height: 16.h),
+
+                          _StateBadges(appInfo: currentAppInfo),
+                          SizedBox(height: 16.h),
 
                           const AppDetailsDescription(),
 
@@ -154,10 +168,22 @@ class AppDetailsScreen extends StatelessWidget {
 
                           AppDetailsSectionTitle(title: context.loc.activeServices),
                           SizedBox(height: 8.h),
+                          if (currentAppInfo.services.isEmpty)
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 24.h),
+                              child: Center(
+                                child: Text(
+                                  context.loc.noServicesFound,
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ),
+                            ),
                         ]),
                       ),
                     ),
-                    ServiceList(services: currentAppInfo.services),
+                    if (currentAppInfo.services.isNotEmpty) ServiceList(services: currentAppInfo.services),
                   ],
                 ),
                 floatingActionButton: currentAppInfo.pids.isEmpty
@@ -232,6 +258,52 @@ class AppDetailsScreen extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _StateBadges extends StatelessWidget {
+  final AppProcessInfo appInfo;
+
+  const _StateBadges({required this.appInfo});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = context.loc;
+    final isActive = isActiveState(appInfo.processState, hasServices: appInfo.hasServices);
+    final isCached = isCachedState(appInfo.processState);
+
+    return Wrap(
+      spacing: 8.w,
+      runSpacing: 4.h,
+      children: [
+        if (isActive) _Badge(label: loc.active, color: Colors.green),
+        if (isCached) _Badge(label: loc.cached, color: Colors.grey),
+        if (appInfo.hasServices) _Badge(label: loc.services, color: Colors.blue),
+      ],
+    );
+  }
+}
+
+class _Badge extends StatelessWidget {
+  final String label;
+  final Color color;
+
+  const _Badge({required this.label, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(6.r),
+        border: Border.all(color: color.withValues(alpha: 0.5), width: 1),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(fontSize: 12.sp, color: color, fontWeight: FontWeight.w500),
       ),
     );
   }

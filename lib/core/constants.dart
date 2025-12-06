@@ -10,6 +10,7 @@ class AppConstants {
 
   // Android system commands
   static const String cmdDumpsysActivityServices = 'dumpsys activity services';
+  static const String cmdDumpsysActivityLru = 'dumpsys activity lru';
   static const String cmdDumpsysMeminfo = 'dumpsys meminfo';
   static const String cmdMethodRunCommand = 'runCommand';
 

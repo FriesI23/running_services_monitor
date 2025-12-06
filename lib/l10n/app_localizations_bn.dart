@@ -305,4 +305,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get capabilities => 'ক্যাপাবিলিটিস';
+
+  @override
+  String get active => 'সক্রিয়';
+
+  @override
+  String get cached => 'ক্যাশড';
+
+  @override
+  String get noServicesFound => 'No services found';
 }
