@@ -49,6 +49,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     try {
+      final hasRoot = await _shizukuService.checkRootPermission();
+      if (hasRoot) {
+        final rootGranted = await _shizukuService.requestRootPermission();
+        if (rootGranted) {
+          final initialized = await _shizukuService.initialize();
+          if (initialized) {
+            emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
+            add(const HomeEvent.updateAppInfoIcons(startCache: true));
+            add(const HomeEvent.loadData(updateAppInfoIcons: true));
+            return;
+          }
+        }
+      }
+
       final isRunning = await _shizukuService.isShizukuRunning();
       if (!isRunning) {
         emit(
@@ -79,7 +93,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(
           HomeState.failure(
             state.value.copyWith(shizukuReady: false),
-            'Failed to initialize Shizuku. Please grant permission.',
+            'Failed to initialize. Please grant permission.',
           ),
         );
         return;

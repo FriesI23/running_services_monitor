@@ -13,14 +13,36 @@ class ShizukuService {
 
   bool _isInitialized = false;
   bool _hasPermission = false;
+  bool _hasRootPermission = false;
 
   bool get isInitialized => _isInitialized;
   bool get hasPermission => _hasPermission;
+  bool get hasRootPermission => _hasRootPermission;
 
   Future<bool> isShizukuRunning() async {
     try {
       final bool isRunning = await _channel.invokeMethod('pingBinder');
       return isRunning;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> checkRootPermission() async {
+    try {
+      final bool granted = await _channel.invokeMethod('checkRootPermission');
+      _hasRootPermission = granted;
+      return _hasRootPermission;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> requestRootPermission() async {
+    try {
+      final bool granted = await _channel.invokeMethod('requestRootPermission');
+      _hasRootPermission = granted;
+      return _hasRootPermission;
     } catch (e) {
       return false;
     }
@@ -51,6 +73,17 @@ class ShizukuService {
       return true;
     }
 
+    final hasRoot = await checkRootPermission();
+    if (hasRoot) {
+      final rootGranted = await requestRootPermission();
+      if (rootGranted) {
+        _isInitialized = true;
+        _hasPermission = true;
+        _hasRootPermission = true;
+        return true;
+      }
+    }
+
     final isRunning = await isShizukuRunning();
     if (!isRunning) {
       return false;
@@ -65,7 +98,6 @@ class ShizukuService {
     }
 
     _isInitialized = true;
-    _hasPermission = true;
     _hasPermission = true;
     return true;
   }
