@@ -253,35 +253,42 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             },
             child: HomeBody(tabController: _tabController),
           ),
-          floatingActionButton: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              final value = state.value;
-              if (!value.shizukuReady) return const SizedBox.shrink();
+          floatingActionButton: Transform.translate(
+            offset: const Offset(10, 10),
+            child: BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                final value = state.value;
+                if (!value.shizukuReady) return const SizedBox.shrink();
 
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                transitionBuilder: (child, animation) => SizeTransition(
-                  sizeFactor: animation,
-                  axis: Axis.horizontal,
-                  axisAlignment: -1,
-                  child: Align(alignment: Alignment.bottomRight, child: child),
-                ),
-                child: _isFabExtended
-                    ? FloatingActionButton.extended(
-                        key: const ValueKey('extended'),
-                        onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
-                        icon: const Icon(Icons.security),
-                        label: Text(context.loc.runningServicesTitle, style: TextStyle(fontSize: 14.sp)),
-                        tooltip: context.loc.openRunningServicesTooltip,
-                      )
-                    : FloatingActionButton(
-                        key: const ValueKey('collapsed'),
-                        onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
-                        tooltip: context.loc.openRunningServicesTooltip,
-                        child: const Icon(Icons.security),
-                      ),
-              );
-            },
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  transitionBuilder: (child, animation) => SizeTransition(
+                    sizeFactor: animation,
+                    axis: Axis.horizontal,
+                    axisAlignment: -1,
+                    child: Align(
+                        alignment: Alignment.bottomRight, child: Padding(
+                          padding: EdgeInsets.only(bottom: 5.h, right: 5.w),
+                          child: child,
+                        )),
+                  ),
+                  child: _isFabExtended
+                      ? FloatingActionButton.extended(
+                          key: const ValueKey('extended'),
+                          onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
+                          icon: const Icon(Icons.security),
+                          label: Text(context.loc.runningServicesTitle, style: TextStyle(fontSize: 14.sp)),
+                          tooltip: context.loc.openRunningServicesTooltip,
+                        )
+                      : FloatingActionButton(
+                          key: const ValueKey('collapsed'),
+                          onPressed: AndroidSettingsHelper.tryOpenSystemRunningServices,
+                          tooltip: context.loc.openRunningServicesTooltip,
+                          child: const Icon(Icons.security),
+                        ),
+                );
+              },
+            ),
           ),
         ),
       ),
