@@ -225,8 +225,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       double totalRamKb = 0;
       final Set<int> pids = {};
       for (var service in updatedServices) {
-        totalRamKb += service.ramInKb ?? 0;
-        if (service.pid != null) pids.add(service.pid!);
+        if (service.pid != null) {
+          final isNewPid = pids.add(service.pid!);
+          if (isNewPid) {
+            totalRamKb += service.ramInKb ?? 0;
+          }
+        }
       }
 
       return app.copyWith(
@@ -259,6 +263,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   String _formatRam(double kb) {
+    if (kb <= 0) {
+      return 'N/A';
+    }
     if (kb > 1024 * 1024) {
       return '${(kb / (1024 * 1024)).toStringAsFixed(2)} GB';
     } else if (kb > 1024) {
