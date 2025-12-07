@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/core/extensions.dart';
+import 'package:running_services_monitor/utils/format_utils.dart';
 import 'ram_legend_item.dart';
 
 class RamBar extends StatelessWidget {
@@ -9,15 +10,6 @@ class RamBar extends StatelessWidget {
   final double freeRamKb;
 
   const RamBar({super.key, required this.totalRamKb, required this.usedRamKb, required this.freeRamKb});
-
-  String _formatRam(double kb) {
-    if (kb > 1024 * 1024) {
-      return '${(kb / (1024 * 1024)).toStringAsFixed(2)} GB';
-    } else if (kb > 1024) {
-      return '${(kb / 1024).toStringAsFixed(1)} MB';
-    }
-    return '${kb.toStringAsFixed(0)} KB';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +50,9 @@ class RamBar extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16.h),
-          RamLegendItem(color: Colors.grey[700]!, label: context.loc.used, value: _formatRam(usedRamKb)),
+          RamLegendItem(color: Colors.grey[700]!, label: context.loc.used, value: formatRam(usedRamKb)),
           SizedBox(height: 8.h),
-          RamLegendItem(color: Colors.grey[300]!, label: context.loc.free, value: _formatRam(freeRamKb)),
+          RamLegendItem(color: Colors.grey[300]!, label: context.loc.free, value: formatRam(freeRamKb)),
         ],
       ),
     );

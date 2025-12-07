@@ -55,7 +55,7 @@ extension HomeEventPatterns on HomeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitializeShizuku value)?  initializeShizuku,TResult Function( _LoadData value)?  loadData,TResult Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult Function( _ToggleSearch value)?  toggleSearch,TResult Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult Function( _RemoveApp value)?  removeApp,TResult Function( _RemoveService value)?  removeService,TResult Function( _AutoUpdateTick value)?  autoUpdateTick,TResult Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult Function( _SetProcessFilter value)?  setProcessFilter,TResult Function( _ToggleSortOrder value)?  toggleSortOrder,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitializeShizuku value)?  initializeShizuku,TResult Function( _LoadData value)?  loadData,TResult Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult Function( _ToggleSearch value)?  toggleSearch,TResult Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult Function( _RemoveApp value)?  removeApp,TResult Function( _RemoveService value)?  removeService,TResult Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult Function( _SetProcessFilter value)?  setProcessFilter,TResult Function( _ToggleSortOrder value)?  toggleSortOrder,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
@@ -65,8 +65,7 @@ return toggleAutoUpdate(_that);case _ToggleSearch() when toggleSearch != null:
 return toggleSearch(_that);case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that);case _RemoveApp() when removeApp != null:
 return removeApp(_that);case _RemoveService() when removeService != null:
-return removeService(_that);case _AutoUpdateTick() when autoUpdateTick != null:
-return autoUpdateTick(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
+return removeService(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
 return updateAppInfoIcons(_that);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder(_that);case _:
@@ -87,7 +86,7 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitializeShizuku value)  initializeShizuku,required TResult Function( _LoadData value)  loadData,required TResult Function( _ToggleAutoUpdate value)  toggleAutoUpdate,required TResult Function( _ToggleSearch value)  toggleSearch,required TResult Function( _UpdateSearchQuery value)  updateSearchQuery,required TResult Function( _RemoveApp value)  removeApp,required TResult Function( _RemoveService value)  removeService,required TResult Function( _AutoUpdateTick value)  autoUpdateTick,required TResult Function( _UpdateAppInfoIcons value)  updateAppInfoIcons,required TResult Function( _SetProcessFilter value)  setProcessFilter,required TResult Function( _ToggleSortOrder value)  toggleSortOrder,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitializeShizuku value)  initializeShizuku,required TResult Function( _LoadData value)  loadData,required TResult Function( _ToggleAutoUpdate value)  toggleAutoUpdate,required TResult Function( _ToggleSearch value)  toggleSearch,required TResult Function( _UpdateSearchQuery value)  updateSearchQuery,required TResult Function( _RemoveApp value)  removeApp,required TResult Function( _RemoveService value)  removeService,required TResult Function( _UpdateAppInfoIcons value)  updateAppInfoIcons,required TResult Function( _SetProcessFilter value)  setProcessFilter,required TResult Function( _ToggleSortOrder value)  toggleSortOrder,}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku():
@@ -97,8 +96,7 @@ return toggleAutoUpdate(_that);case _ToggleSearch():
 return toggleSearch(_that);case _UpdateSearchQuery():
 return updateSearchQuery(_that);case _RemoveApp():
 return removeApp(_that);case _RemoveService():
-return removeService(_that);case _AutoUpdateTick():
-return autoUpdateTick(_that);case _UpdateAppInfoIcons():
+return removeService(_that);case _UpdateAppInfoIcons():
 return updateAppInfoIcons(_that);case _SetProcessFilter():
 return setProcessFilter(_that);case _ToggleSortOrder():
 return toggleSortOrder(_that);case _:
@@ -118,7 +116,7 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitializeShizuku value)?  initializeShizuku,TResult? Function( _LoadData value)?  loadData,TResult? Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult? Function( _ToggleSearch value)?  toggleSearch,TResult? Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult? Function( _RemoveApp value)?  removeApp,TResult? Function( _RemoveService value)?  removeService,TResult? Function( _AutoUpdateTick value)?  autoUpdateTick,TResult? Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult? Function( _SetProcessFilter value)?  setProcessFilter,TResult? Function( _ToggleSortOrder value)?  toggleSortOrder,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitializeShizuku value)?  initializeShizuku,TResult? Function( _LoadData value)?  loadData,TResult? Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult? Function( _ToggleSearch value)?  toggleSearch,TResult? Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult? Function( _RemoveApp value)?  removeApp,TResult? Function( _RemoveService value)?  removeService,TResult? Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult? Function( _SetProcessFilter value)?  setProcessFilter,TResult? Function( _ToggleSortOrder value)?  toggleSortOrder,}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
@@ -128,8 +126,7 @@ return toggleAutoUpdate(_that);case _ToggleSearch() when toggleSearch != null:
 return toggleSearch(_that);case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that);case _RemoveApp() when removeApp != null:
 return removeApp(_that);case _RemoveService() when removeService != null:
-return removeService(_that);case _AutoUpdateTick() when autoUpdateTick != null:
-return autoUpdateTick(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
+return removeService(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
 return updateAppInfoIcons(_that);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder(_that);case _:
@@ -149,7 +146,7 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function()?  autoUpdateTick,TResult Function( bool? startCache)?  updateAppInfoIcons,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function( bool? startCache)?  updateAppInfoIcons,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
 return initializeShizuku();case _LoadData() when loadData != null:
@@ -158,8 +155,7 @@ return toggleAutoUpdate();case _ToggleSearch() when toggleSearch != null:
 return toggleSearch();case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that.query);case _RemoveApp() when removeApp != null:
 return removeApp(_that.packageName);case _RemoveService() when removeService != null:
-return removeService(_that.packageName,_that.serviceName);case _AutoUpdateTick() when autoUpdateTick != null:
-return autoUpdateTick();case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
+return removeService(_that.packageName,_that.serviceName);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
 return updateAppInfoIcons(_that.startCache);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that.filter);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder();case _:
@@ -180,7 +176,7 @@ return toggleSortOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent,  bool updateAppInfoIcons)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function()  autoUpdateTick,required TResult Function( bool? startCache)  updateAppInfoIcons,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent,  bool updateAppInfoIcons)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function( bool? startCache)  updateAppInfoIcons,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku():
 return initializeShizuku();case _LoadData():
@@ -189,8 +185,7 @@ return toggleAutoUpdate();case _ToggleSearch():
 return toggleSearch();case _UpdateSearchQuery():
 return updateSearchQuery(_that.query);case _RemoveApp():
 return removeApp(_that.packageName);case _RemoveService():
-return removeService(_that.packageName,_that.serviceName);case _AutoUpdateTick():
-return autoUpdateTick();case _UpdateAppInfoIcons():
+return removeService(_that.packageName,_that.serviceName);case _UpdateAppInfoIcons():
 return updateAppInfoIcons(_that.startCache);case _SetProcessFilter():
 return setProcessFilter(_that.filter);case _ToggleSortOrder():
 return toggleSortOrder();case _:
@@ -210,7 +205,7 @@ return toggleSortOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function()?  autoUpdateTick,TResult? Function( bool? startCache)?  updateAppInfoIcons,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function( bool? startCache)?  updateAppInfoIcons,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
 return initializeShizuku();case _LoadData() when loadData != null:
@@ -219,8 +214,7 @@ return toggleAutoUpdate();case _ToggleSearch() when toggleSearch != null:
 return toggleSearch();case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that.query);case _RemoveApp() when removeApp != null:
 return removeApp(_that.packageName);case _RemoveService() when removeService != null:
-return removeService(_that.packageName,_that.serviceName);case _AutoUpdateTick() when autoUpdateTick != null:
-return autoUpdateTick();case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
+return removeService(_that.packageName,_that.serviceName);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
 return updateAppInfoIcons(_that.startCache);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that.filter);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder();case _:
@@ -594,38 +588,6 @@ as String,
 
 
 }
-
-/// @nodoc
-
-
-class _AutoUpdateTick implements HomeEvent {
-  const _AutoUpdateTick();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AutoUpdateTick);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'HomeEvent.autoUpdateTick()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
 

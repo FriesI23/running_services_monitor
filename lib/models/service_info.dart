@@ -87,3 +87,19 @@ abstract class ConnectionRecord with _$ConnectionRecord {
     String? rawConnectionRecord,
   }) = _ConnectionRecord;
 }
+
+class ProcessedAppsResult {
+  final List<AppProcessInfo> allApps;
+  final List<AppProcessInfo> userApps;
+  final List<AppProcessInfo> systemApps;
+  final double appsRam;
+  final List<double>? ramInfo;
+
+  ProcessedAppsResult({
+    required this.allApps,
+    required this.userApps,
+    required this.systemApps,
+    required this.appsRam,
+    this.ramInfo,
+  });
+}

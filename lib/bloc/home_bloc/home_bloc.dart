@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:running_services_monitor/utils/format_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:running_services_monitor/models/home_state_model.dart';
@@ -29,7 +30,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_UpdateSearchQuery>(_onUpdateSearchQuery);
     on<_RemoveApp>(_onRemoveApp);
     on<_RemoveService>(_onRemoveService);
-    on<_AutoUpdateTick>(_onAutoUpdateTick);
     on<_UpdateAppInfoIcons>(_onUpdateAppInfoIcons);
     on<_SetProcessFilter>(_onSetProcessFilter);
     on<_ToggleSortOrder>(_onToggleSortOrder);
@@ -109,50 +109,81 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _onLoadData(_LoadData event, Emitter<HomeState> emit) async {
+    if (event.silent) {
+      await _loadDataSimple(emit, event);
+    } else {
+      await _loadDataWithStream(emit, event);
+    }
+  }
+
+  Future<void> _loadDataSimple(Emitter<HomeState> emit, _LoadData event) async {
+    emit(HomeState.loading(state.value));
+    try {
+      final result = await _processService.getAppProcessInfosWithRamInfo();
+
+      emit(
+        HomeState.success(
+          state.value.copyWith(
+            allApps: result.allApps,
+            userApps: result.userApps,
+            systemApps: result.systemApps,
+            appsRamKb: result.appsRam,
+            totalRamKb: result.ramInfo?[0] ?? state.value.totalRamKb,
+            freeRamKb: result.ramInfo?[1] ?? state.value.freeRamKb,
+            usedRamKb: result.ramInfo?[2] ?? state.value.usedRamKb,
+          ),
+          null,
+          event.updateAppInfoIcons,
+        ),
+      );
+    } catch (e) {
+      emit(HomeState.failure(state.value, 'Error loading data: $e'));
+    }
+  }
+
+  Future<void> _loadDataWithStream(Emitter<HomeState> emit, _LoadData event) async {
     emit(HomeState.loading(state.value, 'Loading apps...'));
     try {
       final Map<String, AppProcessInfo> appsMap = {};
-      var currentModel = state.value;
 
       final streamResult = _processService.streamAppProcessInfosWithRamInfo();
-      final systemRamFuture = !event.silent ? streamResult.systemRamInfo : null;
-
       await for (final app in streamResult.apps) {
         appsMap[app.packageName] = app;
 
         final allApps = appsMap.values.toList();
-        final userApps = allApps.where((a) => !a.isSystemApp).toList();
-        final systemApps = allApps.where((a) => a.isSystemApp).toList();
 
-        userApps.sort((a, b) => b.totalRamInKb.compareTo(a.totalRamInKb));
-        systemApps.sort((a, b) => b.totalRamInKb.compareTo(a.totalRamInKb));
-
-        double appsRam = 0;
-        for (var appInfo in allApps) {
-          appsRam += appInfo.totalRamInKb;
-        }
-
-        currentModel = currentModel.copyWith(
-          allApps: allApps,
-          userApps: userApps,
-          systemApps: systemApps,
-          appsRamKb: appsRam,
+        emit(
+          HomeState.loading(
+            state.value.copyWith(
+              allApps: allApps,
+              userApps: allApps.where((a) => !a.isSystemApp).toList(),
+              systemApps: allApps.where((a) => a.isSystemApp).toList(),
+              appsRamKb: allApps.fold(0.0, (sum, a) => sum + a.totalRamInKb),
+            ),
+          ),
         );
-        emit(HomeState.loading(currentModel));
       }
 
-      if (systemRamFuture != null) {
-        final ramInfo = await systemRamFuture;
-        if (ramInfo != null) {
-          currentModel = currentModel.copyWith(totalRamKb: ramInfo[0], freeRamKb: ramInfo[1], usedRamKb: ramInfo[2]);
-          emit(HomeState.loading(currentModel));
-        }
-      }
-      emit(HomeState.success(currentModel, 'Refreshed successfully', event.updateAppInfoIcons));
+      final result = _processService.categorizeApps(appsMap.values.toList());
+
+      final ramInfo = await streamResult.systemRamInfo;
+      emit(
+        HomeState.success(
+          state.value.copyWith(
+            allApps: result.allApps,
+            userApps: result.userApps,
+            systemApps: result.systemApps,
+            appsRamKb: result.appsRam,
+            totalRamKb: ramInfo?[0] ?? state.value.totalRamKb,
+            freeRamKb: ramInfo?[1] ?? state.value.freeRamKb,
+            usedRamKb: ramInfo?[2] ?? state.value.usedRamKb,
+          ),
+          'Refreshed successfully',
+          event.updateAppInfoIcons,
+        ),
+      );
     } catch (e) {
-      if (!event.silent) {
-        emit(HomeState.failure(state.value, 'Error loading data: $e'));
-      }
+      emit(HomeState.failure(state.value, 'Error loading data: $e'));
     }
   }
 
@@ -161,7 +192,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     if (newAutoUpdateState) {
       _autoUpdateTimer = Timer.periodic(const Duration(seconds: 3), (_) {
-        add(const HomeEvent.autoUpdateTick());
+        add(const HomeEvent.loadData(silent: true));
       });
     } else {
       _autoUpdateTimer?.cancel();
@@ -169,10 +200,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     emit(HomeState.success(state.value.copyWith(isAutoUpdateEnabled: newAutoUpdateState)));
-  }
-
-  Future<void> _onAutoUpdateTick(_AutoUpdateTick event, Emitter<HomeState> emit) async {
-    add(const HomeEvent.loadData(silent: true));
   }
 
   Future<void> _onToggleSearch(_ToggleSearch event, Emitter<HomeState> emit) async {
@@ -237,7 +264,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         services: updatedServices,
         pids: pids.toList(),
         totalRamInKb: totalRamKb,
-        totalRam: _formatRam(totalRamKb),
+        totalRam: formatRam(totalRamKb),
       );
     }
 
@@ -260,18 +287,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       ),
     );
-  }
-
-  String _formatRam(double kb) {
-    if (kb <= 0) {
-      return 'N/A';
-    }
-    if (kb > 1024 * 1024) {
-      return '${(kb / (1024 * 1024)).toStringAsFixed(2)} GB';
-    } else if (kb > 1024) {
-      return '${(kb / 1024).toStringAsFixed(1)} MB';
-    }
-    return '${kb.toStringAsFixed(0)} KB';
   }
 
   Future<void> _onUpdateAppInfoIcons(_UpdateAppInfoIcons event, Emitter<HomeState> emit) async {

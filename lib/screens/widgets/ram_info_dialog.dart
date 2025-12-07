@@ -3,23 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/core/extensions.dart';
+import 'package:running_services_monitor/utils/format_utils.dart';
 
 class RamInfoDialog extends StatelessWidget {
   final AppProcessInfo appInfo;
 
   const RamInfoDialog({super.key, required this.appInfo});
-
-  String _formatRam(double kb) {
-    if (kb <= 0) {
-      return 'N/A';
-    }
-    if (kb > 1024 * 1024) {
-      return '${(kb / (1024 * 1024)).toStringAsFixed(2)} GB';
-    } else if (kb > 1024) {
-      return '${(kb / 1024).toStringAsFixed(1)} MB';
-    }
-    return '${kb.toStringAsFixed(0)} KB';
-  }
 
   String _formatRawKb(double kb) {
     final kbInt = kb.toInt();
@@ -156,7 +145,7 @@ class RamInfoDialog extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            _formatRam(source.ramKb),
+                            formatRam(source.ramKb),
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,

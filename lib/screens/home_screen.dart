@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
@@ -28,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
-  int _refreshCount = 0;
   bool _isFabExtended = true;
 
   @override
@@ -42,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       homeBloc.add(HomeEvent.updateSearchQuery(_searchController.text.toLowerCase()));
     });
 
+    homeBloc.add(const HomeEvent.updateAppInfoIcons(startCache: true));
     homeBloc.add(const HomeEvent.initializeShizuku());
   }
 
@@ -79,19 +78,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  void _checkReviewRequest() {
-    _refreshCount++;
-    if (_refreshCount % 5 == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.loc.enjoyingApp, style: TextStyle(fontSize: 14.sp)),
-          action: SnackBarAction(label: context.loc.donate, onPressed: () => context.push('/about')),
-          behavior: SnackBarBehavior.fixed,
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -116,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     behavior: SnackBarBehavior.fixed,
                   ),
                 );
-                _checkReviewRequest();
 
                 if (updateAppInfoIcons ?? false) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -132,71 +117,69 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         },
         child: Scaffold(
           appBar: AppBar(
-            title: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                final value = state.value;
-                return value.isSearching ? SearchField(controller: _searchController) : const AppLogo();
+            title: BlocSelector<HomeBloc, HomeState, bool>(
+              selector: (state) => state.value.isSearching,
+              builder: (context, isSearching) {
+                return isSearching ? SearchField(controller: _searchController) : const AppLogo();
               },
             ),
             bottom: TabBar(
               controller: _tabController,
               tabs: [
                 Tab(
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      final value = state.value;
-                      return Text('${context.loc.all} (${value.allApps.length})', style: TextStyle(fontSize: 14.sp));
+                  child: BlocSelector<HomeBloc, HomeState, int>(
+                    selector: (state) => state.value.allApps.length,
+                    builder: (context, count) {
+                      return Text('${context.loc.all} ($count)', style: TextStyle(fontSize: 14.sp));
                     },
                   ),
                 ),
                 Tab(
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      final value = state.value;
-                      return Text('${context.loc.user} (${value.userApps.length})', style: TextStyle(fontSize: 14.sp));
+                  child: BlocSelector<HomeBloc, HomeState, int>(
+                    selector: (state) => state.value.userApps.length,
+                    builder: (context, count) {
+                      return Text('${context.loc.user} ($count)', style: TextStyle(fontSize: 14.sp));
                     },
                   ),
                 ),
                 Tab(
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      final value = state.value;
-                      return Text(
-                        '${context.loc.system} (${value.systemApps.length})',
-                        style: TextStyle(fontSize: 14.sp),
-                      );
+                  child: BlocSelector<HomeBloc, HomeState, int>(
+                    selector: (state) => state.value.systemApps.length,
+                    builder: (context, count) {
+                      return Text('${context.loc.system} ($count)', style: TextStyle(fontSize: 14.sp));
                     },
                   ),
                 ),
               ],
             ),
             actions: [
-              BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  final value = state.value;
-                  if (!value.shizukuReady) return const SizedBox.shrink();
+              BlocSelector<HomeBloc, HomeState, ({bool shizukuReady, bool isSearching})>(
+                selector: (state) => (shizukuReady: state.value.shizukuReady, isSearching: state.value.isSearching),
+                builder: (context, data) {
+                  if (!data.shizukuReady) return const SizedBox.shrink();
                   return IconButton(
-                    icon: Icon(value.isSearching ? Icons.close : Icons.search),
+                    icon: Icon(data.isSearching ? Icons.close : Icons.search),
                     onPressed: () {
-                      if (!value.isSearching) {
+                      if (!data.isSearching) {
                         homeBloc.add(const HomeEvent.toggleSearch());
                       } else {
                         _searchController.clear();
                         homeBloc.add(const HomeEvent.toggleSearch());
                       }
                     },
-                    tooltip: value.isSearching ? context.loc.closeSearch : context.loc.search,
+                    tooltip: data.isSearching ? context.loc.closeSearch : context.loc.search,
                   );
                 },
               ),
-              BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  final value = state.value;
-                  if (!value.shizukuReady) return const SizedBox.shrink();
+              BlocSelector<HomeBloc, HomeState, ({bool shizukuReady, bool isAutoUpdateEnabled})>(
+                selector: (state) =>
+                    (shizukuReady: state.value.shizukuReady, isAutoUpdateEnabled: state.value.isAutoUpdateEnabled),
+                builder: (context, data) {
+                  if (!data.shizukuReady) return const SizedBox.shrink();
                   return IconButton(
                     icon: Icon(
-                      value.isAutoUpdateEnabled ? Icons.timer : Icons.timer_off,
-                      color: value.isAutoUpdateEnabled ? Theme.of(context).colorScheme.primary : null,
+                      data.isAutoUpdateEnabled ? Icons.timer : Icons.timer_off,
+                      color: data.isAutoUpdateEnabled ? Theme.of(context).colorScheme.primary : null,
                     ),
                     onPressed: () => homeBloc.add(const HomeEvent.toggleAutoUpdate()),
                     tooltip: context.loc.autoUpdate,
@@ -255,10 +238,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
           floatingActionButton: Transform.translate(
             offset: const Offset(10, 10),
-            child: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                final value = state.value;
-                if (!value.shizukuReady) return const SizedBox.shrink();
+            child: BlocSelector<HomeBloc, HomeState, bool>(
+              selector: (state) => state.value.shizukuReady,
+              builder: (context, shizukuReady) {
+                if (!shizukuReady) return const SizedBox.shrink();
 
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
@@ -267,10 +250,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     axis: Axis.horizontal,
                     axisAlignment: -1,
                     child: Align(
-                        alignment: Alignment.bottomRight, child: Padding(
-                          padding: EdgeInsets.only(bottom: 5.h, right: 5.w),
-                          child: child,
-                        )),
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 5.h, right: 5.w),
+                        child: child,
+                      ),
+                    ),
                   ),
                   child: _isFabExtended
                       ? FloatingActionButton.extended(
