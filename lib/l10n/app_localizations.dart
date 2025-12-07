@@ -685,6 +685,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No services found'**
   String get noServicesFound;
+
+  /// No description provided for @ramCalculation.
+  ///
+  /// In en, this message translates to:
+  /// **'RAM Calculation'**
+  String get ramCalculation;
+
+  /// No description provided for @totalRam.
+  ///
+  /// In en, this message translates to:
+  /// **'Total RAM'**
+  String get totalRam;
+
+  /// No description provided for @ramSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get ramSources;
+
+  /// No description provided for @noRamDataAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No RAM data available for this app in the system memory report.'**
+  String get noRamDataAvailable;
+
+  /// No description provided for @ramCalculationExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'RAM is calculated from system memory info. PID = Process ID lookup, Process = Process name lookup, LRU = Recent process list.'**
+  String get ramCalculationExplanation;
+
+  /// No description provided for @verifyCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Command'**
+  String get verifyCommand;
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get copiedToClipboard;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
 }
 
 class _AppLocalizationsDelegate

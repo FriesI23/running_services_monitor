@@ -95,5 +95,14 @@
   "visible": "দৃশ্যমান",
   "capabilities": "ক্যাপাবিলিটিস",
   "active": "সক্রিয়",
-  "cached": "ক্যাশড"
+  "cached": "ক্যাশড",
+  "noServicesFound": "কোনো সার্ভিস পাওয়া যায়নি",
+  "ramCalculation": "র‍্যাম হিসাব",
+  "totalRam": "মোট র‍্যাম",
+  "ramSources": "সোর্সসমূহ",
+  "noRamDataAvailable": "এই অ্যাপের জন্য সিস্টেম মেমোরি রিপোর্টে কোনো র‍্যাম ডেটা নেই।",
+  "ramCalculationExplanation": "র‍্যাম সিস্টেম মেমোরি তথ্য থেকে গণনা করা হয়। PID = প্রসেস আইডি লুকআপ, Process = প্রসেস নাম লুকআপ, LRU = সাম্প্রতিক প্রসেস তালিকা।",
+  "verifyCommand": "যাচাই কমান্ড",
+  "copiedToClipboard": "ক্লিপবোর্ডে কপি হয়েছে",
+  "copy": "কপি"
 }

@@ -108,5 +108,13 @@
   "capabilities": "Capabilities",
   "active": "Active",
   "cached": "Cached",
-  "noServicesFound": "No services found"
+  "noServicesFound": "No services found",
+  "ramCalculation": "RAM Calculation",
+  "totalRam": "Total RAM",
+  "ramSources": "Sources",
+  "noRamDataAvailable": "No RAM data available for this app in the system memory report.",
+  "ramCalculationExplanation": "RAM is calculated from system memory info. PID = Process ID lookup, Process = Process name lookup, LRU = Recent process list.",
+  "verifyCommand": "Verify Command",
+  "copiedToClipboard": "Copied to clipboard",
+  "copy": "Copy"
 }

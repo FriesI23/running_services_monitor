@@ -312,4 +312,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noServicesFound => 'No services found';
+
+  @override
+  String get ramCalculation => 'RAM Calculation';
+
+  @override
+  String get totalRam => 'Total RAM';
+
+  @override
+  String get ramSources => 'Sources';
+
+  @override
+  String get noRamDataAvailable =>
+      'No RAM data available for this app in the system memory report.';
+
+  @override
+  String get ramCalculationExplanation =>
+      'RAM is calculated from system memory info. PID = Process ID lookup, Process = Process name lookup, LRU = Recent process list.';
+
+  @override
+  String get verifyCommand => 'Verify Command';
+
+  @override
+  String get copiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get copy => 'Copy';
 }

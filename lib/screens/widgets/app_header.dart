@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'app_icon.dart';
+import 'ram_info_dialog.dart';
 
 class AppHeader extends StatelessWidget {
   final AppProcessInfo appInfo;
@@ -41,7 +42,32 @@ class AppHeader extends StatelessWidget {
             ),
           ),
         ),
-        SelectionArea(child: Text(appInfo.totalRam, style: Theme.of(context).textTheme.titleMedium)),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SelectionArea(child: Text(appInfo.totalRam, style: Theme.of(context).textTheme.titleMedium)),
+            SizedBox(height: 4.h),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => RamInfoDialog(appInfo: appInfo),
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.info_outline, size: 14.sp, color: Theme.of(context).colorScheme.primary),
+                  SizedBox(width: 4.w),
+                  Text(
+                    'Info',
+                    style: TextStyle(fontSize: 11.sp, color: Theme.of(context).colorScheme.primary),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

@@ -313,5 +313,31 @@ class AppLocalizationsBn extends AppLocalizations {
   String get cached => 'ক্যাশড';
 
   @override
-  String get noServicesFound => 'No services found';
+  String get noServicesFound => 'কোনো সার্ভিস পাওয়া যায়নি';
+
+  @override
+  String get ramCalculation => 'র‍্যাম হিসাব';
+
+  @override
+  String get totalRam => 'মোট র‍্যাম';
+
+  @override
+  String get ramSources => 'সোর্সসমূহ';
+
+  @override
+  String get noRamDataAvailable =>
+      'এই অ্যাপের জন্য সিস্টেম মেমোরি রিপোর্টে কোনো র‍্যাম ডেটা নেই।';
+
+  @override
+  String get ramCalculationExplanation =>
+      'র‍্যাম সিস্টেম মেমোরি তথ্য থেকে গণনা করা হয়। PID = প্রসেস আইডি লুকআপ, Process = প্রসেস নাম লুকআপ, LRU = সাম্প্রতিক প্রসেস তালিকা।';
+
+  @override
+  String get verifyCommand => 'যাচাই কমান্ড';
+
+  @override
+  String get copiedToClipboard => 'ক্লিপবোর্ডে কপি হয়েছে';
+
+  @override
+  String get copy => 'কপি';
 }

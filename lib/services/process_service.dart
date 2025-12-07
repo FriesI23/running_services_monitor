@@ -249,30 +249,40 @@ class ProcessService {
 
         double totalRamKb = 0;
         final Set<int> countedPids = {};
+        final List<RamSourceInfo> ramSources = [];
 
         for (var pid in app.pids) {
           if (!countedPids.contains(pid) && ramMap.containsKey(pid)) {
             countedPids.add(pid);
-            totalRamKb += ramMap[pid]!;
+            final ramKb = ramMap[pid]!;
+            totalRamKb += ramKb;
+            ramSources.add(RamSourceInfo(source: 'pid', ramKb: ramKb, pid: pid));
           }
         }
 
         if (totalRamKb == 0) {
           if (processNameRamMap.containsKey(packageName)) {
-            totalRamKb = processNameRamMap[packageName]!;
+            final ramKb = processNameRamMap[packageName]!;
+            totalRamKb = ramKb;
+            ramSources.add(RamSourceInfo(source: 'process_name', ramKb: ramKb, processName: packageName));
           } else {
             for (final processName in processNameRamMap.keys) {
               if (processName == packageName ||
                   processName.startsWith('$packageName:') ||
-                  processName.startsWith('$packageName.')) {
-                totalRamKb += processNameRamMap[processName]!;
+                  processName.startsWith('$packageName.') ||
+                  processName.startsWith('${packageName}_')) {
+                final ramKb = processNameRamMap[processName]!;
+                totalRamKb += ramKb;
+                ramSources.add(RamSourceInfo(source: 'process_name', ramKb: ramKb, processName: processName));
               }
             }
           }
         }
 
         if (totalRamKb > 0 && app.totalRamInKb != totalRamKb) {
-          app = app.copyWith(totalRam: _formatRam(totalRamKb), totalRamInKb: totalRamKb);
+          app = app.copyWith(totalRam: _formatRam(totalRamKb), totalRamInKb: totalRamKb, ramSources: ramSources);
+        } else if (ramSources.isNotEmpty) {
+          app = app.copyWith(ramSources: ramSources);
         }
 
         if (lruProcesses.containsKey(packageName)) {
@@ -307,8 +317,10 @@ class ProcessService {
           }
 
           double ramKb = 0;
+          final List<RamSourceInfo> ramSources = [];
           if (ramMap.containsKey(lruInfo.pid)) {
             ramKb = ramMap[lruInfo.pid]!;
+            ramSources.add(RamSourceInfo(source: 'lru', ramKb: ramKb, pid: lruInfo.pid));
           }
 
           final processOnlyApp = AppProcessInfo(
@@ -323,6 +335,7 @@ class ProcessService {
             processState: lruInfo.state,
             adjLevel: lruInfo.adj,
             hasServices: false,
+            ramSources: ramSources,
           );
 
           groupedApps[packageName] = processOnlyApp;
@@ -889,10 +902,10 @@ class ProcessService {
         final ramKb = double.tryParse(ramStr) ?? 0;
         final pid = int.tryParse(pidStr) ?? 0;
 
-        if (pid > 0) {
+        if (pid > 0 && !pidMap.containsKey(pid)) {
           pidMap[pid] = ramKb;
         }
-        if (processName.isNotEmpty) {
+        if (processName.isNotEmpty && !processNameMap.containsKey(processName)) {
           processNameMap[processName] = ramKb;
         }
       }

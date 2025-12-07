@@ -49,7 +49,14 @@ abstract class AppProcessInfo with _$AppProcessInfo {
     String? processState,
     String? adjLevel,
     @Default(true) bool hasServices,
+    @Default([]) List<RamSourceInfo> ramSources,
   }) = _AppProcessInfo;
+}
+
+@freezed
+abstract class RamSourceInfo with _$RamSourceInfo {
+  const factory RamSourceInfo({required String source, required double ramKb, int? pid, String? processName}) =
+      _RamSourceInfo;
 }
 
 @freezed
