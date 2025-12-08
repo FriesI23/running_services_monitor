@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/bloc/language_bloc/language_bloc.dart';
+import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({super.key});
@@ -12,7 +12,7 @@ class LanguageSelector extends StatelessWidget {
       icon: const Icon(Icons.language),
       tooltip: 'Language',
       onSelected: (Locale locale) {
-        context.read<LanguageBloc>().add(LanguageEvent.changeLanguage(locale));
+        getIt<LanguageBloc>().add(LanguageEvent.changeLanguage(locale));
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
         PopupMenuItem<Locale>(value: const Locale('en'), child: Text('English', style: TextStyle(fontSize: 14.sp))),

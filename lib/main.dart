@@ -41,57 +41,59 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIt<ThemeBloc>()),
-        BlocProvider(create: (context) => getIt<LanguageBloc>()),
-      ],
-      child: BlocBuilder<ThemeBloc, ThemeMode>(
-        builder: (context, themeMode) {
-          return BlocBuilder<LanguageBloc, LanguageState>(
-            builder: (context, languageState) {
-              return MaterialApp.router(
-                routerConfig: createAppRouter(),
-                onGenerateTitle: (context) => context.loc.appTitle,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: AppLocalizations.supportedLocales,
-                locale: languageState.locale,
-                debugShowCheckedModeBanner: false,
-                scrollBehavior: const MaterialScrollBehavior().copyWith(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                ),
-                theme: ThemeData(
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.light),
-                  useMaterial3: true,
-                  appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
-                ),
-                darkTheme: ThemeData(
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
-                  useMaterial3: true,
-                  appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
-                ),
-                themeMode: themeMode,
-                builder: (context, child) {
-                  final orientation = MediaQuery.of(context).orientation;
-                  return ScaleKitBuilder(
-                    autoScalePortrait: true,
-                    key: ValueKey(orientation),
-                    designWidth: 375,
-                    designHeight: 812,
-                    designType: DeviceType.mobile,
-                    child: child!,
-                  );
-                },
-              );
-            },
-          );
-        },
-      ),
+    return BlocSelector<ThemeBloc, AppThemeMode, ThemeMode>(
+      bloc: getIt<ThemeBloc>(),
+      selector: (state) => switch (state) {
+        AppThemeMode.system => ThemeMode.system,
+        AppThemeMode.light => ThemeMode.light,
+        AppThemeMode.dark => ThemeMode.dark,
+      },
+      builder: (context, themeMode) {
+        return BlocSelector<LanguageBloc, LanguageState, Locale?>(
+          bloc: getIt<LanguageBloc>(),
+          selector: (state) => state.locale,
+          builder: (context, locale) {
+            return MaterialApp.router(
+              routerConfig: createAppRouter(),
+              onGenerateTitle: (context) => context.loc.appTitle,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: locale,
+              debugShowCheckedModeBanner: false,
+              scrollBehavior: const MaterialScrollBehavior().copyWith(
+                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              ),
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.light),
+                useMaterial3: true,
+                appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
+              ),
+              darkTheme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
+                useMaterial3: true,
+                appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
+              ),
+              themeMode: themeMode,
+              builder: (context, child) {
+                final orientation = MediaQuery.of(context).orientation;
+                return ScaleKitBuilder(
+                  autoScalePortrait: true,
+                  key: ValueKey(orientation),
+                  designWidth: 375,
+                  designHeight: 812,
+                  designType: DeviceType.mobile,
+                  child: child!,
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 }

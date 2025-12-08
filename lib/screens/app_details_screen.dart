@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
@@ -38,13 +39,7 @@ class AppDetailsScreen extends StatelessWidget {
         },
         child: BlocSelector<HomeBloc, HomeState, AppProcessInfo?>(
           bloc: getIt<HomeBloc>(),
-          selector: (state) {
-            try {
-              return state.value.allApps.firstWhere((app) => app.packageName == packageId);
-            } catch (_) {
-              return null;
-            }
-          },
+          selector: (state) => state.value.allApps.firstWhereOrNull((app) => app.packageName == packageId),
           builder: (context, currentAppInfo) {
             if (currentAppInfo == null) {
               return const SizedBox.shrink();
@@ -151,7 +146,7 @@ class AppDetailsScreen extends StatelessWidget {
                 body: CustomScrollView(
                   slivers: [
                     SliverPadding(
-                      padding: EdgeInsets.all(24.0.w),
+                      padding: EdgeInsets.only(left: 24.0.w, right: 24.0.w, top: 24.0.w, bottom: 5.0.w),
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           AppHeader(appInfo: currentAppInfo),
@@ -167,7 +162,7 @@ class AppDetailsScreen extends StatelessWidget {
                           SizedBox(height: 16.h),
 
                           AppDetailsSectionTitle(title: context.loc.activeServices),
-                          SizedBox(height: 8.h),
+                          SizedBox(height: 5.h),
                           if (currentAppInfo.services.isEmpty)
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 24.h),

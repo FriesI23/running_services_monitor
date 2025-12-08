@@ -7,6 +7,7 @@ import 'package:running_services_monitor/core/dependency_injection/dependency_in
 import 'package:running_services_monitor/core/extensions.dart';
 import 'package:running_services_monitor/core/utils/android_settings_helper.dart';
 import 'package:running_services_monitor/bloc/home_bloc/home_bloc.dart';
+import 'package:running_services_monitor/bloc/app_info_bloc/app_info_bloc.dart';
 import 'widgets/shizuku_permission_dialog.dart';
 import 'widgets/home_body.dart';
 import 'widgets/language_selector.dart';
@@ -40,8 +41,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       homeBloc.add(HomeEvent.updateSearchQuery(_searchController.text.toLowerCase()));
     });
 
-    homeBloc.add(const HomeEvent.updateAppInfoIcons(startCache: true));
     homeBloc.add(const HomeEvent.initializeShizuku());
+
+    getIt<AppInfoBloc>().add(const AppInfoEvent.loadAllApps());
   }
 
   @override
@@ -92,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 _showPermissionDialog();
               }
             },
-            success: (value, toast, updateAppInfoIcons) {
+            success: (value, toast) {
               if (toast != null) {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -102,14 +104,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     behavior: SnackBarBehavior.fixed,
                   ),
                 );
-
-                if (updateAppInfoIcons ?? false) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Future.delayed(const Duration(milliseconds: 500), () {
-                      homeBloc.add(const HomeEvent.updateAppInfoIcons());
-                    });
-                  });
-                }
               }
             },
             orElse: () {},

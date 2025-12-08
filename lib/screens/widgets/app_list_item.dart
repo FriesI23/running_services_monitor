@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:running_services_monitor/bloc/app_info_bloc/app_info_bloc.dart';
+import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/models/process_state_filter.dart';
 import 'package:running_services_monitor/l10n/app_localizations.dart';
@@ -22,11 +25,19 @@ class AppListItem extends StatelessWidget {
 
     return ListTile(
       leading: AppIcon(appInfo: appInfo, size: 40.sp),
-      title: Text(
-        appInfo.appName,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontSize: 16.sp),
+      title: BlocSelector<AppInfoBloc, AppInfoState, String?>(
+        bloc: getIt<AppInfoBloc>(),
+        selector: (state) {
+          return state.value.cachedApps[appInfo.packageName]?.appName;  
+        },
+        builder: (context, appName) {
+          return Text(
+            appName ?? appInfo.appName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 16.sp),
+          );
+        },
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,30 +1,38 @@
-import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-@singleton
-class ThemeBloc extends HydratedCubit<ThemeMode> {
-  ThemeBloc() : super(ThemeMode.system);
+part 'theme_bloc.freezed.dart';
+part 'theme_event.dart';
 
-  void toggleTheme(Brightness brightness) {
-    if (state == ThemeMode.system) {
-      brightness == Brightness.dark ? emit(ThemeMode.light) : emit(ThemeMode.dark);
+enum AppThemeMode { system, light, dark }
+
+@singleton
+class ThemeBloc extends HydratedBloc<ThemeEvent, AppThemeMode> {
+  ThemeBloc() : super(AppThemeMode.system) {
+    on<_ToggleTheme>(_onToggleTheme);
+    on<_SetTheme>(_onSetTheme);
+  }
+
+  void _onToggleTheme(_ToggleTheme event, Emitter<AppThemeMode> emit) {
+    if (state == AppThemeMode.system) {
+      event.isDark ? emit(AppThemeMode.light) : emit(AppThemeMode.dark);
     } else {
-      state == ThemeMode.dark ? emit(ThemeMode.light) : emit(ThemeMode.dark);
+      state == AppThemeMode.dark ? emit(AppThemeMode.light) : emit(AppThemeMode.dark);
     }
   }
 
-  void setTheme(ThemeMode mode) {
-    emit(mode);
+  void _onSetTheme(_SetTheme event, Emitter<AppThemeMode> emit) {
+    emit(event.mode);
   }
 
   @override
-  ThemeMode? fromJson(Map<String, dynamic> json) {
-    return ThemeMode.values[json['theme_mode'] as int];
+  AppThemeMode? fromJson(Map<String, dynamic> json) {
+    return AppThemeMode.values[json['theme_mode'] as int];
   }
 
   @override
-  Map<String, dynamic>? toJson(ThemeMode state) {
+  Map<String, dynamic>? toJson(AppThemeMode state) {
     return {'theme_mode': state.index};
   }
 }

@@ -55,15 +55,25 @@ class HomeBody extends StatelessWidget {
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: FilterChipsDelegate(
-                  child: ProcessFilterChips(
-                    selectedFilter: data.model.selectedProcessFilter,
-                    apps: data.model.allApps,
-                    sortAscending: data.model.sortAscending,
-                  ),
-                ),
+              ListenableBuilder(
+                listenable: tabController,
+                builder: (context, child) {
+                  return SliverPersistentHeader(
+                    pinned: true,
+                    delegate: FilterChipsDelegate(
+                      child: ProcessFilterChips(
+                        selectedFilter: data.model.selectedProcessFilter,
+                        apps: switch (tabController.index) {
+                          0 => data.model.allApps,
+                          1 => data.model.userApps,
+                          2 => data.model.systemApps,
+                          _ => data.model.allApps,
+                        },
+                        sortAscending: data.model.sortAscending,
+                      ),
+                    ),
+                  );
+                },
               ),
               if (ram.total > 0)
                 SliverPersistentHeader(

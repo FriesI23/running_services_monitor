@@ -32,6 +32,7 @@ dependencies:
   flutter_isolate: ^2.1.0
   flutter_scale_kit: ^1.5.2
   fluttertoast: ^8.2.8
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:

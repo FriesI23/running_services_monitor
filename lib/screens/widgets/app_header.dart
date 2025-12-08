@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
+import 'package:running_services_monitor/bloc/app_info_bloc/app_info_bloc.dart';
+import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/utils/format_utils.dart';
 import 'app_icon.dart';
@@ -24,7 +27,15 @@ class AppHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(appInfo.appName, style: Theme.of(context).textTheme.headlineSmall),
+                BlocSelector<AppInfoBloc, AppInfoState, String?>(
+                  bloc: getIt<AppInfoBloc>(),
+                  selector: (state) {
+                    return state.value.cachedApps[appInfo.packageName]?.appName;
+                  },
+                  builder: (context, appName) {
+                    return Text(appName ?? appInfo.appName, style: Theme.of(context).textTheme.headlineSmall);
+                  },
+                ),
                 SizedBox(height: 4.h),
                 Text(
                   appInfo.packageName,

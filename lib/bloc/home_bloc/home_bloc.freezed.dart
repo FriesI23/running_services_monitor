@@ -55,7 +55,7 @@ extension HomeEventPatterns on HomeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitializeShizuku value)?  initializeShizuku,TResult Function( _LoadData value)?  loadData,TResult Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult Function( _ToggleSearch value)?  toggleSearch,TResult Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult Function( _RemoveApp value)?  removeApp,TResult Function( _RemoveService value)?  removeService,TResult Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult Function( _SetProcessFilter value)?  setProcessFilter,TResult Function( _ToggleSortOrder value)?  toggleSortOrder,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitializeShizuku value)?  initializeShizuku,TResult Function( _LoadData value)?  loadData,TResult Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult Function( _ToggleSearch value)?  toggleSearch,TResult Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult Function( _RemoveApp value)?  removeApp,TResult Function( _RemoveService value)?  removeService,TResult Function( _SetProcessFilter value)?  setProcessFilter,TResult Function( _ToggleSortOrder value)?  toggleSortOrder,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
@@ -65,8 +65,7 @@ return toggleAutoUpdate(_that);case _ToggleSearch() when toggleSearch != null:
 return toggleSearch(_that);case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that);case _RemoveApp() when removeApp != null:
 return removeApp(_that);case _RemoveService() when removeService != null:
-return removeService(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that);case _SetProcessFilter() when setProcessFilter != null:
+return removeService(_that);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder(_that);case _:
   return orElse();
@@ -86,7 +85,7 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitializeShizuku value)  initializeShizuku,required TResult Function( _LoadData value)  loadData,required TResult Function( _ToggleAutoUpdate value)  toggleAutoUpdate,required TResult Function( _ToggleSearch value)  toggleSearch,required TResult Function( _UpdateSearchQuery value)  updateSearchQuery,required TResult Function( _RemoveApp value)  removeApp,required TResult Function( _RemoveService value)  removeService,required TResult Function( _UpdateAppInfoIcons value)  updateAppInfoIcons,required TResult Function( _SetProcessFilter value)  setProcessFilter,required TResult Function( _ToggleSortOrder value)  toggleSortOrder,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitializeShizuku value)  initializeShizuku,required TResult Function( _LoadData value)  loadData,required TResult Function( _ToggleAutoUpdate value)  toggleAutoUpdate,required TResult Function( _ToggleSearch value)  toggleSearch,required TResult Function( _UpdateSearchQuery value)  updateSearchQuery,required TResult Function( _RemoveApp value)  removeApp,required TResult Function( _RemoveService value)  removeService,required TResult Function( _SetProcessFilter value)  setProcessFilter,required TResult Function( _ToggleSortOrder value)  toggleSortOrder,}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku():
@@ -96,8 +95,7 @@ return toggleAutoUpdate(_that);case _ToggleSearch():
 return toggleSearch(_that);case _UpdateSearchQuery():
 return updateSearchQuery(_that);case _RemoveApp():
 return removeApp(_that);case _RemoveService():
-return removeService(_that);case _UpdateAppInfoIcons():
-return updateAppInfoIcons(_that);case _SetProcessFilter():
+return removeService(_that);case _SetProcessFilter():
 return setProcessFilter(_that);case _ToggleSortOrder():
 return toggleSortOrder(_that);case _:
   throw StateError('Unexpected subclass');
@@ -116,7 +114,7 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitializeShizuku value)?  initializeShizuku,TResult? Function( _LoadData value)?  loadData,TResult? Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult? Function( _ToggleSearch value)?  toggleSearch,TResult? Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult? Function( _RemoveApp value)?  removeApp,TResult? Function( _RemoveService value)?  removeService,TResult? Function( _UpdateAppInfoIcons value)?  updateAppInfoIcons,TResult? Function( _SetProcessFilter value)?  setProcessFilter,TResult? Function( _ToggleSortOrder value)?  toggleSortOrder,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitializeShizuku value)?  initializeShizuku,TResult? Function( _LoadData value)?  loadData,TResult? Function( _ToggleAutoUpdate value)?  toggleAutoUpdate,TResult? Function( _ToggleSearch value)?  toggleSearch,TResult? Function( _UpdateSearchQuery value)?  updateSearchQuery,TResult? Function( _RemoveApp value)?  removeApp,TResult? Function( _RemoveService value)?  removeService,TResult? Function( _SetProcessFilter value)?  setProcessFilter,TResult? Function( _ToggleSortOrder value)?  toggleSortOrder,}){
 final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
@@ -126,8 +124,7 @@ return toggleAutoUpdate(_that);case _ToggleSearch() when toggleSearch != null:
 return toggleSearch(_that);case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that);case _RemoveApp() when removeApp != null:
 return removeApp(_that);case _RemoveService() when removeService != null:
-return removeService(_that);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that);case _SetProcessFilter() when setProcessFilter != null:
+return removeService(_that);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder(_that);case _:
   return null;
@@ -146,17 +143,16 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function( bool? startCache)?  updateAppInfoIcons,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
 return initializeShizuku();case _LoadData() when loadData != null:
-return loadData(_that.silent,_that.updateAppInfoIcons);case _ToggleAutoUpdate() when toggleAutoUpdate != null:
+return loadData(_that.silent);case _ToggleAutoUpdate() when toggleAutoUpdate != null:
 return toggleAutoUpdate();case _ToggleSearch() when toggleSearch != null:
 return toggleSearch();case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that.query);case _RemoveApp() when removeApp != null:
 return removeApp(_that.packageName);case _RemoveService() when removeService != null:
-return removeService(_that.packageName,_that.serviceName);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that.startCache);case _SetProcessFilter() when setProcessFilter != null:
+return removeService(_that.packageName,_that.serviceName);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that.filter);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder();case _:
   return orElse();
@@ -176,17 +172,16 @@ return toggleSortOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent,  bool updateAppInfoIcons)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function( bool? startCache)  updateAppInfoIcons,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku():
 return initializeShizuku();case _LoadData():
-return loadData(_that.silent,_that.updateAppInfoIcons);case _ToggleAutoUpdate():
+return loadData(_that.silent);case _ToggleAutoUpdate():
 return toggleAutoUpdate();case _ToggleSearch():
 return toggleSearch();case _UpdateSearchQuery():
 return updateSearchQuery(_that.query);case _RemoveApp():
 return removeApp(_that.packageName);case _RemoveService():
-return removeService(_that.packageName,_that.serviceName);case _UpdateAppInfoIcons():
-return updateAppInfoIcons(_that.startCache);case _SetProcessFilter():
+return removeService(_that.packageName,_that.serviceName);case _SetProcessFilter():
 return setProcessFilter(_that.filter);case _ToggleSortOrder():
 return toggleSortOrder();case _:
   throw StateError('Unexpected subclass');
@@ -205,17 +200,16 @@ return toggleSortOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent,  bool updateAppInfoIcons)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function( bool? startCache)?  updateAppInfoIcons,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
 return initializeShizuku();case _LoadData() when loadData != null:
-return loadData(_that.silent,_that.updateAppInfoIcons);case _ToggleAutoUpdate() when toggleAutoUpdate != null:
+return loadData(_that.silent);case _ToggleAutoUpdate() when toggleAutoUpdate != null:
 return toggleAutoUpdate();case _ToggleSearch() when toggleSearch != null:
 return toggleSearch();case _UpdateSearchQuery() when updateSearchQuery != null:
 return updateSearchQuery(_that.query);case _RemoveApp() when removeApp != null:
 return removeApp(_that.packageName);case _RemoveService() when removeService != null:
-return removeService(_that.packageName,_that.serviceName);case _UpdateAppInfoIcons() when updateAppInfoIcons != null:
-return updateAppInfoIcons(_that.startCache);case _SetProcessFilter() when setProcessFilter != null:
+return removeService(_that.packageName,_that.serviceName);case _SetProcessFilter() when setProcessFilter != null:
 return setProcessFilter(_that.filter);case _ToggleSortOrder() when toggleSortOrder != null:
 return toggleSortOrder();case _:
   return null;
@@ -261,11 +255,10 @@ String toString() {
 
 
 class _LoadData implements HomeEvent {
-  const _LoadData({this.silent = false, this.updateAppInfoIcons = false});
+  const _LoadData({this.silent = false});
   
 
 @JsonKey() final  bool silent;
-@JsonKey() final  bool updateAppInfoIcons;
 
 /// Create a copy of HomeEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -277,16 +270,16 @@ _$LoadDataCopyWith<_LoadData> get copyWith => __$LoadDataCopyWithImpl<_LoadData>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadData&&(identical(other.silent, silent) || other.silent == silent)&&(identical(other.updateAppInfoIcons, updateAppInfoIcons) || other.updateAppInfoIcons == updateAppInfoIcons));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadData&&(identical(other.silent, silent) || other.silent == silent));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,silent,updateAppInfoIcons);
+int get hashCode => Object.hash(runtimeType,silent);
 
 @override
 String toString() {
-  return 'HomeEvent.loadData(silent: $silent, updateAppInfoIcons: $updateAppInfoIcons)';
+  return 'HomeEvent.loadData(silent: $silent)';
 }
 
 
@@ -297,7 +290,7 @@ abstract mixin class _$LoadDataCopyWith<$Res> implements $HomeEventCopyWith<$Res
   factory _$LoadDataCopyWith(_LoadData value, $Res Function(_LoadData) _then) = __$LoadDataCopyWithImpl;
 @useResult
 $Res call({
- bool silent, bool updateAppInfoIcons
+ bool silent
 });
 
 
@@ -314,10 +307,9 @@ class __$LoadDataCopyWithImpl<$Res>
 
 /// Create a copy of HomeEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? silent = null,Object? updateAppInfoIcons = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? silent = null,}) {
   return _then(_LoadData(
 silent: null == silent ? _self.silent : silent // ignore: cast_nullable_to_non_nullable
-as bool,updateAppInfoIcons: null == updateAppInfoIcons ? _self.updateAppInfoIcons : updateAppInfoIcons // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -592,72 +584,6 @@ as String,
 /// @nodoc
 
 
-class _UpdateAppInfoIcons implements HomeEvent {
-  const _UpdateAppInfoIcons({this.startCache = false});
-  
-
-@JsonKey() final  bool? startCache;
-
-/// Create a copy of HomeEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$UpdateAppInfoIconsCopyWith<_UpdateAppInfoIcons> get copyWith => __$UpdateAppInfoIconsCopyWithImpl<_UpdateAppInfoIcons>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateAppInfoIcons&&(identical(other.startCache, startCache) || other.startCache == startCache));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,startCache);
-
-@override
-String toString() {
-  return 'HomeEvent.updateAppInfoIcons(startCache: $startCache)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$UpdateAppInfoIconsCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
-  factory _$UpdateAppInfoIconsCopyWith(_UpdateAppInfoIcons value, $Res Function(_UpdateAppInfoIcons) _then) = __$UpdateAppInfoIconsCopyWithImpl;
-@useResult
-$Res call({
- bool? startCache
-});
-
-
-
-
-}
-/// @nodoc
-class __$UpdateAppInfoIconsCopyWithImpl<$Res>
-    implements _$UpdateAppInfoIconsCopyWith<$Res> {
-  __$UpdateAppInfoIconsCopyWithImpl(this._self, this._then);
-
-  final _UpdateAppInfoIcons _self;
-  final $Res Function(_UpdateAppInfoIcons) _then;
-
-/// Create a copy of HomeEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? startCache = freezed,}) {
-  return _then(_UpdateAppInfoIcons(
-startCache: freezed == startCache ? _self.startCache : startCache // ignore: cast_nullable_to_non_nullable
-as bool?,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
 class _SetProcessFilter implements HomeEvent {
   const _SetProcessFilter(this.filter);
   
@@ -910,12 +836,12 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( HomeStateModel value)?  initial,TResult Function( HomeStateModel value,  String? message)?  loading,TResult Function( HomeStateModel value,  String? toast,  bool? updateAppInfoIcons)?  success,TResult Function( HomeStateModel value,  String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( HomeStateModel value)?  initial,TResult Function( HomeStateModel value,  String? message)?  loading,TResult Function( HomeStateModel value,  String? toast)?  success,TResult Function( HomeStateModel value,  String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.value);case _Loading() when loading != null:
 return loading(_that.value,_that.message);case _Success() when success != null:
-return success(_that.value,_that.toast,_that.updateAppInfoIcons);case _Failure() when failure != null:
+return success(_that.value,_that.toast);case _Failure() when failure != null:
 return failure(_that.value,_that.message);case _:
   return orElse();
 
@@ -934,12 +860,12 @@ return failure(_that.value,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( HomeStateModel value)  initial,required TResult Function( HomeStateModel value,  String? message)  loading,required TResult Function( HomeStateModel value,  String? toast,  bool? updateAppInfoIcons)  success,required TResult Function( HomeStateModel value,  String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( HomeStateModel value)  initial,required TResult Function( HomeStateModel value,  String? message)  loading,required TResult Function( HomeStateModel value,  String? toast)  success,required TResult Function( HomeStateModel value,  String message)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.value);case _Loading():
 return loading(_that.value,_that.message);case _Success():
-return success(_that.value,_that.toast,_that.updateAppInfoIcons);case _Failure():
+return success(_that.value,_that.toast);case _Failure():
 return failure(_that.value,_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -957,12 +883,12 @@ return failure(_that.value,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( HomeStateModel value)?  initial,TResult? Function( HomeStateModel value,  String? message)?  loading,TResult? Function( HomeStateModel value,  String? toast,  bool? updateAppInfoIcons)?  success,TResult? Function( HomeStateModel value,  String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( HomeStateModel value)?  initial,TResult? Function( HomeStateModel value,  String? message)?  loading,TResult? Function( HomeStateModel value,  String? toast)?  success,TResult? Function( HomeStateModel value,  String message)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.value);case _Loading() when loading != null:
 return loading(_that.value,_that.message);case _Success() when success != null:
-return success(_that.value,_that.toast,_that.updateAppInfoIcons);case _Failure() when failure != null:
+return success(_that.value,_that.toast);case _Failure() when failure != null:
 return failure(_that.value,_that.message);case _:
   return null;
 
@@ -1127,12 +1053,11 @@ $HomeStateModelCopyWith<$Res> get value {
 
 
 class _Success extends HomeState {
-  const _Success(this.value, [this.toast, this.updateAppInfoIcons]): super._();
+  const _Success(this.value, [this.toast]): super._();
   
 
 @override final  HomeStateModel value;
  final  String? toast;
- final  bool? updateAppInfoIcons;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -1144,16 +1069,16 @@ _$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.value, value) || other.value == value)&&(identical(other.toast, toast) || other.toast == toast)&&(identical(other.updateAppInfoIcons, updateAppInfoIcons) || other.updateAppInfoIcons == updateAppInfoIcons));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.value, value) || other.value == value)&&(identical(other.toast, toast) || other.toast == toast));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,value,toast,updateAppInfoIcons);
+int get hashCode => Object.hash(runtimeType,value,toast);
 
 @override
 String toString() {
-  return 'HomeState.success(value: $value, toast: $toast, updateAppInfoIcons: $updateAppInfoIcons)';
+  return 'HomeState.success(value: $value, toast: $toast)';
 }
 
 
@@ -1164,7 +1089,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $HomeStateCopyWith<$Res>
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @override @useResult
 $Res call({
- HomeStateModel value, String? toast, bool? updateAppInfoIcons
+ HomeStateModel value, String? toast
 });
 
 
@@ -1181,12 +1106,11 @@ class __$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? value = null,Object? toast = freezed,Object? updateAppInfoIcons = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? value = null,Object? toast = freezed,}) {
   return _then(_Success(
 null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as HomeStateModel,freezed == toast ? _self.toast : toast // ignore: cast_nullable_to_non_nullable
-as String?,freezed == updateAppInfoIcons ? _self.updateAppInfoIcons : updateAppInfoIcons // ignore: cast_nullable_to_non_nullable
-as bool?,
+as String?,
   ));
 }
 

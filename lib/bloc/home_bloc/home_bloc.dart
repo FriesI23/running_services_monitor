@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:running_services_monitor/models/home_state_model.dart';
 import 'package:running_services_monitor/models/process_state_filter.dart';
 import 'package:running_services_monitor/models/service_info.dart';
-import 'package:running_services_monitor/services/app_info_service.dart';
 import 'package:running_services_monitor/services/process_service.dart';
 import 'package:running_services_monitor/services/shizuku_service.dart';
 
@@ -18,11 +17,9 @@ part 'home_bloc.freezed.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ShizukuService _shizukuService;
   final ProcessService _processService;
-  final AppInfoService _appInfoService;
   Timer? _autoUpdateTimer;
 
-  HomeBloc(this._shizukuService, this._processService, this._appInfoService)
-    : super(const HomeState.initial(HomeStateModel())) {
+  HomeBloc(this._shizukuService, this._processService) : super(const HomeState.initial(HomeStateModel())) {
     on<_InitializeShizuku>(_onInitializeShizuku);
     on<_LoadData>(_onLoadData);
     on<_ToggleAutoUpdate>(_onToggleAutoUpdate);
@@ -30,7 +27,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_UpdateSearchQuery>(_onUpdateSearchQuery);
     on<_RemoveApp>(_onRemoveApp);
     on<_RemoveService>(_onRemoveService);
-    on<_UpdateAppInfoIcons>(_onUpdateAppInfoIcons);
     on<_SetProcessFilter>(_onSetProcessFilter);
     on<_ToggleSortOrder>(_onToggleSortOrder);
   }
@@ -56,8 +52,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final initialized = await _shizukuService.initialize();
           if (initialized) {
             emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
-            add(const HomeEvent.updateAppInfoIcons(startCache: true));
-            add(const HomeEvent.loadData(updateAppInfoIcons: true));
+            add(const HomeEvent.loadData());
             return;
           }
         }
@@ -101,8 +96,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
 
-      add(const HomeEvent.updateAppInfoIcons(startCache: true));
-      add(const HomeEvent.loadData(updateAppInfoIcons: true));
+      add(const HomeEvent.loadData());
     } catch (e) {
       emit(HomeState.failure(state.value.copyWith(shizukuReady: false), 'Error initializing Shizuku: $e'));
     }
@@ -132,8 +126,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             freeRamKb: result.ramInfo?[1] ?? state.value.freeRamKb,
             usedRamKb: result.ramInfo?[2] ?? state.value.usedRamKb,
           ),
-          null,
-          event.updateAppInfoIcons,
         ),
       );
     } catch (e) {
@@ -179,7 +171,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             usedRamKb: ramInfo?[2] ?? state.value.usedRamKb,
           ),
           'Refreshed successfully',
-          event.updateAppInfoIcons,
         ),
       );
     } catch (e) {
@@ -287,49 +278,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       ),
     );
-  }
-
-  Future<void> _onUpdateAppInfoIcons(_UpdateAppInfoIcons event, Emitter<HomeState> emit) async {
-    try {
-      if (event.startCache ?? false) {
-        await _appInfoService.ensureCacheValid();
-        return;
-      }
-      final cachedApps = _appInfoService.cachedAppsMap;
-      if (cachedApps == null || cachedApps.isEmpty) return;
-
-      final currentState = state.value;
-
-      final updatedAllApps = currentState.allApps.map((app) {
-        final cachedAppInfo = cachedApps[app.packageName];
-        if (cachedAppInfo != null && app.appInfo?.icon == null) {
-          return app.copyWith(appInfo: cachedAppInfo);
-        }
-        return app;
-      }).toList();
-
-      final updatedUserApps = currentState.userApps.map((app) {
-        final cachedAppInfo = cachedApps[app.packageName];
-        if (cachedAppInfo != null && app.appInfo?.icon == null) {
-          return app.copyWith(appInfo: cachedAppInfo);
-        }
-        return app;
-      }).toList();
-
-      final updatedSystemApps = currentState.systemApps.map((app) {
-        final cachedAppInfo = cachedApps[app.packageName];
-        if (cachedAppInfo != null && app.appInfo?.icon == null) {
-          return app.copyWith(appInfo: cachedAppInfo);
-        }
-        return app;
-      }).toList();
-
-      emit(
-        HomeState.success(
-          currentState.copyWith(allApps: updatedAllApps, userApps: updatedUserApps, systemApps: updatedSystemApps),
-        ),
-      );
-    } catch (_) {}
   }
 
   Future<void> _onSetProcessFilter(_SetProcessFilter event, Emitter<HomeState> emit) async {
