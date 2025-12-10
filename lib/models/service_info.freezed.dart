@@ -11,6 +11,7 @@ part of 'service_info.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$RunningServiceInfo {
 
@@ -21,6 +22,8 @@ mixin _$RunningServiceInfo {
 @pragma('vm:prefer-inline')
 $RunningServiceInfoCopyWith<RunningServiceInfo> get copyWith => _$RunningServiceInfoCopyWithImpl<RunningServiceInfo>(this as RunningServiceInfo, _$identity);
 
+  /// Serializes this RunningServiceInfo to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is RunningServiceInfo&&(identical(other.user, user) || other.user == user)&&(identical(other.pid, pid) || other.pid == pid)&&(identical(other.processName, processName) || other.processName == processName)&&(identical(other.serviceName, serviceName) || other.serviceName == serviceName)&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.isSystemApp, isSystemApp) || other.isSystemApp == isSystemApp)&&(identical(other.serviceClass, serviceClass) || other.serviceClass == serviceClass)&&(identical(other.appName, appName) || other.appName == appName)&&(identical(other.ramUsage, ramUsage) || other.ramUsage == ramUsage)&&(identical(other.ramInKb, ramInKb) || other.ramInKb == ramInKb)&&(identical(other.intent, intent) || other.intent == intent)&&(identical(other.baseDir, baseDir) || other.baseDir == baseDir)&&(identical(other.dataDir, dataDir) || other.dataDir == dataDir)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground)&&(identical(other.foregroundId, foregroundId) || other.foregroundId == foregroundId)&&(identical(other.createTime, createTime) || other.createTime == createTime)&&(identical(other.lastActivityTime, lastActivityTime) || other.lastActivityTime == lastActivityTime)&&(identical(other.startRequested, startRequested) || other.startRequested == startRequested)&&(identical(other.createdFromFg, createdFromFg) || other.createdFromFg == createdFromFg)&&(identical(other.rawServiceRecord, rawServiceRecord) || other.rawServiceRecord == rawServiceRecord)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.recentCallingUid, recentCallingUid) || other.recentCallingUid == recentCallingUid)&&const DeepCollectionEquality().equals(other.connections, connections));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hashAll([runtimeType,user,pid,processName,serviceName,packageName,isSystemApp,serviceClass,appName,ramUsage,ramInKb,intent,baseDir,dataDir,isForeground,foregroundId,createTime,lastActivityTime,startRequested,createdFromFg,rawServiceRecord,uid,recentCallingUid,const DeepCollectionEquality().hash(connections)]);
 
@@ -225,11 +228,11 @@ return $default(_that.user,_that.pid,_that.processName,_that.serviceName,_that.p
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _RunningServiceInfo implements RunningServiceInfo {
   const _RunningServiceInfo({required this.user, this.pid, required this.processName, required this.serviceName, required this.packageName, required this.isSystemApp, this.serviceClass, this.appName, this.ramUsage, this.ramInKb, this.intent, this.baseDir, this.dataDir, this.isForeground, this.foregroundId, this.createTime, this.lastActivityTime, this.startRequested, this.createdFromFg, this.rawServiceRecord, this.uid, this.recentCallingUid, final  List<ConnectionRecord> connections = const []}): _connections = connections;
-  
+  factory _RunningServiceInfo.fromJson(Map<String, dynamic> json) => _$RunningServiceInfoFromJson(json);
 
 @override final  String user;
 @override final  int? pid;
@@ -267,14 +270,17 @@ class _RunningServiceInfo implements RunningServiceInfo {
 @pragma('vm:prefer-inline')
 _$RunningServiceInfoCopyWith<_RunningServiceInfo> get copyWith => __$RunningServiceInfoCopyWithImpl<_RunningServiceInfo>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$RunningServiceInfoToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _RunningServiceInfo&&(identical(other.user, user) || other.user == user)&&(identical(other.pid, pid) || other.pid == pid)&&(identical(other.processName, processName) || other.processName == processName)&&(identical(other.serviceName, serviceName) || other.serviceName == serviceName)&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.isSystemApp, isSystemApp) || other.isSystemApp == isSystemApp)&&(identical(other.serviceClass, serviceClass) || other.serviceClass == serviceClass)&&(identical(other.appName, appName) || other.appName == appName)&&(identical(other.ramUsage, ramUsage) || other.ramUsage == ramUsage)&&(identical(other.ramInKb, ramInKb) || other.ramInKb == ramInKb)&&(identical(other.intent, intent) || other.intent == intent)&&(identical(other.baseDir, baseDir) || other.baseDir == baseDir)&&(identical(other.dataDir, dataDir) || other.dataDir == dataDir)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground)&&(identical(other.foregroundId, foregroundId) || other.foregroundId == foregroundId)&&(identical(other.createTime, createTime) || other.createTime == createTime)&&(identical(other.lastActivityTime, lastActivityTime) || other.lastActivityTime == lastActivityTime)&&(identical(other.startRequested, startRequested) || other.startRequested == startRequested)&&(identical(other.createdFromFg, createdFromFg) || other.createdFromFg == createdFromFg)&&(identical(other.rawServiceRecord, rawServiceRecord) || other.rawServiceRecord == rawServiceRecord)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.recentCallingUid, recentCallingUid) || other.recentCallingUid == recentCallingUid)&&const DeepCollectionEquality().equals(other._connections, _connections));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hashAll([runtimeType,user,pid,processName,serviceName,packageName,isSystemApp,serviceClass,appName,ramUsage,ramInKb,intent,baseDir,dataDir,isForeground,foregroundId,createTime,lastActivityTime,startRequested,createdFromFg,rawServiceRecord,uid,recentCallingUid,const DeepCollectionEquality().hash(_connections)]);
 
@@ -340,6 +346,7 @@ as List<ConnectionRecord>,
 
 }
 
+
 /// @nodoc
 mixin _$AppProcessInfo {
 
@@ -350,6 +357,8 @@ mixin _$AppProcessInfo {
 @pragma('vm:prefer-inline')
 $AppProcessInfoCopyWith<AppProcessInfo> get copyWith => _$AppProcessInfoCopyWithImpl<AppProcessInfo>(this as AppProcessInfo, _$identity);
 
+  /// Serializes this AppProcessInfo to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -357,7 +366,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is AppProcessInfo&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.appName, appName) || other.appName == appName)&&const DeepCollectionEquality().equals(other.services, services)&&const DeepCollectionEquality().equals(other.pids, pids)&&(identical(other.totalRam, totalRam) || other.totalRam == totalRam)&&(identical(other.totalRamInKb, totalRamInKb) || other.totalRamInKb == totalRamInKb)&&(identical(other.isSystemApp, isSystemApp) || other.isSystemApp == isSystemApp)&&const DeepCollectionEquality().equals(other.connections, connections)&&(identical(other.processState, processState) || other.processState == processState)&&(identical(other.adjLevel, adjLevel) || other.adjLevel == adjLevel)&&(identical(other.hasServices, hasServices) || other.hasServices == hasServices)&&const DeepCollectionEquality().equals(other.ramSources, ramSources)&&(identical(other.isCached, isCached) || other.isCached == isCached)&&(identical(other.cachedMemoryKb, cachedMemoryKb) || other.cachedMemoryKb == cachedMemoryKb));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,packageName,appName,const DeepCollectionEquality().hash(services),const DeepCollectionEquality().hash(pids),totalRam,totalRamInKb,isSystemApp,const DeepCollectionEquality().hash(connections),processState,adjLevel,hasServices,const DeepCollectionEquality().hash(ramSources),isCached,cachedMemoryKb);
 
@@ -545,11 +554,11 @@ return $default(_that.packageName,_that.appName,_that.services,_that.pids,_that.
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _AppProcessInfo extends AppProcessInfo {
   const _AppProcessInfo({required this.packageName, required this.appName, required final  List<RunningServiceInfo> services, required final  List<int> pids, required this.totalRam, required this.totalRamInKb, this.isSystemApp, final  List<ConnectionRecord> connections = const [], this.processState, this.adjLevel, this.hasServices = true, final  List<RamSourceInfo> ramSources = const [], this.isCached = false, this.cachedMemoryKb = 0}): _services = services,_pids = pids,_connections = connections,_ramSources = ramSources,super._();
-  
+  factory _AppProcessInfo.fromJson(Map<String, dynamic> json) => _$AppProcessInfoFromJson(json);
 
 @override final  String packageName;
 @override final  String appName;
@@ -596,14 +605,17 @@ class _AppProcessInfo extends AppProcessInfo {
 @pragma('vm:prefer-inline')
 _$AppProcessInfoCopyWith<_AppProcessInfo> get copyWith => __$AppProcessInfoCopyWithImpl<_AppProcessInfo>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$AppProcessInfoToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppProcessInfo&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.appName, appName) || other.appName == appName)&&const DeepCollectionEquality().equals(other._services, _services)&&const DeepCollectionEquality().equals(other._pids, _pids)&&(identical(other.totalRam, totalRam) || other.totalRam == totalRam)&&(identical(other.totalRamInKb, totalRamInKb) || other.totalRamInKb == totalRamInKb)&&(identical(other.isSystemApp, isSystemApp) || other.isSystemApp == isSystemApp)&&const DeepCollectionEquality().equals(other._connections, _connections)&&(identical(other.processState, processState) || other.processState == processState)&&(identical(other.adjLevel, adjLevel) || other.adjLevel == adjLevel)&&(identical(other.hasServices, hasServices) || other.hasServices == hasServices)&&const DeepCollectionEquality().equals(other._ramSources, _ramSources)&&(identical(other.isCached, isCached) || other.isCached == isCached)&&(identical(other.cachedMemoryKb, cachedMemoryKb) || other.cachedMemoryKb == cachedMemoryKb));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,packageName,appName,const DeepCollectionEquality().hash(_services),const DeepCollectionEquality().hash(_pids),totalRam,totalRamInKb,isSystemApp,const DeepCollectionEquality().hash(_connections),processState,adjLevel,hasServices,const DeepCollectionEquality().hash(_ramSources),isCached,cachedMemoryKb);
 
@@ -660,6 +672,7 @@ as double,
 
 }
 
+
 /// @nodoc
 mixin _$RamSourceInfo {
 
@@ -670,6 +683,8 @@ mixin _$RamSourceInfo {
 @pragma('vm:prefer-inline')
 $RamSourceInfoCopyWith<RamSourceInfo> get copyWith => _$RamSourceInfoCopyWithImpl<RamSourceInfo>(this as RamSourceInfo, _$identity);
 
+  /// Serializes this RamSourceInfo to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -677,7 +692,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is RamSourceInfo&&(identical(other.source, source) || other.source == source)&&(identical(other.ramKb, ramKb) || other.ramKb == ramKb)&&(identical(other.pid, pid) || other.pid == pid)&&(identical(other.processName, processName) || other.processName == processName));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,source,ramKb,pid,processName);
 
@@ -855,11 +870,11 @@ return $default(_that.source,_that.ramKb,_that.pid,_that.processName);case _:
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _RamSourceInfo implements RamSourceInfo {
   const _RamSourceInfo({required this.source, required this.ramKb, this.pid, this.processName});
-  
+  factory _RamSourceInfo.fromJson(Map<String, dynamic> json) => _$RamSourceInfoFromJson(json);
 
 @override final  RamSourceType source;
 @override final  double ramKb;
@@ -872,14 +887,17 @@ class _RamSourceInfo implements RamSourceInfo {
 @pragma('vm:prefer-inline')
 _$RamSourceInfoCopyWith<_RamSourceInfo> get copyWith => __$RamSourceInfoCopyWithImpl<_RamSourceInfo>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$RamSourceInfoToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _RamSourceInfo&&(identical(other.source, source) || other.source == source)&&(identical(other.ramKb, ramKb) || other.ramKb == ramKb)&&(identical(other.pid, pid) || other.pid == pid)&&(identical(other.processName, processName) || other.processName == processName));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,source,ramKb,pid,processName);
 
@@ -926,6 +944,7 @@ as String?,
 
 }
 
+
 /// @nodoc
 mixin _$RunningProcessInfo {
 
@@ -936,6 +955,8 @@ mixin _$RunningProcessInfo {
 @pragma('vm:prefer-inline')
 $RunningProcessInfoCopyWith<RunningProcessInfo> get copyWith => _$RunningProcessInfoCopyWithImpl<RunningProcessInfo>(this as RunningProcessInfo, _$identity);
 
+  /// Serializes this RunningProcessInfo to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -943,7 +964,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is RunningProcessInfo&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.processName, processName) || other.processName == processName)&&(identical(other.pid, pid) || other.pid == pid)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.appName, appName) || other.appName == appName)&&(identical(other.isSystemApp, isSystemApp) || other.isSystemApp == isSystemApp)&&(identical(other.importance, importance) || other.importance == importance));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,packageName,processName,pid,uid,appName,isSystemApp,importance);
 
@@ -1124,11 +1145,11 @@ return $default(_that.packageName,_that.processName,_that.pid,_that.uid,_that.ap
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _RunningProcessInfo implements RunningProcessInfo {
   const _RunningProcessInfo({required this.packageName, required this.processName, required this.pid, required this.uid, this.appName, required this.isSystemApp, required this.importance});
-  
+  factory _RunningProcessInfo.fromJson(Map<String, dynamic> json) => _$RunningProcessInfoFromJson(json);
 
 @override final  String packageName;
 @override final  String processName;
@@ -1144,14 +1165,17 @@ class _RunningProcessInfo implements RunningProcessInfo {
 @pragma('vm:prefer-inline')
 _$RunningProcessInfoCopyWith<_RunningProcessInfo> get copyWith => __$RunningProcessInfoCopyWithImpl<_RunningProcessInfo>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$RunningProcessInfoToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _RunningProcessInfo&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.processName, processName) || other.processName == processName)&&(identical(other.pid, pid) || other.pid == pid)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.appName, appName) || other.appName == appName)&&(identical(other.isSystemApp, isSystemApp) || other.isSystemApp == isSystemApp)&&(identical(other.importance, importance) || other.importance == importance));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,packageName,processName,pid,uid,appName,isSystemApp,importance);
 
@@ -1201,6 +1225,7 @@ as String,
 
 }
 
+
 /// @nodoc
 mixin _$ConnectionRecord {
 
@@ -1211,6 +1236,8 @@ mixin _$ConnectionRecord {
 @pragma('vm:prefer-inline')
 $ConnectionRecordCopyWith<ConnectionRecord> get copyWith => _$ConnectionRecordCopyWithImpl<ConnectionRecord>(this as ConnectionRecord, _$identity);
 
+  /// Serializes this ConnectionRecord to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -1218,7 +1245,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is ConnectionRecord&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.serviceName, serviceName) || other.serviceName == serviceName)&&(identical(other.bindingPackage, bindingPackage) || other.bindingPackage == bindingPackage)&&(identical(other.bindingProcess, bindingProcess) || other.bindingProcess == bindingProcess)&&(identical(other.conn, conn) || other.conn == conn)&&(identical(other.flags, flags) || other.flags == flags)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground)&&(identical(other.isVisible, isVisible) || other.isVisible == isVisible)&&(identical(other.hasCapabilities, hasCapabilities) || other.hasCapabilities == hasCapabilities)&&(identical(other.rawConnectionRecord, rawConnectionRecord) || other.rawConnectionRecord == rawConnectionRecord));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,packageName,serviceName,bindingPackage,bindingProcess,conn,flags,isForeground,isVisible,hasCapabilities,rawConnectionRecord);
 
@@ -1402,11 +1429,11 @@ return $default(_that.packageName,_that.serviceName,_that.bindingPackage,_that.b
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _ConnectionRecord implements ConnectionRecord {
   const _ConnectionRecord({required this.packageName, required this.serviceName, this.bindingPackage, this.bindingProcess, this.conn, this.flags, this.isForeground, this.isVisible, this.hasCapabilities, this.rawConnectionRecord});
-  
+  factory _ConnectionRecord.fromJson(Map<String, dynamic> json) => _$ConnectionRecordFromJson(json);
 
 @override final  String packageName;
 @override final  String serviceName;
@@ -1425,14 +1452,17 @@ class _ConnectionRecord implements ConnectionRecord {
 @pragma('vm:prefer-inline')
 _$ConnectionRecordCopyWith<_ConnectionRecord> get copyWith => __$ConnectionRecordCopyWithImpl<_ConnectionRecord>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$ConnectionRecordToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConnectionRecord&&(identical(other.packageName, packageName) || other.packageName == packageName)&&(identical(other.serviceName, serviceName) || other.serviceName == serviceName)&&(identical(other.bindingPackage, bindingPackage) || other.bindingPackage == bindingPackage)&&(identical(other.bindingProcess, bindingProcess) || other.bindingProcess == bindingProcess)&&(identical(other.conn, conn) || other.conn == conn)&&(identical(other.flags, flags) || other.flags == flags)&&(identical(other.isForeground, isForeground) || other.isForeground == isForeground)&&(identical(other.isVisible, isVisible) || other.isVisible == isVisible)&&(identical(other.hasCapabilities, hasCapabilities) || other.hasCapabilities == hasCapabilities)&&(identical(other.rawConnectionRecord, rawConnectionRecord) || other.rawConnectionRecord == rawConnectionRecord));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,packageName,serviceName,bindingPackage,bindingProcess,conn,flags,isForeground,isVisible,hasCapabilities,rawConnectionRecord);
 

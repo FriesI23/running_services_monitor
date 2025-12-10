@@ -11,16 +11,19 @@ part of 'home_state_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$HomeStateModel {
 
- bool get shizukuReady; List<AppProcessInfo> get allApps; double get totalRamKb; double get freeRamKb; double get usedRamKb; bool get isAutoUpdateEnabled; bool get isSearching; String get searchQuery; ProcessStateFilter get selectedProcessFilter; bool get sortAscending;
+@JsonKey(includeFromJson: false, includeToJson: false) bool get shizukuReady; List<AppProcessInfo> get allApps;@JsonKey(includeFromJson: false, includeToJson: false) double get totalRamKb;@JsonKey(includeFromJson: false, includeToJson: false) double get freeRamKb;@JsonKey(includeFromJson: false, includeToJson: false) double get usedRamKb;@JsonKey(includeFromJson: false, includeToJson: false) bool get isAutoUpdateEnabled;@JsonKey(includeFromJson: false, includeToJson: false) bool get isSearching;@JsonKey(includeFromJson: false, includeToJson: false) String get searchQuery; ProcessStateFilter get selectedProcessFilter; bool get sortAscending;
 /// Create a copy of HomeStateModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $HomeStateModelCopyWith<HomeStateModel> get copyWith => _$HomeStateModelCopyWithImpl<HomeStateModel>(this as HomeStateModel, _$identity);
 
+  /// Serializes this HomeStateModel to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateModel&&(identical(other.shizukuReady, shizukuReady) || other.shizukuReady == shizukuReady)&&const DeepCollectionEquality().equals(other.allApps, allApps)&&(identical(other.totalRamKb, totalRamKb) || other.totalRamKb == totalRamKb)&&(identical(other.freeRamKb, freeRamKb) || other.freeRamKb == freeRamKb)&&(identical(other.usedRamKb, usedRamKb) || other.usedRamKb == usedRamKb)&&(identical(other.isAutoUpdateEnabled, isAutoUpdateEnabled) || other.isAutoUpdateEnabled == isAutoUpdateEnabled)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedProcessFilter, selectedProcessFilter) || other.selectedProcessFilter == selectedProcessFilter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,shizukuReady,const DeepCollectionEquality().hash(allApps),totalRamKb,freeRamKb,usedRamKb,isAutoUpdateEnabled,isSearching,searchQuery,selectedProcessFilter,sortAscending);
 
@@ -45,7 +48,7 @@ abstract mixin class $HomeStateModelCopyWith<$Res>  {
   factory $HomeStateModelCopyWith(HomeStateModel value, $Res Function(HomeStateModel) _then) = _$HomeStateModelCopyWithImpl;
 @useResult
 $Res call({
- bool shizukuReady, List<AppProcessInfo> allApps, double totalRamKb, double freeRamKb, double usedRamKb, bool isAutoUpdateEnabled, bool isSearching, String searchQuery, ProcessStateFilter selectedProcessFilter, bool sortAscending
+@JsonKey(includeFromJson: false, includeToJson: false) bool shizukuReady, List<AppProcessInfo> allApps,@JsonKey(includeFromJson: false, includeToJson: false) double totalRamKb,@JsonKey(includeFromJson: false, includeToJson: false) double freeRamKb,@JsonKey(includeFromJson: false, includeToJson: false) double usedRamKb,@JsonKey(includeFromJson: false, includeToJson: false) bool isAutoUpdateEnabled,@JsonKey(includeFromJson: false, includeToJson: false) bool isSearching,@JsonKey(includeFromJson: false, includeToJson: false) String searchQuery, ProcessStateFilter selectedProcessFilter, bool sortAscending
 });
 
 
@@ -159,7 +162,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool shizukuReady,  List<AppProcessInfo> allApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeFromJson: false, includeToJson: false)  bool shizukuReady,  List<AppProcessInfo> allApps, @JsonKey(includeFromJson: false, includeToJson: false)  double totalRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  double freeRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  double usedRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  bool isAutoUpdateEnabled, @JsonKey(includeFromJson: false, includeToJson: false)  bool isSearching, @JsonKey(includeFromJson: false, includeToJson: false)  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeStateModel() when $default != null:
 return $default(_that.shizukuReady,_that.allApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery,_that.selectedProcessFilter,_that.sortAscending);case _:
@@ -180,7 +183,7 @@ return $default(_that.shizukuReady,_that.allApps,_that.totalRamKb,_that.freeRamK
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool shizukuReady,  List<AppProcessInfo> allApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeFromJson: false, includeToJson: false)  bool shizukuReady,  List<AppProcessInfo> allApps, @JsonKey(includeFromJson: false, includeToJson: false)  double totalRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  double freeRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  double usedRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  bool isAutoUpdateEnabled, @JsonKey(includeFromJson: false, includeToJson: false)  bool isSearching, @JsonKey(includeFromJson: false, includeToJson: false)  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)  $default,) {final _that = this;
 switch (_that) {
 case _HomeStateModel():
 return $default(_that.shizukuReady,_that.allApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery,_that.selectedProcessFilter,_that.sortAscending);case _:
@@ -200,7 +203,7 @@ return $default(_that.shizukuReady,_that.allApps,_that.totalRamKb,_that.freeRamK
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool shizukuReady,  List<AppProcessInfo> allApps,  double totalRamKb,  double freeRamKb,  double usedRamKb,  bool isAutoUpdateEnabled,  bool isSearching,  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeFromJson: false, includeToJson: false)  bool shizukuReady,  List<AppProcessInfo> allApps, @JsonKey(includeFromJson: false, includeToJson: false)  double totalRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  double freeRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  double usedRamKb, @JsonKey(includeFromJson: false, includeToJson: false)  bool isAutoUpdateEnabled, @JsonKey(includeFromJson: false, includeToJson: false)  bool isSearching, @JsonKey(includeFromJson: false, includeToJson: false)  String searchQuery,  ProcessStateFilter selectedProcessFilter,  bool sortAscending)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeStateModel() when $default != null:
 return $default(_that.shizukuReady,_that.allApps,_that.totalRamKb,_that.freeRamKb,_that.usedRamKb,_that.isAutoUpdateEnabled,_that.isSearching,_that.searchQuery,_that.selectedProcessFilter,_that.sortAscending);case _:
@@ -212,13 +215,13 @@ return $default(_that.shizukuReady,_that.allApps,_that.totalRamKb,_that.freeRamK
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _HomeStateModel implements HomeStateModel {
-  const _HomeStateModel({this.shizukuReady = false, final  List<AppProcessInfo> allApps = const [], this.totalRamKb = 0.0, this.freeRamKb = 0.0, this.usedRamKb = 0.0, this.isAutoUpdateEnabled = false, this.isSearching = false, this.searchQuery = '', this.selectedProcessFilter = ProcessStateFilter.all, this.sortAscending = false}): _allApps = allApps;
-  
+  const _HomeStateModel({@JsonKey(includeFromJson: false, includeToJson: false) this.shizukuReady = false, final  List<AppProcessInfo> allApps = const [], @JsonKey(includeFromJson: false, includeToJson: false) this.totalRamKb = 0.0, @JsonKey(includeFromJson: false, includeToJson: false) this.freeRamKb = 0.0, @JsonKey(includeFromJson: false, includeToJson: false) this.usedRamKb = 0.0, @JsonKey(includeFromJson: false, includeToJson: false) this.isAutoUpdateEnabled = false, @JsonKey(includeFromJson: false, includeToJson: false) this.isSearching = false, @JsonKey(includeFromJson: false, includeToJson: false) this.searchQuery = '', this.selectedProcessFilter = ProcessStateFilter.all, this.sortAscending = false}): _allApps = allApps;
+  factory _HomeStateModel.fromJson(Map<String, dynamic> json) => _$HomeStateModelFromJson(json);
 
-@override@JsonKey() final  bool shizukuReady;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  bool shizukuReady;
  final  List<AppProcessInfo> _allApps;
 @override@JsonKey() List<AppProcessInfo> get allApps {
   if (_allApps is EqualUnmodifiableListView) return _allApps;
@@ -226,12 +229,12 @@ class _HomeStateModel implements HomeStateModel {
   return EqualUnmodifiableListView(_allApps);
 }
 
-@override@JsonKey() final  double totalRamKb;
-@override@JsonKey() final  double freeRamKb;
-@override@JsonKey() final  double usedRamKb;
-@override@JsonKey() final  bool isAutoUpdateEnabled;
-@override@JsonKey() final  bool isSearching;
-@override@JsonKey() final  String searchQuery;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  double totalRamKb;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  double freeRamKb;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  double usedRamKb;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  bool isAutoUpdateEnabled;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  bool isSearching;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  String searchQuery;
 @override@JsonKey() final  ProcessStateFilter selectedProcessFilter;
 @override@JsonKey() final  bool sortAscending;
 
@@ -241,14 +244,17 @@ class _HomeStateModel implements HomeStateModel {
 @pragma('vm:prefer-inline')
 _$HomeStateModelCopyWith<_HomeStateModel> get copyWith => __$HomeStateModelCopyWithImpl<_HomeStateModel>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$HomeStateModelToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeStateModel&&(identical(other.shizukuReady, shizukuReady) || other.shizukuReady == shizukuReady)&&const DeepCollectionEquality().equals(other._allApps, _allApps)&&(identical(other.totalRamKb, totalRamKb) || other.totalRamKb == totalRamKb)&&(identical(other.freeRamKb, freeRamKb) || other.freeRamKb == freeRamKb)&&(identical(other.usedRamKb, usedRamKb) || other.usedRamKb == usedRamKb)&&(identical(other.isAutoUpdateEnabled, isAutoUpdateEnabled) || other.isAutoUpdateEnabled == isAutoUpdateEnabled)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedProcessFilter, selectedProcessFilter) || other.selectedProcessFilter == selectedProcessFilter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,shizukuReady,const DeepCollectionEquality().hash(_allApps),totalRamKb,freeRamKb,usedRamKb,isAutoUpdateEnabled,isSearching,searchQuery,selectedProcessFilter,sortAscending);
 
@@ -265,7 +271,7 @@ abstract mixin class _$HomeStateModelCopyWith<$Res> implements $HomeStateModelCo
   factory _$HomeStateModelCopyWith(_HomeStateModel value, $Res Function(_HomeStateModel) _then) = __$HomeStateModelCopyWithImpl;
 @override @useResult
 $Res call({
- bool shizukuReady, List<AppProcessInfo> allApps, double totalRamKb, double freeRamKb, double usedRamKb, bool isAutoUpdateEnabled, bool isSearching, String searchQuery, ProcessStateFilter selectedProcessFilter, bool sortAscending
+@JsonKey(includeFromJson: false, includeToJson: false) bool shizukuReady, List<AppProcessInfo> allApps,@JsonKey(includeFromJson: false, includeToJson: false) double totalRamKb,@JsonKey(includeFromJson: false, includeToJson: false) double freeRamKb,@JsonKey(includeFromJson: false, includeToJson: false) double usedRamKb,@JsonKey(includeFromJson: false, includeToJson: false) bool isAutoUpdateEnabled,@JsonKey(includeFromJson: false, includeToJson: false) bool isSearching,@JsonKey(includeFromJson: false, includeToJson: false) String searchQuery, ProcessStateFilter selectedProcessFilter, bool sortAscending
 });
 
 

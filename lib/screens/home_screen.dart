@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       homeBloc.add(HomeEvent.updateSearchQuery(_searchController.text.toLowerCase()));
     });
 
-    homeBloc.add(const HomeEvent.initializeShizuku());
+    final hasData = homeBloc.state.value.allApps.isNotEmpty;
+    homeBloc.add(HomeEvent.initializeShizuku(silent: hasData, notify: hasData));
 
     getIt<AppInfoBloc>().add(const AppInfoEvent.loadAllApps());
   }

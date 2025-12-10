@@ -39,7 +39,10 @@ class AppListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$processCount ${loc.processAnd} $serviceCount ${loc.services}',
+            [
+              if (processCount > 0) '$processCount ${loc.process}',
+              if (serviceCount > 0) '$serviceCount ${loc.services}',
+            ].join(' ${loc.and} '),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           SizedBox(height: 4.h),

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:running_services_monitor/utils/format_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -14,7 +14,7 @@ part 'home_state.dart';
 part 'home_bloc.freezed.dart';
 
 @lazySingleton
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
+class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
   final ShizukuService _shizukuService;
   final ProcessService _processService;
   Timer? _autoUpdateTimer;
@@ -52,7 +52,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final initialized = await _shizukuService.initialize();
           if (initialized) {
             emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
-            add(const HomeEvent.loadData());
+            add(HomeEvent.loadData(silent: event.silent, notify: event.notify));
             return;
           }
         }
@@ -96,7 +96,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(HomeState.success(state.value.copyWith(shizukuReady: true)));
 
-      add(const HomeEvent.loadData());
+      add(HomeEvent.loadData(silent: event.silent, notify: event.notify));
     } catch (e) {
       emit(HomeState.failure(state.value.copyWith(shizukuReady: false), 'Error initializing Shizuku: $e'));
     }
@@ -265,5 +265,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onToggleSortOrder(_ToggleSortOrder event, Emitter<HomeState> emit) async {
     emit(HomeState.success(state.value.copyWith(sortAscending: !state.value.sortAscending)));
+  }
+
+  @override
+  HomeState? fromJson(Map<String, dynamic> json) {
+    try {
+      final model = HomeStateModel.fromJson(json);
+      return HomeState.success(model);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(HomeState state) {
+    return state.value.toJson();
   }
 }

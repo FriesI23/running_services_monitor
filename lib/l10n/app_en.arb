@@ -117,5 +117,6 @@
   "ramCalculationExplanation": "RAM is calculated from system memory info. PID = Process ID lookup, Process = Process name lookup, LRU = Recent process list.",
   "verifyCommand": "Verify Command",
   "copiedToClipboard": "Copied to clipboard",
-  "copy": "Copy"
+  "copy": "Copy",
+  "and": "and"
 }

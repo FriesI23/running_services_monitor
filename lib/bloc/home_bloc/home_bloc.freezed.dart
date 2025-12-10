@@ -143,10 +143,10 @@ return toggleSortOrder(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initializeShizuku,TResult Function( bool silent,  bool notify)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( bool silent,  bool notify)?  initializeShizuku,TResult Function( bool silent,  bool notify)?  loadData,TResult Function()?  toggleAutoUpdate,TResult Function()?  toggleSearch,TResult Function( String query)?  updateSearchQuery,TResult Function( String packageName)?  removeApp,TResult Function( String packageName,  String serviceName)?  removeService,TResult Function( ProcessStateFilter filter)?  setProcessFilter,TResult Function()?  toggleSortOrder,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
-return initializeShizuku();case _LoadData() when loadData != null:
+return initializeShizuku(_that.silent,_that.notify);case _LoadData() when loadData != null:
 return loadData(_that.silent,_that.notify);case _ToggleAutoUpdate() when toggleAutoUpdate != null:
 return toggleAutoUpdate();case _ToggleSearch() when toggleSearch != null:
 return toggleSearch();case _UpdateSearchQuery() when updateSearchQuery != null:
@@ -172,10 +172,10 @@ return toggleSortOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initializeShizuku,required TResult Function( bool silent,  bool notify)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( bool silent,  bool notify)  initializeShizuku,required TResult Function( bool silent,  bool notify)  loadData,required TResult Function()  toggleAutoUpdate,required TResult Function()  toggleSearch,required TResult Function( String query)  updateSearchQuery,required TResult Function( String packageName)  removeApp,required TResult Function( String packageName,  String serviceName)  removeService,required TResult Function( ProcessStateFilter filter)  setProcessFilter,required TResult Function()  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku():
-return initializeShizuku();case _LoadData():
+return initializeShizuku(_that.silent,_that.notify);case _LoadData():
 return loadData(_that.silent,_that.notify);case _ToggleAutoUpdate():
 return toggleAutoUpdate();case _ToggleSearch():
 return toggleSearch();case _UpdateSearchQuery():
@@ -200,10 +200,10 @@ return toggleSortOrder();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initializeShizuku,TResult? Function( bool silent,  bool notify)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( bool silent,  bool notify)?  initializeShizuku,TResult? Function( bool silent,  bool notify)?  loadData,TResult? Function()?  toggleAutoUpdate,TResult? Function()?  toggleSearch,TResult? Function( String query)?  updateSearchQuery,TResult? Function( String packageName)?  removeApp,TResult? Function( String packageName,  String serviceName)?  removeService,TResult? Function( ProcessStateFilter filter)?  setProcessFilter,TResult? Function()?  toggleSortOrder,}) {final _that = this;
 switch (_that) {
 case _InitializeShizuku() when initializeShizuku != null:
-return initializeShizuku();case _LoadData() when loadData != null:
+return initializeShizuku(_that.silent,_that.notify);case _LoadData() when loadData != null:
 return loadData(_that.silent,_that.notify);case _ToggleAutoUpdate() when toggleAutoUpdate != null:
 return toggleAutoUpdate();case _ToggleSearch() when toggleSearch != null:
 return toggleSearch();case _UpdateSearchQuery() when updateSearchQuery != null:
@@ -223,33 +223,69 @@ return toggleSortOrder();case _:
 
 
 class _InitializeShizuku implements HomeEvent {
-  const _InitializeShizuku();
+  const _InitializeShizuku({this.silent = false, this.notify = false});
   
 
+@JsonKey() final  bool silent;
+@JsonKey() final  bool notify;
 
-
+/// Create a copy of HomeEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InitializeShizukuCopyWith<_InitializeShizuku> get copyWith => __$InitializeShizukuCopyWithImpl<_InitializeShizuku>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitializeShizuku);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitializeShizuku&&(identical(other.silent, silent) || other.silent == silent)&&(identical(other.notify, notify) || other.notify == notify));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,silent,notify);
 
 @override
 String toString() {
-  return 'HomeEvent.initializeShizuku()';
+  return 'HomeEvent.initializeShizuku(silent: $silent, notify: $notify)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$InitializeShizukuCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
+  factory _$InitializeShizukuCopyWith(_InitializeShizuku value, $Res Function(_InitializeShizuku) _then) = __$InitializeShizukuCopyWithImpl;
+@useResult
+$Res call({
+ bool silent, bool notify
+});
 
 
+
+
+}
+/// @nodoc
+class __$InitializeShizukuCopyWithImpl<$Res>
+    implements _$InitializeShizukuCopyWith<$Res> {
+  __$InitializeShizukuCopyWithImpl(this._self, this._then);
+
+  final _InitializeShizuku _self;
+  final $Res Function(_InitializeShizuku) _then;
+
+/// Create a copy of HomeEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? silent = null,Object? notify = null,}) {
+  return _then(_InitializeShizuku(
+silent: null == silent ? _self.silent : silent // ignore: cast_nullable_to_non_nullable
+as bool,notify: null == notify ? _self.notify : notify // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
 
 /// @nodoc
 

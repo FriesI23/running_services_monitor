@@ -340,4 +340,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get copy => 'কপি';
+
+  @override
+  String get and => 'এবং';
 }

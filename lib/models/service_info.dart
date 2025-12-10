@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:running_services_monitor/models/process_state_filter.dart';
 
 part 'service_info.freezed.dart';
+part 'service_info.g.dart';
 
 @freezed
 abstract class RunningServiceInfo with _$RunningServiceInfo {
@@ -30,6 +31,8 @@ abstract class RunningServiceInfo with _$RunningServiceInfo {
     int? recentCallingUid,
     @Default([]) List<ConnectionRecord> connections,
   }) = _RunningServiceInfo;
+
+  factory RunningServiceInfo.fromJson(Map<String, dynamic> json) => _$RunningServiceInfoFromJson(json);
 }
 
 @freezed
@@ -52,6 +55,8 @@ abstract class AppProcessInfo with _$AppProcessInfo {
     @Default(0) double cachedMemoryKb,
   }) = _AppProcessInfo;
 
+  factory AppProcessInfo.fromJson(Map<String, dynamic> json) => _$AppProcessInfoFromJson(json);
+
   bool get isActive => isActiveState(processState, hasServices: hasServices);
   bool get isCachedProcess => isCachedState(processState) || isCached;
 }
@@ -62,6 +67,8 @@ enum RamSourceType { pid, lru, processName, meminfoPss }
 abstract class RamSourceInfo with _$RamSourceInfo {
   const factory RamSourceInfo({required RamSourceType source, required double ramKb, int? pid, String? processName}) =
       _RamSourceInfo;
+
+  factory RamSourceInfo.fromJson(Map<String, dynamic> json) => _$RamSourceInfoFromJson(json);
 }
 
 @freezed
@@ -75,6 +82,8 @@ abstract class RunningProcessInfo with _$RunningProcessInfo {
     required bool isSystemApp,
     required String importance,
   }) = _RunningProcessInfo;
+
+  factory RunningProcessInfo.fromJson(Map<String, dynamic> json) => _$RunningProcessInfoFromJson(json);
 }
 
 @freezed
@@ -91,6 +100,8 @@ abstract class ConnectionRecord with _$ConnectionRecord {
     bool? hasCapabilities,
     String? rawConnectionRecord,
   }) = _ConnectionRecord;
+
+  factory ConnectionRecord.fromJson(Map<String, dynamic> json) => _$ConnectionRecordFromJson(json);
 }
 
 class ProcessedAppsResult {
