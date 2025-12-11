@@ -341,4 +341,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get and => 'and';
+
+  @override
+  String service_string(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services',
+      one: '1 service',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String process_string(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count processes',
+      one: '1 process',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String service_process_string(int serviceCount, int processCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      processCount,
+      locale: localeName,
+      other: '$processCount processes',
+      one: '1 process',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      serviceCount,
+      locale: localeName,
+      other: '$serviceCount services',
+      one: '1 service',
+    );
+    return '$_temp0 and $_temp1';
+  }
+
+  @override
+  String get info => 'Info';
 }

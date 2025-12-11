@@ -118,5 +118,33 @@
   "verifyCommand": "Verify Command",
   "copiedToClipboard": "Copied to clipboard",
   "copy": "Copy",
-  "and": "and"
+  "and": "and",
+  "service_string": "{count, plural, one {1 service} other {{count} services}}",
+  "@service_string": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "process_string": "{count, plural, one {1 process} other {{count} processes}}",
+  "@process_string": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "service_process_string": "{processCount, plural, one {1 process} other {{processCount} processes}} and {serviceCount, plural, one {1 service} other {{serviceCount} services}}",
+  "@service_process_string": {
+    "placeholders": {
+      "serviceCount": {
+        "type": "int"
+      },
+      "processCount": {
+        "type": "int"
+      }
+    }
+  },
+  "info": "Info"
 }

@@ -106,5 +106,9 @@
   "verifyCommand": "验证命令",
   "copiedToClipboard": "已复制到剪贴板",
   "copy": "复制",
-  "and": "和"
+  "and": "和",
+  "service_string": "{count}个服务",
+  "process_string": "{count}个进程",
+  "service_process_string": "{processCount}个进程和{serviceCount}个服务",
+  "info": "信息"
 }

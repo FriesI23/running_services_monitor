@@ -741,6 +741,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'and'**
   String get and;
+
+  /// No description provided for @service_string.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {1 service} other {{count} services}}'**
+  String service_string(int count);
+
+  /// No description provided for @process_string.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {1 process} other {{count} processes}}'**
+  String process_string(int count);
+
+  /// No description provided for @service_process_string.
+  ///
+  /// In en, this message translates to:
+  /// **'{processCount, plural, one {1 process} other {{processCount} processes}} and {serviceCount, plural, one {1 service} other {{serviceCount} services}}'**
+  String service_process_string(int serviceCount, int processCount);
+
+  /// No description provided for @info.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get info;
 }
 
 class _AppLocalizationsDelegate

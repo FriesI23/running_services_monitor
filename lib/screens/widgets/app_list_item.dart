@@ -19,6 +19,20 @@ class AppListItem extends StatelessWidget {
     final serviceCount = appInfo.services.length;
     final loc = AppLocalizations.of(context)!;
 
+    String buildSubtitleText() {
+      final hasService = serviceCount > 0;
+      final hasProcess = processCount > 0;
+      if (hasService && hasProcess) {
+        return loc.service_process_string(serviceCount, processCount);
+      } else if (hasService) {
+        return loc.service_string(serviceCount);
+      } else if (hasProcess) {
+        return loc.process_string(processCount);
+      } else {
+        return '';
+      }
+    }
+
     return ListTile(
       leading: AppIcon(appInfo: appInfo, size: 40.sp),
       title: BlocSelector<AppInfoBloc, AppInfoState, String?>(
@@ -39,10 +53,7 @@ class AppListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            [
-              if (processCount > 0) '$processCount ${loc.process}',
-              if (serviceCount > 0) '$serviceCount ${loc.services}',
-            ].join(' ${loc.and} '),
+            buildSubtitleText(),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           SizedBox(height: 4.h),
@@ -50,9 +61,12 @@ class AppListItem extends StatelessWidget {
             spacing: 4.w,
             runSpacing: 2.h,
             children: [
-              if (appInfo.isActive) _StateBadge(label: loc.active, color: Colors.green),
-              if (appInfo.isCachedProcess) _StateBadge(label: loc.cached, color: Colors.grey),
-              if (appInfo.hasServices) _StateBadge(label: loc.services, color: Colors.blue),
+              if (appInfo.isActive)
+                _StateBadge(label: loc.active, color: Colors.green),
+              if (appInfo.isCachedProcess)
+                _StateBadge(label: loc.cached, color: Colors.grey),
+              if (appInfo.hasServices)
+                _StateBadge(label: loc.services, color: Colors.blue),
             ],
           ),
         ],
@@ -82,7 +96,11 @@ class _StateBadge extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(fontSize: 10.sp, color: color, fontWeight: FontWeight.w500),
+        style: TextStyle(
+          fontSize: 10.sp,
+          color: color,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }

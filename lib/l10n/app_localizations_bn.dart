@@ -343,4 +343,46 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get and => 'এবং';
+
+  @override
+  String service_string(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count সার্ভিসগুলো',
+      one: '1 সার্ভিস',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String process_string(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count প্রক্রিয়াগুলো',
+      one: '1 প্রক্রিয়া',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String service_process_string(int serviceCount, int processCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      processCount,
+      locale: localeName,
+      other: '$processCount প্রক্রিয়াগুলো',
+      one: '1 প্রক্রিয়া',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      serviceCount,
+      locale: localeName,
+      other: '$serviceCount সার্ভিসগুলো',
+      one: '1 সার্ভিস',
+    );
+    return '$_temp0 এবং $_temp1';
+  }
+
+  @override
+  String get info => 'তথ্য';
 }

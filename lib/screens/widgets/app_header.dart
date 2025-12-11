@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scale_kit/flutter_scale_kit.dart';
 import 'package:running_services_monitor/bloc/app_info_bloc/app_info_bloc.dart';
 import 'package:running_services_monitor/core/dependency_injection/dependency_injection.dart';
+import 'package:running_services_monitor/l10n/app_localizations.dart';
 import 'package:running_services_monitor/models/service_info.dart';
 import 'package:running_services_monitor/utils/format_utils.dart';
 import 'app_icon.dart';
@@ -17,6 +18,23 @@ class AppHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final processCount = appInfo.pids.length;
     final serviceCount = appInfo.services.length;
+    final loc = AppLocalizations.of(context)!;
+
+
+    String builDescText() {
+      final hasService = serviceCount > 0;
+      final hasProcess = processCount > 0;
+      if (hasService && hasProcess) {
+        return loc.service_process_string(serviceCount, processCount);
+      } else if (hasService) {
+        return loc.service_string(serviceCount);
+      } else if (hasProcess) {
+        return loc.process_string(processCount);
+      } else {
+        return '';
+      }
+    }
+
 
     return Row(
       children: [
@@ -45,7 +63,7 @@ class AppHeader extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  '$processCount process and $serviceCount services',
+                  builDescText(),
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
@@ -82,7 +100,7 @@ class AppHeader extends StatelessWidget {
                   Icon(Icons.info_outline, size: 14.sp, color: Theme.of(context).colorScheme.primary),
                   SizedBox(width: 4.w),
                   Text(
-                    'Info',
+                    loc.info,
                     style: TextStyle(fontSize: 11.sp, color: Theme.of(context).colorScheme.primary),
                   ),
                 ],

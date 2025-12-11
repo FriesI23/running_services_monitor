@@ -333,4 +333,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get and => '和';
+
+  @override
+  String service_string(int count) {
+    return '$count个服务';
+  }
+
+  @override
+  String process_string(int count) {
+    return '$count个进程';
+  }
+
+  @override
+  String service_process_string(int serviceCount, int processCount) {
+    return '$processCount个进程和$serviceCount个服务';
+  }
+
+  @override
+  String get info => '信息';
 }
